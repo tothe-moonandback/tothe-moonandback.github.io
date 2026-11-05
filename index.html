@@ -55,6 +55,7 @@ button{font:inherit;color:inherit}
 @keyframes fall{from{transform:translateX(0) rotate(0) scale(var(--s))}to{transform:translateX(70px) translateY(112vh) rotate(380deg) scale(var(--s))}}
 
 /* letter + photos */
+.questions{text-align:center;background:#fff4f6;border:1px solid #efbdcc;border-radius:18px;padding:18px;margin:22px 0}.questions h3{font-size:2rem;margin:16px 0 8px}.choices{display:flex;justify-content:center;gap:12px}.choices button{border:1px solid var(--rose);border-radius:22px;background:#fff;padding:9px 20px;color:var(--ink);cursor:pointer}.answer{min-height:1.3em;font-style:italic}
 #story{justify-content:flex-start;gap:56px;padding:48px 16px 80px}
 .letter{position:relative;width:min(640px,100%);text-align:left;background:var(--paper);padding:44px 28px 36px 64px;border-radius:6px;box-shadow:0 18px 40px -18px rgba(150,60,90,.45);
  background-image:repeating-linear-gradient(transparent 0 33px,rgba(201,112,139,.16) 33px 34px);background-position:0 78px}
@@ -78,6 +79,16 @@ button{font:inherit;color:inherit}
 /* v2 */
 .page{padding:36px 16px 120px;gap:14px}
 .page:not([hidden]){animation:pgin .7s}
+.apology-teaser{width:min(560px,100%);margin:0 auto 18px;padding:18px 22px;border:1px solid #e9b5c4;border-radius:22px;background:linear-gradient(135deg,#fffaf4,#fde8e9);box-shadow:0 10px 28px -18px #9d536a;color:var(--ink)}
+.apology-teaser .tag{font:italic 1.15rem "Cormorant Garamond",serif;color:#9a5268;margin:0 0 5px}
+.apology-teaser p{font-size:1.2rem;line-height:1.35;margin:0 0 12px}
+.apology-teaser button,.apology-back{border:1px solid var(--rose);border-radius:24px;background:#fff8f8;padding:10px 20px;color:var(--ink);cursor:pointer;font-size:1.1rem}
+.apology-page{width:min(680px,100%);padding:30px 28px;border-radius:24px;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 18px 42px -22px #9d536a;border:1px solid #f0c7cf;text-align:left}
+.apology-page h2{text-align:center;font-size:2.8rem;font-weight:400;margin:0 0 20px}
+.apology-page p{font-size:1.35rem;line-height:1.65;margin:0 0 20px}
+.apology-page .sign{text-align:right;font:2.2rem "Allura",cursive;margin:0}
+.sweet-gift{text-align:center;margin-top:30px;padding:22px 12px;border-top:1px dashed #e4adbe}.sweet-gift h3{font-size:2.3rem;font-weight:400;margin:0 0 12px}.sweet-gift button{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--rose);border-radius:28px;background:#fff8fa;color:var(--ink);padding:12px 20px;font:1.1rem inherit;cursor:pointer;box-shadow:0 5px 16px #9d536a25}.choco{font-size:2rem}.ring-art{display:block;width:210px;max-width:80%;margin:18px auto 0;filter:drop-shadow(0 6px 5px #8e4a6230);animation:pop .45s ease-out}.ring-caption{font:2rem "Allura",cursive!important;line-height:1.2!important;margin:0!important;text-align:center}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.apology-photo{display:block;width:min(100%,420px);max-height:340px;object-fit:cover;object-position:center 35%;margin:22px auto;border:9px solid white;border-radius:5px;box-shadow:0 10px 25px #9d536a35;transform:rotate(-2deg)}
 @keyframes pgin{from{opacity:0}}
 .kitty{position:absolute;bottom:14px;left:12px;width:84px;height:84px;pointer-events:none}
 .kitty.r{left:auto;right:12px}
@@ -150,6 +161,7 @@ body.playing .vinyl{animation:spin 8s linear infinite}
 
 <!-- 1. PIN lock -->
 <section id="lock" class="stage page">
+  <aside class="apology-teaser"><p class="tag">A little note from my heart</p><p>I have something sweet for you, my pretty girl 🍫</p><button type="button" id="openApology">Read my apology 💗</button></aside>
   <div class="avatar"><img id="lockImg" alt=""></div>
   <h1 class="script" id="lockTitle"></h1>
   <p id="hintText"></p>
@@ -158,6 +170,7 @@ body.playing .vinyl{animation:spin 8s linear infinite}
   <div class="pad" id="pad"></div>
   <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
+<section id="apology" class="stage page" hidden><article class="apology-page"><h2 class="script">Can we make this right? 💗</h2><p>I am truly sorry from the bottom of my heart. Seeing you upset hurts me deeply, especially knowing that my actions may have caused it. You are the most important person in my world, and I never want you to feel that your feelings do not matter.</p><p>I know loving you means more than saying beautiful things. It means listening to you, understanding how my actions affected you, and taking responsibility instead of making excuses. You deserved more care from me, and I am truly sorry that I hurt you. I may not always express myself well or make the right choices, but I want to learn from this and show you through my actions that I can do better.</p><p>You mean everything to me, and I care so much about your happiness and your smile. I don’t want to leave things unresolved while you’re hurting. Can we talk and try to figure this out together now, if you’re willing? I’ll listen and do my best to understand what you need.</p><section class="questions"><h3 class="script">Can you forgive me, at least for trying? 💗</h3><div class="choices"><button data-q="forgive" data-a="yes">Yes 💗</button><button data-q="forgive" data-a="no">No</button></div><p class="answer" id="forgiveAnswer" aria-live="polite"></p><h3 class="script">Do you still love me? 💞</h3><div class="choices"><button data-q="love" data-a="yes">Yes 💗</button><button data-q="love" data-a="no">No</button></div><p class="answer" id="loveAnswer" aria-live="polite"></p></section><img class="apology-photo" src="8.jpg" alt="A favorite memory of us together"><p>i love you to the moon and back marioumty. im truly sorry, hbibty.</p><p class="sign">With all my love 💗</p><div class="sweet-gift"><h3 class="script">A little something for you</h3><button id="chocoGift" type="button" aria-expanded="false"><span class="choco" aria-hidden="true">🍫</span><span>Open your chocolate gift</span></button><div id="ringReveal" hidden><svg class="ring-art" viewBox="0 0 220 180" role="img" aria-label="Cartoon silver ring with pink stones"><ellipse cx="110" cy="110" rx="37" ry="57" fill="none" stroke="#b9bcc5" stroke-width="13"/><ellipse cx="110" cy="110" rx="27" ry="48" fill="none" stroke="#fff" stroke-width="5"/><path d="M76 56Q110 43 144 56" fill="none" stroke="#aeb2bd" stroke-width="8" stroke-linecap="round"/><path d="M79 51L88 36M141 51L132 36" stroke="#aeb2bd" stroke-width="5"/><path d="M88 33l9-10 9 10-9 10zM112 33l9-10 9 10-9 10z" fill="#ff91b5" stroke="#dc638c" stroke-width="3"/><circle cx="97" cy="31" r="3" fill="#fff"/><circle cx="121" cy="31" r="3" fill="#fff"/></svg><p class="ring-caption">Here is your ring, baby 💍<br>I love you so much</p></div></div></article><button class="apology-back" type="button" id="backApology">‹ Back to your surprise</button></section>
 <!-- 2. Gift 1 (lilies) -->
 <section id="gift" class="stage page" hidden>
   <button class="scene" aria-label="Open the gift">
@@ -307,6 +320,10 @@ $("#hintText").textContent = CONFIG.pinHint;
 
 /* Pages */
 const pages = [...document.querySelectorAll(".page")];
+document.querySelector("#openApology").onclick = () => go(1);
+document.querySelector("#backApology").onclick = () => go(0);
+document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{let q=b.dataset.q,a=b.dataset.a,o=document.getElementById(q+"Answer");if(a==="yes"){o.textContent=q==="love"?"That means so much to me. 💗":"Thank you for hearing me out. 💗";return}let n=+(o.dataset.n||0),p=q==="love"?["Are you sure? 🥺","Can I still earn a little place in your heart?","I understand. Thank you for being honest."]:["Are you sure? 🥺","Maybe after one tiny chocolate? 🍫","I understand. Thank you for being honest."];o.textContent=p[Math.min(n,p.length-1)];o.dataset.n=Math.min(n+1,p.length-1)});
+document.querySelector("#chocoGift").onclick = e => { const r=document.querySelector("#ringReveal"); r.hidden=false; e.currentTarget.setAttribute("aria-expanded","true"); e.currentTarget.querySelector("span:last-child").textContent="A little sweetness, just for you 💗"; };
 let idx = 0;
 function go(i){
   idx = Math.max(0, Math.min(i, pages.length - 1));
