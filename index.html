@@ -322,7 +322,7 @@ $("#hintText").textContent = CONFIG.pinHint;
 /* Pages */
 const pages = [...document.querySelectorAll(".page")];
 document.querySelector("#openApology").onclick = () => go(pages.indexOf(document.querySelector("#apology")));
-document.querySelector("#backApology").onclick = () => go(0);
+document.querySelector("#backApology").onclick = () => go(pages.indexOf(document.querySelector("#gift")));
 document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{let q=b.dataset.q,a=b.dataset.a,o=document.getElementById(q+"Answer");if(a==="yes"){o.textContent=q==="love"?"That means so much to me. 💗":"Thank you for hearing me out. 💗";return}let n=+(o.dataset.n||0),p=q==="love"?["Are you sure? 🥺","Can I still earn a little place in your heart?","I understand. Thank you for being honest."]:["Are you sure? 🥺","Maybe after one tiny chocolate? 🍫","I understand. Thank you for being honest."];o.textContent=p[Math.min(n,p.length-1)];o.dataset.n=Math.min(n+1,p.length-1)});
 document.querySelector("#chocoGift").onclick = e => { const r=document.querySelector("#ringReveal"); r.hidden=false; e.currentTarget.setAttribute("aria-expanded","true"); e.currentTarget.querySelector("span:last-child").textContent="A little sweetness, just for you 💗"; };
 let idx = 0;
