@@ -130,6 +130,149 @@ body.playing .vinyl{animation:spin 8s linear infinite}
 .h{color:#ff8fb4;font-size:calc(14px*var(--s,1))}
 .bub{width:calc(34px*var(--s,1));height:calc(34px*var(--s,1));border-radius:50%;opacity:.85;border:1.5px solid rgba(255,255,255,.9);background:radial-gradient(circle at 30% 28%,#fff 0 12%,transparent 13%),radial-gradient(circle,rgba(255,255,255,.15),var(--c))}
 @media (prefers-reduced-motion:reduce){.rise,.fall{display:none}body.playing .vinyl{animation:none}}
+/* v3: interactive extras */
+.xpage{justify-content:flex-start;gap:18px;padding-top:56px}
+.xpage h2.big{margin:0}
+.sub{margin:0;font-size:1.25rem;font-style:italic;max-width:460px}
+.xsec{width:min(960px,100%);display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:26px}
+.xsec h3{margin:0;font-size:2.4rem;font-weight:400}
+/* counter */
+.counter{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.counter div{min-width:76px;padding:12px 8px 8px;border-radius:18px;background:rgba(255,255,255,.8);border:1px solid #efbdcc;box-shadow:0 10px 22px -16px rgba(150,60,90,.7)}
+.counter b{display:block;font-size:2.2rem;line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
+.counter span{font-size:1rem;font-style:italic;color:#9a5268}
+.counter-label{margin:0;font-size:1.25rem;font-style:italic}
+.miles{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;width:100%}
+.mile{width:min(270px,100%);padding:18px 16px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;transition:transform .25s}
+.mile:active{transform:scale(.97)}
+.mile .ic{font-size:2rem;display:block}
+.mile .dt{font:2rem "Allura",cursive;display:block;line-height:1.1}
+.mile .tt{font-size:1.2rem;font-style:italic;display:block}
+.mile .more{display:block;max-height:0;overflow:hidden;opacity:0;font-size:1.15rem;line-height:1.35;transition:max-height .5s,opacity .5s,margin .5s}
+.mile.on .more{max-height:220px;opacity:1;margin-top:10px}
+/* flip polaroids */
+.polaroid.flip{padding:0;background:none;box-shadow:none;perspective:900px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.polaroid.flip .pin{position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.2,.4,1);transform:rotateX(var(--ty,0deg)) rotateY(calc(var(--tx,0deg) + var(--fl,0deg)))}
+.polaroid.flip.tilting .pin{transition:transform .12s linear}
+.polaroid.flip.flipped{--fl:180deg}
+.pface{-webkit-backface-visibility:hidden;backface-visibility:hidden;background:#fff;border-radius:3px;box-shadow:0 12px 26px -14px rgba(150,60,90,.6)}
+.pfront{padding:12px 12px 10px;position:relative}
+.pback{position:absolute;inset:0;transform:rotateY(180deg);-webkit-transform:rotateY(180deg);display:flex;align-items:center;justify-content:center;padding:18px 16px;text-align:center;font-family:"Allura",cursive;font-size:1.65rem;line-height:1.25;background:linear-gradient(145deg,#fffdf8,#fde8ec)}
+.pback small{position:absolute;bottom:8px;left:0;right:0;font:italic .85rem "Cormorant Garamond",serif;color:#b37a8c}
+.zoom{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;border:1px solid #e6b3c3;background:rgba(255,255,255,.88);font-size:1rem;line-height:1;cursor:pointer;padding:0;display:grid;place-items:center;z-index:2}
+.polaroid.empty .pfront::before{content:"your photo here";display:grid;place-items:center;aspect-ratio:4/5;background:var(--petal);font-style:italic}
+.polaroid.flip.empty::before{content:none}
+.polaroid.flip.empty .zoom{display:none}
+/* coupons */
+.coupons{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;width:100%}
+.coupon{position:relative;width:min(290px,100%);height:150px;border-radius:18px;border:2px dashed #e4adbe;background:linear-gradient(145deg,#fffdf8,#fff0f4);overflow:hidden;box-shadow:0 12px 26px -18px #9d536a}
+.cp-reward{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 14px;text-align:center}
+.cp-reward .ic{font-size:2rem}
+.cp-reward b{font-size:1.45rem;line-height:1.15}
+.cp-reward span{font-style:italic;font-size:1rem;color:#9a5268}
+.coupon canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;cursor:crosshair;transition:opacity .8s}
+.coupon.done canvas{opacity:0;pointer-events:none}
+/* envelopes */
+.envs{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;width:100%}
+.env{position:relative;width:min(260px,100%);height:170px;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;perspective:700px}
+.env .e-back{position:absolute;inset:0;background:#f3b9ca;border-radius:6px;box-shadow:0 12px 24px -14px rgba(150,60,90,.7)}
+.env .e-paper{position:absolute;left:14px;right:14px;top:14px;height:130px;background:#fffaf7;border-radius:4px;transition:transform .8s .25s cubic-bezier(.3,1.2,.4,1);background-image:repeating-linear-gradient(transparent 0 17px,rgba(201,112,139,.2) 17px 18px);display:flex;justify-content:center;padding-top:12px;font:1.5rem "Allura",cursive}
+.env .e-front{position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,#f7cfdb 0 50%,transparent 50%),linear-gradient(225deg,#f5c3d3 0 50%,transparent 50%),linear-gradient(#f0b1c5,#f0b1c5);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%)}
+.env .e-flap{position:absolute;left:0;right:0;top:0;height:92px;background:#e9a2b8;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .5s;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.env .e-label{position:absolute;left:8px;right:8px;bottom:14px;text-align:center;font-size:1.25rem;font-weight:600;z-index:3;pointer-events:none}
+.env .e-seal{position:absolute;left:50%;top:70px;margin:-14px 0 0 -14px;font-size:1.7rem;z-index:3;transition:opacity .3s;pointer-events:none}
+.env.open .e-flap{transform:rotateX(180deg);z-index:0}
+.env.open .e-paper{transform:translateY(-62px)}
+.env.open .e-seal{opacity:0}
+.env:not(.open){animation:bob 3.4s ease-in-out infinite}
+#ow{position:fixed;inset:0;z-index:11;background:rgba(60,20,35,.7);display:grid;place-items:center;padding:20px}
+#ow[hidden]{display:none}
+#ow .sheet{position:relative;width:min(560px,100%);max-height:86svh;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper);border-radius:8px;padding:30px 24px 24px 24px;text-align:left;box-shadow:0 24px 50px -18px rgba(0,0,0,.6);background-image:repeating-linear-gradient(transparent 0 33px,rgba(201,112,139,.16) 33px 34px);background-position:0 54px;animation:sheetin .6s cubic-bezier(.3,1.2,.4,1)}
+#ow h4{font:2.4rem "Allura",cursive;margin:0 0 8px;font-weight:400;line-height:1.1}
+#ow p{margin:0;font-size:1.3rem;font-style:italic;line-height:34px;white-space:pre-line}
+#ow .x{position:absolute;top:8px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.8);font-size:1.2rem;cursor:pointer}
+@keyframes sheetin{from{transform:translateY(60px) scale(.9);opacity:0}}
+/* love jar */
+.jarwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.jar{position:relative;width:170px;height:200px;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.jar .lidj{position:absolute;left:30px;right:30px;top:0;height:26px;border-radius:8px;background:linear-gradient(#f6c6d4,#e592ac)}
+.jar .glass{position:absolute;left:14px;right:14px;top:22px;bottom:0;border-radius:26px 26px 40px 40px;border:2px solid rgba(255,255,255,.95);background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(247,207,219,.45));box-shadow:0 0 26px 6px rgba(255,143,180,.55),inset 0 0 18px rgba(255,255,255,.9);animation:glow 2.6s ease-in-out infinite}
+.jar .glass i{position:absolute;font-style:normal;font-size:1.3rem;line-height:1}
+.jar.shake{animation:jshake .7s}
+@keyframes glow{50%{box-shadow:0 0 38px 12px rgba(255,143,180,.8),inset 0 0 18px rgba(255,255,255,.9)}}
+@keyframes jshake{15%{transform:rotate(-9deg) translateX(-4px)}30%{transform:rotate(8deg) translateX(4px)}45%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}80%{transform:rotate(-2deg)}}
+.jnote{min-height:150px;width:min(360px,100%);padding:20px 22px;border-radius:6px;background:#fffaf7;box-shadow:0 14px 28px -16px rgba(150,60,90,.6);font:1.9rem/1.2 "Allura",cursive;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-1.5deg)}
+.jnote.pop{animation:notepop .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes notepop{from{transform:scale(.5) rotate(8deg);opacity:0}}
+.pop-h{position:fixed;left:0;top:0;z-index:30;pointer-events:none;will-change:transform,opacity;line-height:1}
+/* dodging no */
+.choices .ghost{display:inline-block}
+.choices button.dodge{position:fixed;z-index:20;transition:left .28s cubic-bezier(.3,1.4,.5,1),top .28s cubic-bezier(.3,1.4,.5,1);touch-action:manipulation}
+@media (prefers-reduced-motion:reduce){.env:not(.open),.jar .glass,.jar.shake{animation:none}.polaroid.flip .pin{transition-duration:.01s}}
+.envs{padding-top:50px}
+/* v4: control center, quiz, mood, bucket, capsule, send, final */
+body.cc-on .page,body.cc-on .xpage{padding-top:88px}
+#cc{position:fixed;top:max(10px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(440px,calc(100% - 20px));z-index:100;border-radius:24px;border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 14px 34px -16px rgba(150,60,90,.65);color:var(--ink);overflow:hidden}
+#cc[hidden]{display:none}
+#cc .cc-bar{display:flex;align-items:center;gap:8px;padding:8px 10px}
+#cc .cc-disc{width:40px;height:40px;border-radius:50%;flex:none;overflow:hidden;border:2px solid #ffb3cf;background:#2a1a22}
+#cc .cc-disc img{width:100%;height:100%;object-fit:cover;display:block}
+body.playing #cc .cc-disc{animation:spin 8s linear infinite}
+#cc .cc-info{flex:1;min-width:0;text-align:left;line-height:1.15}
+#cc .cc-info b{display:block;font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cc .cc-info span{display:block;font-size:.95rem;font-style:italic;color:#9a5268;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cc .cc-btn{width:38px;height:38px;border-radius:50%;border:1px solid #e6b3c3;background:rgba(255,255,255,.8);font-size:1rem;cursor:pointer;padding:0;display:grid;place-items:center;flex:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#cc .cc-btn:active{background:var(--petal)}
+#cc .cc-main{background:var(--rose);color:#fff;border-color:var(--rose)}
+#cc .cc-body{max-height:0;overflow:hidden;transition:max-height .45s ease;padding:0 10px}
+#cc.open .cc-body{max-height:70svh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 10px 12px}
+#cc .tracks{width:100%;gap:8px}
+#cc .track{padding:8px 12px;border-radius:14px;font-size:1rem;gap:10px;width:100%;-webkit-tap-highlight-color:transparent}
+#cc .track b{font-size:1.15rem}
+#cc .track .ic{width:34px;height:34px}
+#cc .note{font-size:.95rem;margin:8px 0 0;max-width:none}
+/* quiz */
+.qlist{width:min(640px,100%);display:flex;flex-direction:column;gap:16px}
+.qcard{padding:18px 16px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;text-align:center}
+.qcard h3{margin:0 0 12px;font-size:1.5rem;line-height:1.25;font-weight:600}
+.qopts{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.qopt{border:1px solid #e6b3c3;border-radius:16px;background:#fff;padding:10px 14px;font-size:1.15rem;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background .2s,transform .2s}
+.qopt.on{background:var(--rose);color:#fff;border-color:var(--rose);transform:scale(1.02)}
+.qcard input,#noteBox{width:100%;border:1px solid #e6b3c3;border-radius:14px;background:rgba(255,255,255,.9);padding:10px 12px;font:italic 1.1rem "Cormorant Garamond",serif;color:var(--ink);-webkit-appearance:none;appearance:none}
+#noteBox{min-height:150px;resize:vertical;font-size:1.2rem;line-height:1.4}
+.qcard input:focus,#noteBox:focus{outline:2px solid var(--rose);outline-offset:1px}
+.qthanks{min-height:1.2em;margin:6px 0 0;font-style:italic;color:#9a5268;font-size:1.05rem}
+/* mood */
+.moods{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:min(560px,100%)}
+.mood{border:1px solid #e6b3c3;border-radius:22px;background:#fff;padding:10px 16px;font-size:1.2rem;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .2s,background .2s}
+.mood.on{background:var(--rose);color:#fff;border-color:var(--rose);transform:scale(1.05)}
+.moodmsg{width:min(520px,100%);min-height:120px;padding:20px 22px;border-radius:6px;background:#fffaf7;box-shadow:0 14px 28px -16px rgba(150,60,90,.6);font:1.75rem/1.25 "Allura",cursive;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-1deg)}
+.moodmsg.pop{animation:notepop .55s cubic-bezier(.3,1.5,.5,1)}
+/* bucket list */
+.bucket{list-style:none;margin:0;padding:0;width:min(560px,100%);display:flex;flex-direction:column;gap:8px}
+.bucket label{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:16px;border:1px solid #efbdcc;background:rgba(255,255,255,.8);font-size:1.2rem;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bucket input{position:absolute;opacity:0;width:1px;height:1px}
+.bucket .bx{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--rose);display:grid;place-items:center;color:#fff;font-size:.9rem;transition:background .2s}
+.bucket input:checked + .bx{background:var(--rose)}
+.bucket input:checked + .bx::after{content:"\2665"}
+.bucket input:checked ~ .bt{text-decoration:line-through;text-decoration-color:rgba(201,112,139,.7);opacity:.8}
+.bucket input:focus-visible + .bx{outline:3px solid var(--rose);outline-offset:2px}
+/* capsule */
+.capsule{width:min(420px,100%);border:2px solid #efbdcc;border-radius:22px;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 14px 30px -18px #9d536a;padding:20px 18px;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.capsule .cap-seal{display:block;font-size:3rem;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.capsule .cap-hint{display:block;font-style:italic;font-size:1.15rem;color:#9a5268}
+.capsule .cap-body{display:block;max-height:0;overflow:hidden;opacity:0;transition:max-height .8s ease,opacity .8s ease,margin .6s}
+.capsule .cap-body b{display:block;font:2.2rem "Allura",cursive;font-weight:400}
+.capsule .cap-body span{display:block;font-size:1.25rem;font-style:italic;line-height:1.45;white-space:pre-line}
+.capsule.open .cap-body{max-height:700px;opacity:1;margin-top:12px}
+.capsule.open .cap-seal{transform:scale(.7) rotate(-14deg)}
+.capsule.open .cap-hint{display:none}
+/* send + final */
+.sendcard{width:min(560px,100%);display:flex;flex-direction:column;gap:12px;padding:20px 16px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a}
+.sendmsg{min-height:1.3em;margin:0;font-style:italic;color:#9a5268}
+#final{justify-content:center}
+#final .fin{font-size:1.45rem;font-style:italic;line-height:1.5;max-width:460px;margin:0;white-space:pre-line}
+#final .big{font-size:3.6rem}
 </style>
 </head>
 <body>
@@ -193,6 +336,7 @@ body.playing .vinyl{animation:spin 8s linear infinite}
   <p class="hint">Tap the gift</p>
   <div class="slot later" data-slot="gift" data-rot="4"></div>
   <button class="next later" type="button">Read my letter</button>
+  <button class="back" type="button">‹ Back</button>
   <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
 <!-- 3. Letter pages are built by the script, then gift 2 -->
@@ -214,21 +358,104 @@ body.playing .vinyl{animation:spin 8s linear infinite}
   <p class="queen script later" id="queen"></p>
   <div class="slot later" data-slot="gift2" data-rot="-4"></div>
   <button class="next later" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
   <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
 <!-- 4. Songs -->
-<section id="songs" class="stage page" hidden>
-  <h2 class="script big">Two songs for you</h2>
-  <div class="vinyl"><div class="label"><img id="vinylImg" alt=""></div></div>
-  <div class="tracks" id="tracks"></div>
-  <p class="note" id="note" role="status"></p>
+
+<!-- 5. Our little world (counter, milestones, flip memories) -->
+<section id="us" class="stage page xpage" hidden>
+  <h2 class="script big">Our little world</h2>
+  <p class="counter-label" id="ctLabel"></p>
+  <div class="counter" id="counter" aria-live="off"></div>
+  <div class="miles" id="miles"></div>
+  <div class="xsec"><h3 class="script">Our memories</h3><p class="sub">Tap a polaroid to flip it, or tap the little magnifier to see it big.</p><div class="gallery" id="memGallery"></div></div>
+  <button class="next" type="button">Date coupons</button>
   <button class="back" type="button">‹ Back</button>
   <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
-
+<!-- 6. Coupons + love jar -->
+<section id="treats" class="stage page xpage" hidden>
+  <h2 class="script big">Date coupons</h2>
+  <p class="sub">Scratch with your finger to reveal your surprise.</p>
+  <div class="coupons" id="coupons"></div>
+  <div class="xsec"><h3 class="script">Reasons why I love you</h3><div class="jarwrap"><button class="jar" id="jar" type="button" aria-label="Tap the love jar for a reason I love you"><span class="lidj"></span><span class="glass" id="jarGlass"></span></button><div class="jnote" id="jnote" role="status" aria-live="polite"></div></div></div>
+  <button class="next" type="button">Open when...</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- 7. Open when envelopes -->
+<section id="openwhen" class="stage page xpage" hidden>
+  <h2 class="script big">Open when...</h2>
+  <p class="sub">Little letters for the days you need them.</p>
+  <div class="envs" id="envs"></div>
+  <button class="next" type="button">Our hearts &amp; memories</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<div id="ow" hidden role="dialog" aria-modal="true"><div class="sheet"><button class="x" type="button" aria-label="Close letter">✕</button><h4 class="script" id="owT"></h4><p id="owP"></p></div></div>
+<!-- 8. Quiz -->
+<section id="quiz" class="stage page xpage" hidden>
+  <h2 class="script big" id="quizTitle"></h2>
+  <p class="sub" id="quizSub"></p>
+  <div class="qlist" id="quizList"></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- 9. Mood booster -->
+<section id="mood" class="stage page xpage" hidden>
+  <h2 class="script big" id="moodTitle"></h2>
+  <p class="sub" id="moodSub"></p>
+  <div class="moods" id="moods"></div>
+  <div class="moodmsg" id="moodMsg" role="status" aria-live="polite"></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- 10. Bucket list + promise capsule -->
+<section id="future" class="stage page xpage" hidden>
+  <h2 class="script big" id="bucketTitle"></h2>
+  <p class="sub" id="bucketSub"></p>
+  <ul class="bucket" id="bucket"></ul>
+  <div class="xsec"><h3 class="script" id="capsuleTitle"></h3><button class="capsule" id="capsule" type="button" aria-expanded="false"></button></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- 11. Send answers -->
+<section id="send" class="stage page xpage" hidden>
+  <h2 class="script big" id="sendTitle"></h2>
+  <p class="sub" id="sendSub"></p>
+  <div class="sendcard">
+    <textarea id="noteBox" maxlength="3000" aria-label="Your note to me"></textarea>
+    <button class="next" id="sendBtn" type="button"></button>
+    <p class="sendmsg" id="sendMsg" role="status" aria-live="polite"></p>
+  </div>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- 12. To be continued -->
+<section id="final" class="stage page" hidden>
+  <h2 class="script big" id="finalTitle"></h2>
+  <p class="fin" id="finalText"></p>
+  <p class="script queen" id="finalSign"></p>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
 <section id="apology" class="stage page" hidden><article class="apology-page"><h2 class="script">Can we make this right? 💗</h2><p>I am truly sorry from the bottom of my heart. Seeing you upset hurts me deeply, especially knowing that my actions may have caused it. You are the most important person in my world, and I never want you to feel that your feelings do not matter.</p><p>I know loving you means more than saying beautiful things. It means listening to you, understanding how my actions affected you, and taking responsibility instead of making excuses. You deserved more care from me, and I am truly sorry that I hurt you. I may not always express myself well or make the right choices, but I want to learn from this and show you through my actions that I can do better.</p><p>You mean everything to me, and I care so much about your happiness and your smile. I don’t want to leave things unresolved while you’re hurting. Can we talk and try to figure this out together now, if you’re willing? I’ll listen and do my best to understand what you need.</p><section class="questions"><h3 class="script">Can you forgive me, at least for trying? 💗</h3><div class="choices"><button data-q="forgive" data-a="yes">Yes 💗</button><button data-q="forgive" data-a="no">No</button></div><p class="answer" id="forgiveAnswer" aria-live="polite"></p><h3 class="script">Do you still love me? 💞</h3><div class="choices"><button data-q="love" data-a="yes">Yes 💗</button><button data-q="love" data-a="no">No</button></div><p class="answer" id="loveAnswer" aria-live="polite"></p></section><img class="apology-photo" src="9.jpg" alt="A favorite memory of us together"><p>i love you to the moon and back marioumty. im truly sorry, hbibty.</p><p class="sign">With all my love 💗</p><div class="sweet-gift"><h3 class="script">A little something for you</h3><button id="chocoGift" type="button" aria-expanded="false"><span class="choco" aria-hidden="true">🍫</span><span>Open your chocolate gift</span></button><div id="ringReveal" hidden><svg class="ring-art" viewBox="0 0 220 180" role="img" aria-label="Cartoon silver ring with pink stones"><ellipse cx="110" cy="110" rx="37" ry="57" fill="none" stroke="#b9bcc5" stroke-width="13"/><ellipse cx="110" cy="110" rx="27" ry="48" fill="none" stroke="#fff" stroke-width="5"/><path d="M76 56Q110 43 144 56" fill="none" stroke="#aeb2bd" stroke-width="8" stroke-linecap="round"/><path d="M79 51L88 36M141 51L132 36" stroke="#aeb2bd" stroke-width="5"/><path d="M88 33l9-10 9 10-9 10zM112 33l9-10 9 10-9 10z" fill="#ff91b5" stroke="#dc638c" stroke-width="3"/><circle cx="97" cy="31" r="3" fill="#fff"/><circle cx="121" cy="31" r="3" fill="#fff"/></svg><p class="ring-caption">Here is your ring, baby 💍<br>I love you so much</p></div></div></article><button class="apology-back" type="button" id="backApology">‹ Back to your surprise</button></section>
 
-<button class="fab" id="fab" type="button" aria-label="Play or pause music" hidden>♪</button>
+<div id="cc" hidden>
+  <div class="cc-bar">
+    <button class="cc-btn" id="ccToggle" type="button" aria-expanded="false" aria-label="Show or hide the song list">♪</button>
+    <div class="cc-disc"><img id="ccImg" alt=""></div>
+    <div class="cc-info"><b id="ccTitle">Our songs</b><span id="ccArtist">tap play</span></div>
+    <button class="cc-btn" id="ccPrev" type="button" aria-label="Previous song">⏮</button>
+    <button class="cc-btn cc-main" id="ccPlay" type="button" aria-label="Play or pause">▶</button>
+    <button class="cc-btn" id="ccNext" type="button" aria-label="Next song">⏭</button>
+  </div>
+  <div class="cc-body"><div class="tracks" id="tracks"></div><p class="note" id="note" role="status"></p></div>
+</div>
 <div id="lb" hidden><div><img alt=""><p></p></div></div>
 <script>
 /* ============ EDIT THIS PART ============ */
@@ -258,10 +485,121 @@ const CONFIG = {
   ],
   // Put the mp3 files in the "music" folder with these names
   songs: [
-    { title: "Zay Manty", artist: "Amr Diab", file: "zay-manty.mp3" },
-    { title: "Nefsy Ahebk", artist: "Cairokee", file: "nefsy-ahebk.mp3" }
+    { title: "Zay Manty", artist: "Amr Diab", file: "songs/zay-manty.mp3" },
+    { title: "Nefsy Ahebk", artist: "Cairokee", file: "songs/nefsy-ahebk.mp3" },
+    { title: "Shoft Kalam", artist: "Marwan Pablo, Lege-Cy & Hatem Bas", file: "songs/Shoft kalam.mp3" },
+    { title: "Habibty Malak", artist: "Amr Diab", file: "songs/Habibty malak.mp3" },
+    { title: "Lovesong", artist: "Adele", file: "songs/Lovesong.mp3" }
   ],
   // Optional: your own sticker pictures (PNG with transparent background) in the "stickers" folder
+  // ---- v3 extras: edit all the new text here ----
+  anniversary: "2026-10-14T00:00:00",      // the counter ticks up from this moment
+  counterLabel: "Officially together for",
+  counterLabelFuture: "Counting down to our anniversary",
+  milestones: [
+    { icon: "💬", date: "2024-03-07", title: "The first time we talked", note: "I had no idea that one small hello would turn into my whole world." },
+    { icon: "💌", date: "2024-05-20", title: "The first time I said I love you", note: "My heart was shaking, and I have never been more sure of anything." },
+    { icon: "💍", date: "2026-10-14", title: "Our official anniversary", note: "The day we finally made it. My favorite day of my whole life." }
+  ],
+  // back-of-the-polaroid notes, used in the order the photos appear (they repeat if there are more photos)
+  polaroidNotes: [
+    "Your smile is my favorite thing in the whole world.",
+    "I remember this day and I still smile thinking about it.",
+    "Look how happy you make me, baby.",
+    "I would live this moment a thousand more times with you.",
+    "You are my favorite memory and my favorite future.",
+    "Every picture of you is my favorite picture."
+  ],
+  memories: ["Us", "Sweet day", "My girl", "Always", "Forever", "Mine"],
+  coupons: [
+    { icon: "🍝", reward: "1 Dinner Date of Your Choice", small: "Anywhere you want, my treat" },
+    { icon: "💌", reward: "Unlimited Sweet Words & Voice Notes", small: "Whenever you need them, no expiry date" },
+    { icon: "🎬", reward: "Movie Night: You Pick", small: "Snacks included, no complaining" },
+    { icon: "🌙", reward: "1 Late-Night Deep Talk & Dessert Date", small: "Your favorite dessert and my full attention" }
+  ],
+  scratchHint: "Scratch me ✨",
+  openWhen: [
+    { icon: "🥺", label: "Open when you miss me", title: "My love,", letter: "Close your eyes and think of our favorite memory together. Every minute apart is just a minute closer to the next time we get to laugh together.\n\nI miss you too, always. You are on my mind all day, and I love you to the moon and back.\n\nYours, Dodo" },
+    { icon: "🌧️", label: "Open when you're sad", title: "Baby,", letter: "I am so sorry you are sad. Take a deep breath, you are so much stronger than you know, and so loved.\n\nI am right here with you, even when I am far. Whatever it is, we will face it together, and you can tell me everything.\n\nYours, Dodo" },
+    { icon: "😊", label: "Open when you need a smile", title: "Hey beautiful,", letter: "Remember our silliest inside joke? Go on, think of it. I bet you are smiling already.\n\nYou have the most beautiful smile, and the world is brighter when you use it. Smile for me, please. Yes, that one.\n\nYours, Dodo" },
+    { icon: "😮‍💨", label: "Open when you're stressed or tired", title: "My hardworking girl,", letter: "Pause for a second. Drink some water, take a deep breath, and let your shoulders drop.\n\nYou do so much, and you do it so well, even on the days you feel like you do not. You do not have to be perfect for me. Rest is allowed.\n\nI am proud of you and I am cheering for you, always. Call me whenever you want, and I will listen to every word.\n\nYours, Dodo" },
+    { icon: "🌙", label: "Open when you can't sleep", title: "Hey sleepyhead,", letter: "It is late, and I bet your mind is running again. Let it rest, love. Whatever is worrying you can wait until tomorrow.\n\nThink of something happy: the first time we talked, our best laugh, the plans we are making. I am thinking of you too.\n\nGoodnight, my beautiful girl. Sweet dreams, and I love you.\n\nYours, Dodo" },
+    { icon: "🌟", label: "Open when you're proud of yourself", title: "My superstar,", letter: "Look at you! I knew you could do it. I never doubted you for a second.\n\nI want you to really feel this one. You worked hard, you kept going, and you earned every bit of this moment.\n\nI am so proud to be yours and to watch you shine. Go celebrate, and then tell me everything, I want every detail!\n\nYours, Dodo" },
+    { icon: "🌦️", label: "Open when we just had a silly fight", title: "My Mimi,", letter: "Before anything else: I love you. Nothing we argue about will ever change that.\n\nI know we both said things we did not mean. I am sorry for my part, and I would much rather be on the same team as you than be right.\n\nWhen you are ready, let us talk it through calmly, with kind words. We always find our way back to each other.\n\nYours, Dodo" },
+    { icon: "💗", label: "Open when you want to remember how much I adore you", title: "To the love of my life,", letter: "I adore the way you care about everyone, the way you laugh, and the way you make my ordinary days feel special.\n\nI adore your kindness, your strength, and even your little quirks. You are the best thing that ever happened to me.\n\nIf you ever forget, read this again: you are loved, deeply and completely, today and every day.\n\nYours forever, Dodo" }
+  ],
+  jarHint: "Tap the jar 💗",
+  reasons: [
+    "Your smile makes every bad day better.",
+    "You are kind to everyone, even when it is hard.",
+    "The way you laugh at your own jokes.",
+    "You make me want to be a better person.",
+    "You feel like home to me.",
+    "Our inside jokes that nobody else would ever understand.",
+    "You love so deeply and so honestly.",
+    "You are beautiful inside and out.",
+    "You believe in me when I do not believe in myself.",
+    "Every ordinary day is special with you.",
+    "Your voice is my favorite sound.",
+    "I can talk to you about anything for hours.",
+    "You work so hard, and I admire you for it.",
+    "Because you are simply you, Mimi."
+  ],
+  dodgeLines: ["Hehe, nope 🙈", "Too slow! 💨", "You can't catch me 😜", "Pretty please? 🥺", "Okay okay, I give up 💗"],
+  dodgeLimit: 6,   // after this many dodges the No button holds still so she can always answer honestly
+  // ---- v4: quiz, moods, bucket list, promise, sending answers, final page ----
+  // Where her answers are sent. Web3Forms: keep this URL and paste your free access key below (web3forms.com).
+  // Formspree: put your form URL here (https://formspree.io/f/xxxx) and leave accessKey empty.
+  responsesEndpoint: "https://api.web3forms.com/submit",
+  accessKey: "YOUR_WEB3FORMS_ACCESS_KEY",
+  emailSubject: "Mimi answered your website \u{1F497}",
+  quizTitle: "Our Hearts & Memories",
+  quizSub: "Pick what feels true, or write your own answer underneath.",
+  quizTextPlaceholder: "Or write it in your own words...",
+  quizThanks: "Thank you for sharing your heart \u{1F497}",
+  quiz: [
+    { q: "If we could relive one day together from the very beginning, which one would you choose?", options: ["March 7, 2024", "May 20, 2024", "October 14, 2026", "Every single day with you"] },
+    { q: "What small thing I do makes you feel the most loved and cared for?", options: ["The little messages and check-ins", "Listening to you properly", "Remembering the small details", "Making time for you, no matter what"] },
+    { q: "When you're having a hard or stressful day, what do you need from me most?", options: ["Kind words and reassurance", "Someone to just listen", "A reason to laugh", "Quiet company on the phone"] },
+    { q: "How would you describe what we have in one sentence?", options: ["My safest place", "Best friends who fell in love", "A beautiful forever in the making", "Something I can't put into words"] }
+  ],
+  moodTitle: "How is my pretty girl feeling right now?",
+  moodSub: "Tap how you feel, and read what I'd tell you.",
+  moodStart: "Pick a feeling above \u{1F497}",
+  moods: [
+    { emoji: "✨", label: "Happy", msg: "Seeing you happy is my favorite thing in the world. Keep shining, my love, and tell me all about it. I want to celebrate with you!" },
+    { emoji: "\u{1F4AD}", label: "Missing you", msg: "I miss you too, more than words can say. Every day apart is just a day closer to the next time we're together. You're always on my mind." },
+    { emoji: "\u{1F327}️", label: "Stressed / Tired", msg: "Breathe, my love. You've done enough for today. Drink some water, rest a little, and know that I'm so proud of you. Call me whenever you want." },
+    { emoji: "\u{1F60A}", label: "Need a laugh", msg: "Okay, remember our silliest inside joke and try not to smile. I dare you. You have the best laugh in the world, and I'd do anything to hear it." },
+    { emoji: "\u{1F90D}", label: "Overthinking", msg: "Hey, slow down. Whatever your mind is telling you, here's the truth: you are loved, you are enough, and I'm not going anywhere. Tell me what's on your mind." }
+  ],
+  bucketTitle: "Our Future Bucket List",
+  bucketSub: "Tick the dreams you want us to do together.",
+  bucket: [
+    "Plan a trip to somewhere neither of us has been",
+    "Stay up talking until the sun comes up",
+    "Cook a fancy dinner together (and survive it)",
+    "Build our dream playlist together",
+    "Watch the stars on a clear night",
+    "Write each other letters to open in five years",
+    "Try a brand new hobby together",
+    "Celebrate an anniversary somewhere special",
+    "Plan our dream home, room by room",
+    "Take a photo in every place we visit"
+  ],
+  capsuleTitle: "Our Promise Capsule",
+  capsuleHint: "A promise sealed just for you. Tap to open.",
+  promiseTitle: "My promise to you",
+  promise: "I promise to keep choosing you, every single day.\nTo listen when it's hard, to celebrate when it's good,\nand to keep growing into someone you're proud of.\nWherever life takes us, I'll be on your team.\n\nForever yours, Dodo",
+  sendTitle: "One last thing",
+  sendSub: "Send me your answers, and anything you want to tell me.",
+  sendPlaceholder: "Write me anything you'd like to say...",
+  sendButton: "Send my answers & note to Dodo \u{1F48C}",
+  sendSending: "Sending your answers...",
+  sendFail: "Hmm, that didn't go through. Check your connection and tap again \u{1F97A}",
+  finalTitle: "To be continued...",
+  finalText: "This is just the beginning.\nThis little website is a living project, and it will grow with us.\nWait for the next update, my pretty girl \u{1F497}",
+  finalSign: "Dodo",
   stickers: []   // e.g. ["stickers/1.png", "stickers/2.png", "stickers/3.png"]
 };
 /* ========================================= */
@@ -269,23 +607,49 @@ const CONFIG = {
 const $ = s => document.querySelector(s);
 const lb = $("#lb");
 
-function polaroid(src, cap, rot){
+function openLb(src, cap){
+  lb.querySelector("img").src = src;
+  lb.querySelector("p").textContent = cap || "";
+  lb.hidden = false;
+}
+function polaroid(src, cap, rot, note){
   const f = document.createElement("figure");
-  f.className = "polaroid tape";
+  f.className = "polaroid tape flip";
   f.style.setProperty("--r", rot + "deg");
+  f.tabIndex = 0;
+  f.setAttribute("role", "button");
+  f.setAttribute("aria-label", "Flip the photo to read the note");
+  const inner = document.createElement("div"), front = document.createElement("div"), back = document.createElement("div");
+  inner.className = "pin"; front.className = "pface pfront"; back.className = "pface pback";
   const img = new Image();
   img.alt = "";
   img.src = src;
   img.onerror = () => { img.remove(); f.classList.add("empty"); };
   const c = document.createElement("figcaption");
   c.textContent = cap || "";
-  f.append(img, c);
-  f.onclick = () => {
-    if (f.classList.contains("empty")) return;
-    lb.querySelector("img").src = src;
-    lb.querySelector("p").textContent = cap || "";
-    lb.hidden = false;
+  const z = document.createElement("button");
+  z.type = "button"; z.className = "zoom"; z.textContent = "⤢"; z.setAttribute("aria-label", "View full size");
+  z.onclick = e => { e.stopPropagation(); if (!f.classList.contains("empty")) openLb(src, cap); };
+  front.append(img, c, z);
+  const t = document.createElement("span"); t.textContent = note || "";
+  const sm = document.createElement("small"); sm.textContent = "tap to flip back";
+  back.append(t, sm);
+  inner.append(front, back);
+  f.append(inner);
+  const tilt = e => {
+    const r = f.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    f.classList.add("tilting");
+    f.style.setProperty("--tx", (x * 18).toFixed(1) + "deg");
+    f.style.setProperty("--ty", (-y * 18).toFixed(1) + "deg");
   };
+  const rest = () => { f.classList.remove("tilting"); f.style.setProperty("--tx", "0deg"); f.style.setProperty("--ty", "0deg"); };
+  f.addEventListener("pointermove", tilt);
+  f.addEventListener("pointerdown", tilt);
+  ["pointerleave", "pointerup", "pointercancel"].forEach(n => f.addEventListener(n, rest));
+  const flip = () => { if (f.classList.contains("empty")) return; f.classList.toggle("flipped"); };
+  f.onclick = flip;
+  f.onkeydown = e => { if (e.target === f && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); flip(); } };
   return f;
 }
 const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; };
@@ -307,13 +671,12 @@ lp.forEach((pg, i) => {
 });
 
 /* Fill photo slots */
-document.querySelectorAll(".slot").forEach(sl => {
+document.querySelectorAll(".slot").forEach((sl, si) => {
   const k = sl.dataset.slot;
-  sl.append(polaroid(CONFIG.photos[k] || k, "", sl.dataset.rot || 0));
+  sl.append(polaroid(CONFIG.photos[k] || k, "", sl.dataset.rot || 0, CONFIG.polaroidNotes[si % CONFIG.polaroidNotes.length]));
 });
 $("#lockImg").src = CONFIG.photos.lock;
 $("#lockImg").onerror = e => e.target.style.visibility = "hidden";
-$("#vinylImg").src = CONFIG.photos.songs;
 $("#queen").textContent = CONFIG.queenText;
 document.title = "For " + CONFIG.herName;
 $("#lockTitle").textContent = "For " + CONFIG.herName;
@@ -323,12 +686,73 @@ $("#hintText").textContent = CONFIG.pinHint;
 const pages = [...document.querySelectorAll(".page")];
 document.querySelector("#openApology").onclick = () => go(pages.indexOf(document.querySelector("#apology")));
 document.querySelector("#backApology").onclick = () => go(pages.indexOf(document.querySelector("#gift")));
-document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{let q=b.dataset.q,a=b.dataset.a,o=document.getElementById(q+"Answer");if(a==="yes"){o.textContent=q==="love"?"That means so much to me. 💗":"Thank you for hearing me out. 💗";return}let n=+(o.dataset.n||0),p=q==="love"?["Are you sure? 🥺","Can I still earn a little place in your heart?","I understand. Thank you for being honest."]:["Are you sure? 🥺","Maybe after one tiny chocolate? 🍫","I understand. Thank you for being honest."];o.textContent=p[Math.min(n,p.length-1)];o.dataset.n=Math.min(n+1,p.length-1)});
+/* Forgive / love questions: Yes pops heart confetti, No playfully dodges (then gives in) */
+document.querySelectorAll("[data-q]").forEach(b => {
+  const q = b.dataset.q, a = b.dataset.a, o = document.getElementById(q + "Answer");
+  const lim = CONFIG.dodgeLimit, lines = CONFIG.dodgeLines;
+  let dodges = 0, ghost = null, lastT = 0;
+  const others = () => [...document.querySelectorAll("[data-q]")].filter(x => x !== b);
+  function dodge(px, py){
+    if (dodges >= lim) return false;
+    dodges++;
+    const r = b.getBoundingClientRect(), w = r.width, h = r.height;
+    if (!ghost){
+      ghost = document.createElement("span"); ghost.className = "ghost";
+      ghost.style.width = w + "px"; ghost.style.height = h + "px";
+      b.before(ghost);
+      b.style.left = r.left + "px"; b.style.top = r.top + "px";
+      b.classList.add("dodge");
+      void b.offsetWidth;
+    }
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    const hits = (x, y) => others().some(o2 => { const t = o2.getBoundingClientRect(); return x < t.right + 12 && x + w > t.left - 12 && y < t.bottom + 12 && y + h > t.top - 12; });
+    let x, y, n = 0;
+    do {
+      x = 8 + Math.random() * Math.max(0, vw - w - 16);
+      y = 64 + Math.random() * Math.max(0, vh - h - 80);
+      n++;
+    } while (n < 30 && (Math.hypot(x + w / 2 - px, y + h / 2 - py) < 150 || hits(x, y)));
+    b.style.left = x + "px"; b.style.top = y + "px";
+    o.textContent = lines[Math.min(dodges - 1, lines.length - 1)];
+    if (dodges >= lim) setTimeout(() => {
+      b.classList.remove("dodge"); b.style.left = b.style.top = "";
+      if (ghost){ ghost.remove(); ghost = null; }
+      o.textContent = lines[lines.length - 1];
+    }, 1100);
+    return true;
+  }
+  if (a === "no"){
+    b.addEventListener("pointerdown", e => {
+      if (dodges < lim){ e.preventDefault(); dodge(e.clientX, e.clientY); }
+    });
+    b.addEventListener("touchstart", e => { if (dodges < lim) e.preventDefault(); }, { passive: false });
+    document.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse" || dodges >= lim || b.offsetParent === null) return;
+      const now = Date.now(); if (now - lastT < 320) return;
+      const r = b.getBoundingClientRect();
+      if (e.clientX > r.left - 28 && e.clientX < r.right + 28 && e.clientY > r.top - 28 && e.clientY < r.bottom + 28){ lastT = now; dodge(e.clientX, e.clientY); }
+    });
+  }
+  b.onclick = e => {
+    if (a === "yes"){
+      o.textContent = q === "love" ? "That means so much to me. \u{1F497}" : "Thank you for hearing me out. \u{1F497}";
+      ANS.apology[q] = "yes";
+      const [x, y] = centerOf(b); burst(x, y, 48, "big");
+      return;
+    }
+    if (dodges < lim && e.detail !== 0) return;
+    ANS.apology[q] = "no (dodged " + dodges + " times)";
+    let n = +(o.dataset.n || 0), p = q === "love" ? ["Are you sure? \u{1F97A}", "Can I still earn a little place in your heart?", "I understand. Thank you for being honest."] : ["Are you sure? \u{1F97A}", "Maybe after one tiny chocolate? \u{1F36B}", "I understand. Thank you for being honest."];
+    o.textContent = p[Math.min(n, p.length - 1)];
+    o.dataset.n = Math.min(n + 1, p.length - 1);
+  };
+});
 document.querySelector("#chocoGift").onclick = e => { const r=document.querySelector("#ringReveal"); r.hidden=false; e.currentTarget.setAttribute("aria-expanded","true"); e.currentTarget.querySelector("span:last-child").textContent="A little sweetness, just for you 💗"; };
 let idx = 0;
 function go(i){
   idx = Math.max(0, Math.min(i, pages.length - 1));
   pages.forEach((p, k) => p.hidden = k !== idx);
+  if (typeof onPage === "function") onPage(pages[idx]);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".next").forEach(b => b.onclick = () => go(idx + 1));
@@ -395,10 +819,22 @@ CONFIG.stickers.forEach((src, i) => {
   document.body.append(im);
 });
 
-/* Music */
+/* Music: floating Control Center */
 const audio = new Audio();
 audio.preload = "none";
-let cur = -1;
+audio.setAttribute("playsinline", "");
+let cur = -1, srcTry = 0;
+function songSources(s){
+  const f = s.file, enc = encodeURI(decodeURI(f));
+  return enc === f ? [f] : [f, enc];
+}
+function loadTrack(i, k){
+  const list = songSources(CONFIG.songs[i]);
+  if (k >= list.length) return false;
+  srcTry = k;
+  audio.src = list[k];
+  return true;
+}
 function renderSongs(){
   const t = $("#tracks"); t.innerHTML = "";
   CONFIG.songs.forEach((s, i) => {
@@ -406,36 +842,358 @@ function renderSongs(){
     b.type = "button";
     b.innerHTML = `<span class="ic">${i === cur && !audio.paused ? "❚❚" : "▶"}</span><span><b></b><span></span></span>`;
     b.querySelector("b").textContent = s.title;
-    b.querySelector("span:last-child span").textContent = s.artist;
+    b.querySelector("span:last-child span").textContent = s.artist || "";
     b.onclick = () => playTrack(i);
     t.append(b);
   });
+  $("#ccTitle").textContent = cur >= 0 ? CONFIG.songs[cur].title : "Our songs";
+  $("#ccArtist").textContent = cur >= 0 ? (CONFIG.songs[cur].artist || "now playing") : "tap play";
+  $("#ccPlay").textContent = audio.paused ? "▶" : "❚❚";
 }
-function playTrack(i){
-  if (i === cur && !audio.paused){ audio.pause(); return; }
-  if (i !== cur){ cur = i; audio.src = CONFIG.songs[i].file; }
+function playTrack(i, force){
+  if (!force && i === cur && !audio.paused){ audio.pause(); return; }
+  if (i !== cur || force){ cur = i; loadTrack(i, 0); }
   $("#note").textContent = "";
-  audio.play().catch(() => {});
+  const p = audio.play();
+  if (p && p.catch) p.catch(() => {});
 }
 audio.onplay = audio.onpause = () => {
   document.body.classList.toggle("playing", !audio.paused);
-  $("#fab").textContent = audio.paused ? "♪" : "❚❚";
   renderSongs();
 };
-audio.onended = () => playTrack((cur + 1) % CONFIG.songs.length);
+audio.onended = () => playTrack((cur + 1) % CONFIG.songs.length, true);
 audio.onerror = () => {
-  $("#note").textContent = "This audio could not be played in this browser. Try opening the page in a modern browser.";
+  if (cur >= 0 && loadTrack(cur, srcTry + 1)){ const p = audio.play(); if (p && p.catch) p.catch(() => {}); return; }
+  $("#note").textContent = "I couldn't find " + (cur >= 0 ? CONFIG.songs[cur].file : "this song") + ". Check that it is uploaded in the songs folder with exactly that name.";
 };
-$("#fab").onclick = () => { if (cur < 0) playTrack(0); else if (audio.paused) audio.play().catch(() => {}); else audio.pause(); };
+$("#ccPlay").onclick = () => { if (cur < 0) playTrack(0, true); else if (audio.paused){ const p = audio.play(); if (p && p.catch) p.catch(() => {}); } else audio.pause(); };
+$("#ccNext").onclick = () => playTrack(((cur < 0 ? -1 : cur) + 1) % CONFIG.songs.length, true);
+$("#ccPrev").onclick = () => playTrack(((cur < 0 ? 0 : cur) - 1 + CONFIG.songs.length) % CONFIG.songs.length, true);
+$("#ccToggle").onclick = () => { const o = $("#cc").classList.toggle("open"); $("#ccToggle").setAttribute("aria-expanded", o); };
+$("#ccImg").src = CONFIG.photos.songs;
+$("#ccImg").onerror = e => e.target.style.visibility = "hidden";
 renderSongs();
-
 function unlock(){
   go(1); fx();
-  $("#fab").hidden = false;
-  playTrack(0);
+  $("#cc").hidden = false;
+  document.body.classList.add("cc-on");
+  if (cur < 0) playTrack(0, true);
   document.querySelector("#gift .scene").focus();
 }
 
+/* ============ v3 extras ============ */
+const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* heart burst: mode "big" = confetti, "up" = floating hearts */
+function burst(x, y, n, mode){
+  if (reduceMotion) n = Math.min(n, 6);
+  const hs = ["\u{1F497}", "\u{1F496}", "\u{1F495}", "❤️", "\u{1F338}", "✨", "\u{1F49E}"];
+  for (let i = 0; i < n; i++){
+    const el = document.createElement("span");
+    el.className = "pop-h";
+    el.textContent = hs[Math.floor(Math.random() * hs.length)];
+    el.style.fontSize = (14 + Math.random() * (mode === "big" ? 24 : 14)) + "px";
+    document.body.append(el);
+    if (!el.animate){ el.remove(); continue; }
+    let dx, dy, end;
+    if (mode === "up"){ dx = (Math.random() - .5) * 140; dy = -(110 + Math.random() * 190); end = dy - 40; }
+    else {
+      const a = Math.random() * Math.PI * 2, d = (mode === "big" ? 110 : 60) + Math.random() * (mode === "big" ? 230 : 80);
+      dx = Math.cos(a) * d; dy = Math.sin(a) * d - (mode === "big" ? 90 : 30); end = dy + 90;
+    }
+    const an = el.animate([
+      { transform: `translate(${x}px,${y}px) scale(.3)`, opacity: 1 },
+      { transform: `translate(${x + dx}px,${y + dy}px) scale(1.1)`, opacity: 1, offset: .6 },
+      { transform: `translate(${x + dx * 1.1}px,${y + end}px) scale(.8)`, opacity: 0 }
+    ], { duration: 900 + Math.random() * 800, easing: "cubic-bezier(.2,.8,.3,1)", delay: Math.random() * 120, fill: "backwards" });
+    an.onfinish = () => el.remove();
+  }
+}
+const centerOf = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+/* Live counter + milestones */
+(function(){
+  const start = new Date(CONFIG.anniversary), box = $("#counter");
+  const units = ["days", "hours", "minutes", "seconds"], cells = {};
+  units.forEach(u => { const d = mk("div"), b = mk("b", "", "0"), s = mk("span", "", u); d.append(b, s); box.append(d); cells[u] = b; });
+  function tick(){
+    let ms = Date.now() - start.getTime();
+    const fut = ms < 0; ms = Math.abs(ms);
+    const s = Math.floor(ms / 1000);
+    cells.days.textContent = Math.floor(s / 86400);
+    cells.hours.textContent = Math.floor(s % 86400 / 3600);
+    cells.minutes.textContent = Math.floor(s % 3600 / 60);
+    cells.seconds.textContent = s % 60;
+    $("#ctLabel").textContent = fut ? CONFIG.counterLabelFuture : CONFIG.counterLabel;
+  }
+  tick(); setInterval(tick, 1000);
+  const fmt = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric" });
+  CONFIG.milestones.forEach(m => {
+    const d = new Date(m.date + "T00:00:00");
+    const days = Math.round((Date.now() - d.getTime()) / 86400000);
+    const rel = days > 0 ? days + " days ago" : days < 0 ? "in " + (-days) + " days" : "today";
+    const c = mk("button", "mile");
+    c.type = "button";
+    c.append(mk("span", "ic", m.icon), mk("span", "dt script", fmt.format(d)), mk("span", "tt", m.title), mk("span", "more", m.note + " (" + rel + ")"));
+    c.setAttribute("aria-expanded", "false");
+    c.onclick = () => {
+      const on = c.classList.toggle("on");
+      c.setAttribute("aria-expanded", on);
+      if (on){ const [x, y] = centerOf(c); burst(x, y, 10, "up"); }
+    };
+    $("#miles").append(c);
+  });
+})();
+
+/* Memory polaroids */
+(function(){
+  const srcs = [CONFIG.photos.gift, CONFIG.photos.gift2].concat(CONFIG.letterPages.map(p => p.photo)).filter(Boolean);
+  srcs.forEach((s, i) => {
+    $("#memGallery").append(polaroid(s, CONFIG.memories[i % CONFIG.memories.length] || "", (i % 2 ? 3 : -3), CONFIG.polaroidNotes[(i + 2) % CONFIG.polaroidNotes.length]));
+  });
+})();
+
+/* Scratch-off coupons */
+function initScratch(cv){
+  if (cv.dataset.ready) return;
+  const r = cv.getBoundingClientRect();
+  if (!r.width) return;
+  cv.dataset.ready = "1";
+  const dpr = Math.min(window.devicePixelRatio || 1, 2), w = r.width, h = r.height;
+  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  const ctx = cv.getContext("2d");
+  ctx.scale(dpr, dpr);
+  const g = ctx.createLinearGradient(0, 0, w, h);
+  g.addColorStop(0, "#f9d6e3"); g.addColorStop(.5, "#e5daf6"); g.addColorStop(1, "#cde8f8");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+  const cols = ["#ffffff", "#fff6c4", "#ffd3e8", "#d3ebff", "#e7d6ff"];
+  for (let i = 0; i < 170; i++){
+    ctx.fillStyle = cols[i % cols.length];
+    ctx.globalAlpha = .5 + Math.random() * .5;
+    ctx.beginPath(); ctx.arc(Math.random() * w, Math.random() * h, .6 + Math.random() * 1.9, 0, 6.3); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = "#9a5268"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.font = '38px "Allura", cursive';
+  ctx.fillText(CONFIG.scratchHint, w / 2, h / 2);
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.lineWidth = 36;
+  let down = false, last = null, moves = 0, finished = false;
+  const pt = e => { const b = cv.getBoundingClientRect(); return [(e.clientX - b.left) * (w / b.width), (e.clientY - b.top) * (h / b.height)]; };
+  const seg = (a, b) => { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0] + .01, b[1] + .01); ctx.stroke(); };
+  function check(){
+    if (finished) return;
+    const d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+    let clear = 0, tot = 0;
+    for (let i = 3; i < d.length; i += 28){ tot++; if (d[i] < 128) clear++; }
+    if (clear / tot > .5){
+      finished = true;
+      cv.parentNode.classList.add("done");
+      const [x, y] = centerOf(cv.parentNode); burst(x, y, 22, "big");
+    }
+  }
+  cv.addEventListener("pointerdown", e => {
+    down = true; last = pt(e);
+    if (cv.setPointerCapture) try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    seg(last, last); e.preventDefault();
+  });
+  cv.addEventListener("pointermove", e => {
+    if (!down) return;
+    const p = pt(e); seg(last, p); last = p;
+    if (++moves % 14 === 0) check();
+    e.preventDefault();
+  });
+  ["pointerup", "pointercancel"].forEach(n => cv.addEventListener(n, () => { if (down){ down = false; check(); } }));
+  ["touchstart", "touchmove"].forEach(n => cv.addEventListener(n, e => e.preventDefault(), { passive: false }));
+  cv.addEventListener("contextmenu", e => e.preventDefault());
+}
+CONFIG.coupons.forEach(c => {
+  const card = mk("div", "coupon"), rw = mk("div", "cp-reward");
+  rw.append(mk("span", "ic", c.icon), mk("b", "", c.reward), mk("span", "", c.small || ""));
+  const cv = document.createElement("canvas");
+  cv.setAttribute("aria-label", "Scratch to reveal: " + c.reward);
+  card.append(rw, cv);
+  $("#coupons").append(card);
+});
+
+/* Open When envelopes */
+(function(){
+  const ow = $("#ow");
+  const close = () => { ow.hidden = true; };
+  ow.onclick = e => { if (e.target === ow || e.target.classList.contains("x")) close(); };
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  const show = m => { $("#owT").textContent = m.title || ""; $("#owP").textContent = m.letter; ow.hidden = false; ow.querySelector(".sheet").scrollTop = 0; };
+  CONFIG.openWhen.forEach(m => {
+    const e = mk("button", "env");
+    e.type = "button";
+    e.append(mk("div", "e-back"), mk("div", "e-paper", "♡ for you ♡"), mk("div", "e-front"), mk("div", "e-flap"), mk("div", "e-seal", "\u{1F497}"), mk("div", "e-label", m.label));
+    e.onclick = () => {
+      if (e.classList.contains("open")){ show(m); return; }
+      e.classList.add("open");
+      const [x, y] = centerOf(e); burst(x, y, 8, "up");
+      setTimeout(() => show(m), reduceMotion ? 50 : 900);
+    };
+    $("#envs").append(e);
+  });
+})();
+
+/* Love jar */
+(function(){
+  const jar = $("#jar"), note = $("#jnote"), glass = $("#jarGlass");
+  for (let i = 0; i < 16; i++){
+    const h = document.createElement("i");
+    h.textContent = ["\u{1F497}", "\u{1F496}", "\u{1F495}", "\u{1F49E}"][i % 4];
+    h.style.left = (6 + Math.random() * 72) + "%";
+    h.style.top = (28 + Math.random() * 62) + "%";
+    h.style.transform = "rotate(" + Math.round(Math.random() * 60 - 30) + "deg)";
+    glass.append(h);
+  }
+  note.textContent = CONFIG.jarHint;
+  let queue = [], lastR = "";
+  const next = () => {
+    if (!queue.length){
+      queue = CONFIG.reasons.slice();
+      for (let i = queue.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; }
+      if (queue.length > 1 && queue[queue.length - 1] === lastR) queue.unshift(queue.pop());
+    }
+    return lastR = queue.pop();
+  };
+  jar.onclick = () => {
+    jar.classList.remove("shake"); void jar.offsetWidth; jar.classList.add("shake");
+    setTimeout(() => {
+      note.textContent = next();
+      note.classList.remove("pop"); void note.offsetWidth; note.classList.add("pop");
+      const [x, y] = centerOf(jar); burst(x, y - 30, 14, "up");
+    }, reduceMotion ? 0 : 450);
+  };
+})();
+
+/* Hook: set up canvases once their page is visible */
+function onPage(pg){
+  if (pg && pg.id === "treats") setTimeout(() => document.querySelectorAll(".coupon canvas").forEach(initScratch), 60);
+}
+/* ============ v4: quiz, mood, bucket, capsule, send, final ============ */
+const ANS = {
+  quiz: CONFIG.quiz.map(it => ({ question: it.q, choice: "", text: "" })),
+  mood: "", bucket: [], promiseOpened: false, apology: {}, note: ""
+};
+const setText = (id, t) => { $(id).textContent = t; };
+setText("#quizTitle", CONFIG.quizTitle); setText("#quizSub", CONFIG.quizSub);
+setText("#moodTitle", CONFIG.moodTitle); setText("#moodSub", CONFIG.moodSub);
+setText("#bucketTitle", CONFIG.bucketTitle); setText("#bucketSub", CONFIG.bucketSub);
+setText("#capsuleTitle", CONFIG.capsuleTitle);
+setText("#sendTitle", CONFIG.sendTitle); setText("#sendSub", CONFIG.sendSub);
+setText("#sendBtn", CONFIG.sendButton);
+$("#noteBox").placeholder = CONFIG.sendPlaceholder;
+setText("#finalTitle", CONFIG.finalTitle); setText("#finalText", CONFIG.finalText); setText("#finalSign", CONFIG.finalSign);
+
+/* Quiz */
+CONFIG.quiz.forEach((it, qi) => {
+  const card = mk("div", "qcard"), opts = mk("div", "qopts"), thanks = mk("p", "qthanks");
+  card.append(mk("h3", "", it.q));
+  it.options.forEach(o => {
+    const b = mk("button", "qopt", o);
+    b.type = "button";
+    b.onclick = () => {
+      [...opts.children].forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      ANS.quiz[qi].choice = o;
+      thanks.textContent = CONFIG.quizThanks;
+      const [x, y] = centerOf(b); burst(x, y, 8, "up");
+    };
+    opts.append(b);
+  });
+  const inp = document.createElement("input");
+  inp.type = "text"; inp.maxLength = 400; inp.placeholder = CONFIG.quizTextPlaceholder;
+  inp.setAttribute("aria-label", it.q);
+  inp.oninput = () => { ANS.quiz[qi].text = inp.value; };
+  card.append(opts, inp, thanks);
+  $("#quizList").append(card);
+});
+
+/* Mood booster */
+(function(){
+  const msg = $("#moodMsg");
+  msg.textContent = CONFIG.moodStart;
+  CONFIG.moods.forEach(m => {
+    const b = mk("button", "mood", m.emoji + " " + m.label);
+    b.type = "button";
+    b.onclick = () => {
+      document.querySelectorAll(".mood").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      ANS.mood = m.label;
+      msg.textContent = m.msg;
+      msg.classList.remove("pop"); void msg.offsetWidth; msg.classList.add("pop");
+      const [x, y] = centerOf(b); burst(x, y, 12, "up");
+    };
+    $("#moods").append(b);
+  });
+})();
+
+/* Bucket list */
+CONFIG.bucket.forEach(t => {
+  const li = document.createElement("li"), lab = document.createElement("label");
+  const cb = document.createElement("input"); cb.type = "checkbox";
+  cb.onchange = () => {
+    ANS.bucket = [...document.querySelectorAll("#bucket input:checked")].map(i => i.parentNode.querySelector(".bt").textContent);
+    if (cb.checked){ const [x, y] = centerOf(lab); burst(x, y, 6, "up"); }
+  };
+  lab.append(cb, mk("span", "bx"), mk("span", "bt", t));
+  li.append(lab);
+  $("#bucket").append(li);
+});
+
+/* Promise capsule */
+(function(){
+  const c = $("#capsule");
+  const body = mk("span", "cap-body");
+  body.append(mk("b", "", CONFIG.promiseTitle), mk("span", "", CONFIG.promise));
+  c.append(mk("span", "cap-seal", "\u{1F48C}"), mk("span", "cap-hint", CONFIG.capsuleHint), body);
+  c.onclick = () => {
+    const o = c.classList.toggle("open");
+    c.setAttribute("aria-expanded", o);
+    if (o){ ANS.promiseOpened = true; const [x, y] = centerOf(c); burst(x, y - 20, 18, "big"); }
+  };
+})();
+
+/* Send answers quietly in the background */
+(function(){
+  const btn = $("#sendBtn"), msg = $("#sendMsg");
+  function summary(){
+    const L = [];
+    ANS.quiz.forEach((a, i) => L.push((i + 1) + ". " + a.question + "\n   Choice: " + (a.choice || "(none)") + (a.text ? "\n   Her words: " + a.text : "")));
+    L.push("", "Mood: " + (ANS.mood || "(none)"));
+    L.push("Bucket list ticked: " + (ANS.bucket.length ? "\n - " + ANS.bucket.join("\n - ") : "(none)"));
+    L.push("Opened the promise capsule: " + (ANS.promiseOpened ? "yes" : "no"));
+    L.push("Apology answers: forgive = " + (ANS.apology.forgive || "(not answered)") + ", still love = " + (ANS.apology.love || "(not answered)"));
+    L.push("", "Her note to you:", ANS.note || "(none)");
+    return L.join("\n");
+  }
+  const finish = () => {
+    burst(innerWidth / 2, innerHeight / 2, 50, "big");
+    setTimeout(() => go(pages.indexOf($("#final"))), reduceMotion ? 0 : 700);
+  };
+  btn.onclick = async () => {
+    ANS.note = $("#noteBox").value.trim();
+    const ep = CONFIG.responsesEndpoint || "", key = CONFIG.accessKey || "";
+    const unset = !ep || /YOUR_/.test(ep) || (/web3forms/i.test(ep) && (!key || /YOUR_/.test(key)));
+    if (unset){ console.warn("responsesEndpoint / accessKey not set in CONFIG: answers were not sent."); finish(); return; }
+    btn.disabled = true; msg.textContent = CONFIG.sendSending;
+    const data = { subject: CONFIG.emailSubject, from_name: "Your website", message: summary(), mood: ANS.mood || "", note: ANS.note, bucket_list: ANS.bucket.join("; "), apology_forgive: ANS.apology.forgive || "", apology_love: ANS.apology.love || "", botcheck: "" };
+    ANS.quiz.forEach((a, i) => { data["quiz_" + (i + 1)] = (a.choice || "") + (a.text ? " | " + a.text : ""); });
+    if (key) data.access_key = key;
+    try {
+      const res = await fetch(ep, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) });
+      if (!res.ok) throw new Error("http " + res.status);
+      msg.textContent = "";
+      btn.disabled = false;
+      finish();
+    } catch (e){
+      btn.disabled = false;
+      msg.textContent = CONFIG.sendFail;
+    }
+  };
+})();
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 </script>
