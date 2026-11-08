@@ -1198,6 +1198,24 @@ lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 </script>
 </body>
+<script>
+  window.addEventListener("load", function () {
+    if (!sessionStorage.getItem("visit_notified")) {
+      sessionStorage.setItem("visit_notified", "true");
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "c25986ce-ce5e-4687-8b1d-31a6a431b46a",
+          subject: "👀 Someone just opened your website!",
+          Time: new Date().toLocaleString("en-EG", { timeZone: "Africa/Cairo" }),
+          Device: navigator.userAgent,
+          Screen: window.screen.width + "x" + window.screen.height
+        })
+      });
+    }
+  });
+</script>
 </html>
 
 
