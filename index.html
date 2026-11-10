@@ -444,6 +444,86 @@ body.museum #cc .note{color:#D8B8BE}
 .mz-plaque,.mz-crown .mz-plaque{border:1px solid rgba(243,229,171,.16);outline:0;border-radius:20px;background:rgba(74,13,29,.36);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 22px 50px -26px rgba(0,0,0,.85),inset 0 1px 0 rgba(243,229,171,.1)}
 .mz-note{border-top-style:solid;border-top-color:rgba(243,229,171,.14)}
 .mz-exhibit .mz-nav .back,.mz-exhibit .mz-nav .mz-btn:not(.exit){display:none}
+/* v7: 11/11 • 11:11 Special Edition - dreamy theme, shimmer wave, top pill, announcement modal */
+.pop-h{z-index:250}
+/* the pastel pink / baby blue / starlight backdrop fades in over the pink world (the museum's burgundy room still covers it) */
+#elBg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1.8s cubic-bezier(.4,0,.2,1);background:linear-gradient(160deg,#fff4f8 0%,#fde6f0 32%,#e9f3ff 68%,#fff6e2 100%)}
+#elBg::before{content:"";position:absolute;inset:-12%;background:radial-gradient(ellipse 55% 38% at 86% 10%,rgba(255,232,170,.85),transparent 70%),radial-gradient(ellipse 60% 42% at 10% 16%,rgba(184,222,255,.9),transparent 70%),radial-gradient(ellipse 75% 46% at 48% 104%,rgba(255,184,212,.9),transparent 70%),radial-gradient(ellipse 46% 34% at 94% 66%,rgba(196,224,255,.75),transparent 70%),radial-gradient(ellipse 44% 30% at 6% 72%,rgba(255,226,170,.6),transparent 70%);animation:elDrift 26s ease-in-out infinite alternate;animation-play-state:paused}
+body.e11 #elBg{opacity:1}
+body.e11 #elBg::before{animation-play-state:running}
+@keyframes elDrift{0%{transform:translate(-2%,-1.5%) scale(1)}50%{transform:translate(2%,1%) scale(1.06)}100%{transform:translate(-1%,2.5%) scale(1.02)}}
+.el-star{position:absolute;width:var(--d,10px);height:var(--d,10px);background:linear-gradient(135deg,#fffbe6,#f6c658);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);opacity:.12;animation:elTwinkle var(--t,3.5s) ease-in-out infinite;animation-play-state:paused}
+body.e11 .el-star{animation-play-state:running}
+@keyframes elTwinkle{50%{opacity:.95;transform:scale(1.45) rotate(20deg)}}
+#elFx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1.6s ease .3s}
+body.e11 #elFx{opacity:1}
+body.museum #elFx{opacity:0}
+#elFx i{position:absolute;bottom:-60px;font-style:normal;line-height:1;font-size:calc(15px * var(--s,1));opacity:var(--o,.7);animation:elRise linear infinite;animation-play-state:paused;will-change:transform}
+body.e11 #elFx i{animation-play-state:running}
+@keyframes elRise{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(var(--dx,20px),-58vh) rotate(var(--r,12deg))}100%{transform:translate(calc(var(--dx,20px) * -.4),-118vh) rotate(calc(var(--r,12deg) * -1))}}
+/* the shimmer wave that rolls out from the middle of the screen right after the PIN */
+#elWave{position:fixed;inset:0;z-index:190;pointer-events:none;overflow:hidden}
+#elWave[hidden]{display:none}
+#elWave i{position:absolute;left:50%;top:50%;width:60vmax;height:60vmax;margin:-30vmax 0 0 -30vmax;border-radius:50%;will-change:transform,opacity;background:radial-gradient(circle,rgba(255,255,255,0) 34%,rgba(255,244,205,.9) 44%,rgba(255,196,224,.75) 50%,rgba(176,218,255,.65) 56%,rgba(255,255,255,0) 66%);transform:scale(0);animation:elWave 1.9s cubic-bezier(.22,.7,.25,1) forwards}
+#elWave i + i{animation-delay:.3s}
+#elWave b{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,251,238,.95),rgba(255,214,232,.55) 38%,rgba(190,225,255,.28) 68%,transparent 100%);opacity:0;animation:elFlash 1.7s ease-out forwards}
+@keyframes elWave{0%{transform:scale(0);opacity:1}65%{opacity:1}100%{transform:scale(5.2);opacity:0}}
+@keyframes elFlash{0%{opacity:0}16%{opacity:.9}100%{opacity:0}}
+/* floating pill under the music player: re-opens the 11/11 letter */
+#elPill{position:fixed;left:50%;top:calc(max(10px,env(safe-area-inset-top)) + 66px);transform:translateX(-50%);z-index:95;width:max-content;max-width:calc(100% - 20px);padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.92);background:linear-gradient(120deg,rgba(255,224,238,.82),rgba(255,243,206,.82) 50%,rgba(212,233,255,.82));-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);color:#6a3348;font:600 clamp(.8rem,3.45vw,.98rem)/1.25 "Cormorant Garamond",serif;font-variant-numeric:lining-nums;letter-spacing:.02em;text-align:center;cursor:pointer;overflow:hidden;box-shadow:0 8px 22px -10px rgba(170,110,160,.75),0 0 20px rgba(255,220,150,.5);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:border-color 1.2s,color 1.2s,box-shadow 1.2s}
+#elPill[hidden]{display:none}
+#elPill:not([hidden]){animation:elPillIn .9s cubic-bezier(.2,.9,.3,1.2) 1.1s backwards}
+@keyframes elPillIn{from{opacity:0;transform:translateX(-50%) translateY(-16px) scale(.9)}}
+#elPill::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:36%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:shimmer 4.2s ease-in-out infinite;pointer-events:none}
+#elPill:active{transform:translateX(-50%) scale(.96)}
+body.museum #elPill{background:rgba(45,8,18,.66);border-color:rgba(212,175,55,.6);color:#F3E5AB;box-shadow:0 8px 22px -10px rgba(0,0,0,.8),0 0 18px rgba(212,175,55,.3)}
+body.e11 .page,body.e11 .xpage{padding-top:128px}
+/* the announcement modal */
+#el{position:fixed;inset:0;z-index:200;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 38%,rgba(255,244,250,.84),rgba(222,236,255,.82) 55%,rgba(255,236,206,.8) 100%);touch-action:none}
+#el[hidden]{display:none}
+#el:not([hidden]){animation:lbFade .5s ease}
+#el.closing{animation:elOut .48s ease forwards}
+@keyframes elOut{to{opacity:0}}
+.el-card{position:relative;width:min(560px,100%);max-height:100%;display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 18px 18px;border-radius:30px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(160deg,rgba(255,255,255,.74),rgba(255,240,247,.6) 50%,rgba(232,244,255,.64));-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 30px 80px -24px rgba(140,90,160,.6),0 0 0 1px rgba(255,236,190,.5),inset 0 1px 0 #fff;color:var(--ink);outline:0;animation:elCardIn .95s cubic-bezier(.2,.9,.25,1.12) backwards}
+@keyframes elCardIn{from{opacity:0;transform:translateY(42px) scale(.86);filter:blur(10px)}}
+#el.closing .el-card{animation:elCardOut .48s cubic-bezier(.5,0,.8,.4) forwards}
+@keyframes elCardOut{to{opacity:0;transform:translateY(-18px) scale(.94);filter:blur(8px)}}
+.el-card::before{content:"";position:absolute;inset:-12px;z-index:-1;border-radius:42px;background:linear-gradient(120deg,#ffc2dc,#ffe6a8 50%,#bfe0ff);filter:blur(24px);opacity:.55;animation:elHalo 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes elHalo{50%{opacity:.85}}
+.el-badge{flex:none;margin:0;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.95);background:linear-gradient(120deg,rgba(255,236,179,.95),rgba(255,214,232,.95) 50%,rgba(200,228,255,.95));color:#7a3d55;font:600 clamp(.6rem,2.75vw,.78rem)/1.4 "Cormorant Garamond",serif;font-variant-numeric:lining-nums;letter-spacing:.08em;text-align:center;text-wrap:balance;box-shadow:0 6px 16px -8px rgba(200,120,160,.7)}
+.el-clock{flex:none;display:inline-flex;align-items:baseline;justify-content:center;margin:2px 0 0;font:700 clamp(3.4rem,18vw,5.6rem)/1.05 "Playfair Display","Cormorant Garamond",serif;font-variant-numeric:lining-nums tabular-nums;filter:drop-shadow(0 0 14px rgba(255,205,130,.75)) drop-shadow(0 4px 10px rgba(201,112,139,.35))}
+.el-clock span,.el-clock i{display:inline-block;font-style:normal;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.el-clock span{min-width:1.16em;text-align:center}
+#elHH{background-image:linear-gradient(120deg,#c9708b,#d9a43c)}
+.el-clock i{padding:0 .04em;background-image:linear-gradient(#d9a43c,#efc25e)}
+#elMM{background-image:linear-gradient(120deg,#e3ae45,#7fb4e6)}
+.el-clock.ticking i{animation:elBlink .5s steps(2,jump-none) infinite}
+@keyframes elBlink{50%{opacity:.25}}
+.el-clock span.tick{animation:elTick .17s ease-out}
+@keyframes elTick{from{transform:translateY(-.12em);opacity:.5}}
+.el-sub{flex:none;margin:0;font:italic 500 1.16rem/1.35 "Cormorant Garamond",serif;text-align:center;text-wrap:balance;opacity:0;transform:translateY(8px);transition:opacity .9s ease .25s,transform .9s ease .25s}
+.el-clock.done ~ .el-sub{opacity:1;transform:none}
+.el-letter{position:relative;flex:1 1 auto;min-height:0;width:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding:18px 18px 34px;border-radius:18px;border:1px solid rgba(233,181,196,.7);background:linear-gradient(180deg,rgba(255,253,248,.93),rgba(255,246,249,.9));box-shadow:inset 0 0 0 5px rgba(255,255,255,.6),inset 0 0 0 6px rgba(255,226,170,.55);text-align:left;-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent);mask-image:linear-gradient(#000 calc(100% - 30px),transparent);outline:0}
+.el-letter h3{margin:0 0 8px;font:400 2.3rem/1.15 "Allura",cursive;color:var(--rose)}
+.el-letter p{margin:0 0 14px;font:italic 500 1.2rem/1.6 "Cormorant Garamond",serif;font-variant-numeric:lining-nums}
+.el-letter p.el-sign{margin:8px 0 0;font:400 2rem/1.25 "Allura",cursive;color:var(--rose);text-align:right}
+.el-go{position:relative;flex:none;overflow:hidden;margin-top:4px;padding:13px 22px;border-radius:30px;border:1px solid rgba(255,255,255,.95);background:linear-gradient(120deg,#ffa9cb 0%,#ffd27a 52%,#a9d6ff 100%);color:#5b2d3d;font:600 clamp(1rem,4.5vw,1.18rem) "Cormorant Garamond",serif;font-variant-numeric:lining-nums;letter-spacing:.02em;cursor:pointer;box-shadow:0 12px 30px -10px rgba(255,140,185,.85);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .3s cubic-bezier(.2,.9,.3,1.3)}
+.el-go::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:38%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent);transform:skewX(-20deg);animation:shimmer 3s ease-in-out infinite;pointer-events:none}
+.el-go:active{transform:scale(.96)}
+@keyframes elGlow{0%{box-shadow:0 12px 30px -10px rgba(255,140,185,.85),0 0 0 0 rgba(255,205,120,.75)}70%,100%{box-shadow:0 12px 30px -10px rgba(255,140,185,.85),0 0 0 16px rgba(255,205,120,0)}}
+#el:not([hidden]) .el-badge{animation:softIn .8s .35s backwards}
+#el:not([hidden]) .el-clock{animation:softIn .8s .5s backwards}
+#el:not([hidden]) .el-letter{animation:softIn .9s .75s backwards}
+#el:not([hidden]) .el-go{animation:softIn .9s 1s backwards,elGlow 2.4s ease-out 1.9s infinite}
+#el .el-clock.done{animation:elPulse 1.1s cubic-bezier(.3,1.6,.5,1) 1,elBreathe 3.2s ease-in-out 1.1s infinite}
+@keyframes elPulse{0%{transform:scale(1)}35%{transform:scale(1.14)}100%{transform:scale(1)}}
+@keyframes elBreathe{50%{transform:scale(1.035);filter:drop-shadow(0 0 26px rgba(255,205,130,1)) drop-shadow(0 4px 14px rgba(201,112,139,.5))}}
+@media (max-height:640px){.el-clock{font-size:clamp(2.8rem,14vw,4rem)}.el-card{gap:7px;padding-top:16px}.el-letter h3{font-size:2rem}}
+@media (prefers-reduced-motion:reduce){
+#elBg::before,.el-star,#elFx i,#elWave i,#elWave b,#elPill::after,#elPill:not([hidden]),#el:not([hidden]),#el.closing,.el-card,#el.closing .el-card,.el-card::before,#el:not([hidden]) .el-badge,#el:not([hidden]) .el-clock,#el:not([hidden]) .el-letter,#el:not([hidden]) .el-go,#el .el-clock.done,.el-go::after,.el-clock.ticking i,.el-clock span.tick{animation:none}
+#elBg,#elFx,.el-sub{transition-duration:.01s}
+#elFx{display:none}
+}
 </style>
 </head>
 <body>
@@ -616,6 +696,20 @@ body.museum #cc .note{color:#D8B8BE}
 </section>
 <section id="apology" class="stage page" hidden><article class="apology-page"><h2 class="script">Can we make this right? 💗</h2><p>I am truly sorry from the bottom of my heart. Seeing you upset hurts me deeply, especially knowing that my actions may have caused it. You are the most important person in my world, and I never want you to feel that your feelings do not matter.</p><p>I know loving you means more than saying beautiful things. It means listening to you, understanding how my actions affected you, and taking responsibility instead of making excuses. You deserved more care from me, and I am truly sorry that I hurt you. I may not always express myself well or make the right choices, but I want to learn from this and show you through my actions that I can do better.</p><p>You mean everything to me, and I care so much about your happiness and your smile. I don’t want to leave things unresolved while you’re hurting. Can we talk and try to figure this out together now, if you’re willing? I’ll listen and do my best to understand what you need.</p><section class="questions"><h3 class="script">Can you forgive me, at least for trying? 💗</h3><div class="choices"><button data-q="forgive" data-a="yes">Yes 💗</button><button data-q="forgive" data-a="no">No</button></div><p class="answer" id="forgiveAnswer" aria-live="polite"></p><h3 class="script">Do you still love me? 💞</h3><div class="choices"><button data-q="love" data-a="yes">Yes 💗</button><button data-q="love" data-a="no">No</button></div><p class="answer" id="loveAnswer" aria-live="polite"></p></section><img class="apology-photo" src="9.jpg" alt="A favorite memory of us together"><p>i love you to the moon and back marioumty. im truly sorry, hbibty.</p><p class="sign">With all my love 💗</p><div class="sweet-gift"><h3 class="script">A little something for you</h3><button id="chocoGift" type="button" aria-expanded="false"><span class="choco" aria-hidden="true">🍫</span><span>Open your chocolate gift</span></button><div id="ringReveal" hidden><svg class="ring-art" viewBox="0 0 220 180" role="img" aria-label="Cartoon silver ring with pink stones"><ellipse cx="110" cy="110" rx="37" ry="57" fill="none" stroke="#b9bcc5" stroke-width="13"/><ellipse cx="110" cy="110" rx="27" ry="48" fill="none" stroke="#fff" stroke-width="5"/><path d="M76 56Q110 43 144 56" fill="none" stroke="#aeb2bd" stroke-width="8" stroke-linecap="round"/><path d="M79 51L88 36M141 51L132 36" stroke="#aeb2bd" stroke-width="5"/><path d="M88 33l9-10 9 10-9 10zM112 33l9-10 9 10-9 10z" fill="#ff91b5" stroke="#dc638c" stroke-width="3"/><circle cx="97" cy="31" r="3" fill="#fff"/><circle cx="121" cy="31" r="3" fill="#fff"/></svg><p class="ring-caption">Here is your ring, baby 💍<br>I love you so much</p></div></div></article><button class="apology-back" type="button" id="backApology">‹ Back to your surprise</button></section>
 
+<!-- v7: 11/11 • 11:11 Special Edition: dreamy backdrop, particles, shimmer wave, top pill, announcement modal -->
+<div id="elBg" aria-hidden="true"></div>
+<div id="elFx" aria-hidden="true"></div>
+<div id="elWave" aria-hidden="true" hidden><b></b><i></i><i></i></div>
+<button id="elPill" type="button" hidden></button>
+<div id="el" hidden role="dialog" aria-modal="true" aria-labelledby="elBadge">
+  <div class="el-card" id="elCard" tabindex="-1">
+    <p class="el-badge" id="elBadge"></p>
+    <div class="el-clock" id="elClock" role="img"><span id="elHH"></span><i>:</i><span id="elMM"></span></div>
+    <p class="el-sub" id="elSub"></p>
+    <div class="el-letter" id="elLetter" tabindex="0"></div>
+    <button class="el-go" id="elGo" type="button"></button>
+  </div>
+</div>
 <!-- v5: museum backdrop, cursor spotlight, gold ornaments, floating dock -->
 <div id="mzBg" aria-hidden="true"></div>
 <div id="mzSpot" aria-hidden="true"></div>
@@ -859,6 +953,27 @@ const CONFIG = {
     { icon: "💭", label: "Quizzes", pages: ["quiz", "mood"] },
     { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
   ],
+  // ---- v7: 11/11 • 11:11 Special Edition (starts right after the correct PIN) ----
+  eleven: {
+    enabled: true,      // false = switch the whole special edition off
+    onlyOn: "",         // "" = every day. "11-11" = only on November 11, going by the clock of the phone that opens the site
+    pill: "✨ 11:11 Special Edition Active • Read 11/11 Letter 💌",
+    badge: "✨ 11/11 • SPECIAL CHAPTER UNLOCKED ✨",
+    clockFrom: "11:00", // the big clock counts up from here...
+    clockTo: "11:11",   // ...and stops here
+    subtitle: "🎀 Make a wish... though mine already came true 🫧",
+    greeting: `To the love of my life,`,
+    letter: [
+      `Everyday at 11:11, I stop whatever I’m doing just to think of you and tell you that I love you. What started as a sweet little habit has become my favorite part of the day—my constant, gentle reminder that no matter how busy life gets, you are always on my mind.`,
+      `Today feels different because it’s 11/11, a day the whole world treats as a moment made for wishes. People wait all day for the clock to align into four identical numbers, hoping the universe will finally listen to what their hearts want. But the truth is, I don’t need a special time on the clock or a rare date on the calendar to remind me how extraordinary you are. I don’t tell you I love you at 11:11 because the minute is magic—the minute only feels like magic because it belongs to you.`,
+      `Every single second with you is already special. You are the person I think about even when I don’t mean to, the one who turns the smallest, most ordinary moments of my day into something unforgettable. You are my peace when the world gets too loud, the sweetest thought in my head, and the only wish I could ever ask for.`,
+      `While everyone else looks at 11:11 today and wishes for something they don’t have, I just look at the clock and thank God that my greatest wish is already mine. You are my favorite habit, my forever person, and the reason I look forward to every tomorrow.`,
+      `Happy 11/11, my love. Today, tomorrow, and at every 11:11 for the rest of my life, all I will ever wish for is you.`
+    ],
+    signoff: `I love you to the moon and back, Mimi. 💗✨`,
+    button: "Explore Our 11:11 World 💗✨",
+    particles: ["✨", "💗", "🫧", "🎀"]   // what floats up in the background of the 11:11 theme
+  },
   stickers: []   // e.g. ["stickers/1.png", "stickers/2.png", "stickers/3.png"]
 };
 /* ========================================= */
@@ -1252,6 +1367,7 @@ function enterSite(){
   $("#cc").hidden = false;
   document.body.classList.add("cc-on");
   if (cur < 0) playTrack(0, true);
+  activate1111();                      // 11/11 special edition: theme shift, shimmer wave, announcement card
 }
 function unlock(){
   enterSite();
@@ -1653,7 +1769,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -1665,7 +1781,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -1740,6 +1856,117 @@ if (!reduceMotion){
 pages[0].classList.add("lit");
 if (!reduceMotion){ pages[0].classList.add("entering"); enterT = setTimeout(() => pages[0].classList.remove("entering"), 1900); }
 updateDock();
+/* ============ v7: 11/11 • 11:11 Special Edition (all its text lives in CONFIG.eleven) ============ */
+const EL = CONFIG.eleven || {};
+let elOn = false, elCloseT = 0, elClockT = 0, elLastFocus = null;
+function elEnabled(){
+  if (!EL.enabled) return false;
+  if (!EL.onlyOn) return true;
+  const d = new Date();
+  return EL.onlyOn === String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+/* The big clock: counts up quickly from clockFrom, lands on clockTo, then pulses softly */
+function runClock(){
+  const clock = $("#elClock"), hh = $("#elHH"), mm = $("#elMM");
+  const parse = s => { const a = String(s).split(":"); return (+a[0]) * 60 + (+a[1]); };
+  const show = t => { hh.textContent = String(Math.floor(t / 60)).padStart(2, "0"); mm.textContent = String(t % 60).padStart(2, "0"); };
+  const from = parse(EL.clockFrom || "11:00"), to = parse(EL.clockTo || "11:11");
+  clearTimeout(elClockT);
+  clock.classList.remove("done", "ticking");
+  clock.setAttribute("aria-label", EL.clockTo || "11:11");
+  if (reduceMotion || !(to > from)){ show(to); clock.classList.add("done"); return; }
+  let t = from, k = 0;
+  show(t);
+  const step = () => {
+    t++; k++;
+    show(t);
+    mm.classList.remove("tick"); void mm.offsetWidth; mm.classList.add("tick");
+    if (t >= to){
+      clock.classList.remove("ticking");
+      clock.classList.add("done");
+      const [x, y] = centerOf(clock); burst(x, y, 14, "up");
+      return;
+    }
+    elClockT = setTimeout(step, 70 + k * 13);          // each minute lands a touch slower than the last
+  };
+  elClockT = setTimeout(() => { clock.classList.add("ticking"); step(); }, 750);
+}
+function open1111(){
+  const el = $("#el");
+  if (!elOn) return;
+  clearTimeout(elCloseT);
+  if (el.hidden) elLastFocus = document.activeElement;
+  el.classList.remove("closing");
+  el.hidden = false;
+  $("#elLetter").scrollTop = 0;
+  runClock();
+  setTimeout(() => { try { $("#elCard").focus({ preventScroll: true }); } catch (e){} }, 60);
+}
+function close1111(){
+  const el = $("#el");
+  if (el.hidden || el.classList.contains("closing")) return;
+  clearTimeout(elClockT);
+  const [x, y] = centerOf($("#elGo")); burst(x, y, 26, "big");
+  el.classList.add("closing");
+  elCloseT = setTimeout(() => {
+    el.hidden = true;
+    el.classList.remove("closing");
+    if (elLastFocus && elLastFocus.focus && document.contains(elLastFocus)){ try { elLastFocus.focus({ preventScroll: true }); } catch (e){} }
+  }, reduceMotion ? 0 : 480);
+}
+/* Called from enterSite(), so it runs the moment she gets in with the correct PIN (once per visit) */
+function activate1111(){
+  if (elOn || !elEnabled()) return;
+  elOn = true;
+  document.body.classList.add("e11");                 // the pastel 11:11 backdrop and particles fade in
+  $("#elPill").hidden = false;
+  if (!reduceMotion){
+    const w = $("#elWave");
+    w.hidden = false;                                  // shimmer wave across the screen
+    setTimeout(() => { w.hidden = true; }, 2400);
+    burst(window.innerWidth / 2, window.innerHeight / 2, 22, "big");
+  }
+  setTimeout(open1111, reduceMotion ? 0 : 900);       // then the announcement card
+}
+(function(){
+  if (!EL.enabled) return;
+  $("#elPill").textContent = EL.pill;
+  $("#elBadge").textContent = EL.badge;
+  $("#elSub").textContent = EL.subtitle;
+  $("#elGo").textContent = EL.button;
+  const box = $("#elLetter");
+  box.setAttribute("aria-label", "11/11 letter");
+  box.append(mk("h3", "", EL.greeting));
+  (EL.letter || []).forEach(t => box.append(mk("p", "", t)));
+  box.append(mk("p", "el-sign", EL.signoff));
+  /* twinkling starlight + floating sparkles, hearts, bubbles and bows (they only move once the theme is on) */
+  const R = (a, b) => a + Math.random() * (b - a), bg = $("#elBg"), layer = $("#elFx");
+  const em = EL.particles && EL.particles.length ? EL.particles : ["✨"];
+  for (let i = 0; i < 22; i++){
+    const s = document.createElement("i");
+    s.className = "el-star";
+    s.style.cssText = `left:${R(2, 98).toFixed(1)}%;top:${R(2, 96).toFixed(1)}%;--d:${R(7, 15).toFixed(1)}px;--t:${R(2.4, 5.5).toFixed(1)}s;animation-delay:${(-R(0, 5)).toFixed(1)}s`;
+    bg.append(s);
+  }
+  for (let i = 0; i < 20; i++){
+    const p = document.createElement("i");
+    p.textContent = em[i % em.length];
+    p.style.cssText = `left:${R(0, 95).toFixed(1)}%;--s:${R(.8, 1.7).toFixed(2)};--o:${R(.45, .85).toFixed(2)};--dx:${Math.round(R(-50, 50))}px;--r:${Math.round(R(-25, 25))}deg;animation-duration:${R(13, 24).toFixed(1)}s;animation-delay:${(-R(0, 22)).toFixed(1)}s`;
+    layer.append(p);
+  }
+  $("#elPill").onclick = open1111;
+  $("#elGo").onclick = close1111;
+  const el = $("#el");
+  el.addEventListener("keydown", e => {               // keep Tab inside the card while it is open
+    if (e.key !== "Tab") return;
+    const f = [box, $("#elGo")], i = f.indexOf(document.activeElement);
+    e.preventDefault();
+    f[(i + (e.shiftKey ? f.length - 1 : 1) + f.length) % f.length].focus();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !el.hidden) close1111(); });
+  /* the page behind must not scroll while the card is open; only the letter scrolls */
+  el.addEventListener("wheel", e => { if (!(e.target.closest && e.target.closest(".el-letter"))) e.preventDefault(); }, { passive: false });
+})();
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 </script>
