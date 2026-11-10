@@ -6,7 +6,7 @@
 <title>For you</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Amiri&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root{--blush:#fdf0f3;--petal:#f7cfdb;--rose:#c9708b;--ink:#5b2d3d;--stem:#7da58c;--paper:#fffaf7;--cream:#fff6ee}
 *{box-sizing:border-box}
@@ -273,6 +273,177 @@ body.playing #cc .cc-disc{animation:spin 8s linear infinite}
 #final{justify-content:center}
 #final .fin{font-size:1.45rem;font-style:italic;line-height:1.5;max-width:460px;margin:0;white-space:pre-line}
 #final .big{font-size:3.6rem}
+/* v5: museum, theme melting, floating dock, cinematic transitions, micro-interactions */
+:root{--mz0:#1A050A;--mz1:#2D0812;--mz2:#420D1B;--mzcard:#380A14;--gold:#D4AF37;--goldl:#F3E5AB;--parch:#FAF6F0;--rosecream:#D8B8BE;
+--velvet:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .86 0 0 0 0 .78 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+--goldgrad:linear-gradient(135deg,#7a5a12 0%,#F3E5AB 14%,#D4AF37 28%,#8a6914 46%,#D4AF37 62%,#F3E5AB 80%,#7a5a12 100%)}
+/* cinematic page changes: the old page melts out, the new one rises in piece by piece */
+.page:not([hidden]){animation:none}
+.page.leaving{animation:pgOut .34s cubic-bezier(.4,0,.9,.6) forwards;pointer-events:none;transform-origin:50% calc(var(--sy,0px) + 50vh)}
+.page.leaving.big{animation-name:pgOutLite}
+@keyframes pgOut{to{opacity:0;transform:scale(.972);filter:blur(7px)}}
+@keyframes pgOutLite{to{opacity:0;transform:scale(.985)}}
+.page.entering > *{animation:pgIn .78s cubic-bezier(.2,.75,.2,1) backwards;animation-delay:calc(var(--i,0) * 70ms)}
+@keyframes pgIn{from{opacity:0;transform:translateY(22px) scale(.972);filter:blur(7px)}}
+@keyframes softIn{from{opacity:0;transform:translateY(14px);filter:blur(6px)}}
+#lb:not([hidden]){animation:lbFade .35s ease}
+#lb:not([hidden]) img{animation:lbZoom .5s cubic-bezier(.2,.9,.2,1)}
+@keyframes lbFade{from{opacity:0}}
+@keyframes lbZoom{from{opacity:0;transform:scale(.86);filter:blur(8px)}}
+/* 3D tilt + magnetic buttons */
+.tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.tilt.tilting{transition:transform .08s linear}
+.magnet{transition:transform .4s cubic-bezier(.2,.9,.3,1.3),opacity 1.2s}
+/* theme melting: a burgundy velvet room fades over the pink world and back */
+#mzBg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1.4s cubic-bezier(.4,0,.2,1);background:var(--velvet),radial-gradient(ellipse 80% 50% at 50% -5%,rgba(243,229,171,.13),transparent 70%),radial-gradient(ellipse 130% 95% at 50% 20%,#420D1B 0%,#2D0812 46%,#1A050A 100%)}
+#mzBg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 40%,rgba(0,0,0,.6) 100%)}
+body.museum #mzBg{opacity:1}
+#fx{transition:opacity 1.2s ease}
+body.museum #fx{opacity:0}
+.mote{position:absolute;bottom:-20px;width:var(--d,3px);height:var(--d,3px);border-radius:50%;background:radial-gradient(circle,#F3E5AB,rgba(212,175,55,.25) 70%,transparent);opacity:0;animation:mote linear infinite;animation-play-state:paused}
+body.museum .mote{animation-play-state:running}
+@keyframes mote{0%{transform:translate(0,0);opacity:0}12%{opacity:.8}85%{opacity:.45}100%{transform:translate(var(--dx,20px),-112vh);opacity:0}}
+#mzSpot{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity 1.2s ease;mix-blend-mode:screen;background:radial-gradient(circle 270px at var(--mx,50%) var(--my,32%),rgba(243,229,171,.2),rgba(212,175,55,.08) 45%,transparent 72%)}
+body.museum #mzSpot{opacity:1}
+body.museum :focus-visible{outline-color:#D4AF37}
+/* museum pages */
+.mz{color:#FAF6F0;overflow:hidden;gap:20px;font-variant-numeric:lining-nums}
+.mz.entering > *{animation-duration:1s;animation-delay:calc(var(--i,0) * 160ms + 120ms)}
+.mz .back{color:#D8B8BE}
+.mz-orn{display:flex;align-items:center;gap:12px;color:#D4AF37;font-size:.8rem;line-height:1}
+.mz-orn::before,.mz-orn::after{content:"";width:64px;height:1px;background:linear-gradient(90deg,transparent,#D4AF37)}
+.mz-orn::after{transform:scaleX(-1)}
+.mz-hall{position:relative;width:min(600px,100%);display:flex;flex-direction:column;align-items:center;gap:20px;padding:74px 22px 30px;border:1px solid rgba(212,175,55,.45);border-radius:50% 50% 4px 4px / 150px 150px 4px 4px;background:linear-gradient(180deg,rgba(66,13,27,.55),rgba(26,5,10,.35));box-shadow:inset 0 0 0 6px rgba(26,5,10,.5),inset 0 0 0 7px rgba(212,175,55,.22),0 40px 80px -30px rgba(0,0,0,.9),0 0 90px -20px rgba(212,175,55,.25)}
+.mz-hall::before{content:"\2726";position:absolute;top:-14px;left:50%;transform:translateX(-50%);color:#D4AF37;font-size:1.5rem;line-height:1;text-shadow:0 0 14px rgba(243,229,171,.9)}
+.mz-badge{margin:0;max-width:min(430px,84%);padding:9px 16px;border:1px solid rgba(212,175,55,.6);background:rgba(26,5,10,.45);font:600 .78rem/1.6 "Cormorant Garamond",serif;letter-spacing:.3em;color:#D4AF37}
+.mz-quote{margin:0;max-width:17em;font:italic 500 clamp(1.5rem,5.3vw,2.45rem)/1.32 "Playfair Display","Cormorant Garamond",serif;color:#FAF6F0;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.mz-quote .w{display:inline-block;opacity:0;transform:translateY(.45em);filter:blur(8px)}
+.mz-quote .w.gold{background:linear-gradient(100deg,#D4AF37,#F3E5AB 40%,#D4AF37 62%,#b8922a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.mz.lit .mz-quote .w{animation:wordIn .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.5s + var(--w,0) * 70ms)}
+@keyframes wordIn{to{opacity:1;transform:none;filter:blur(0)}}
+.mz-ar{margin:0;max-width:26em;font:400 clamp(1.1rem,3.9vw,1.45rem)/1.95 "Amiri","Noto Naskh Arabic","Cormorant Garamond",serif;color:#D8B8BE}
+.mz.lit .mz-badge{animation:softIn .9s .1s backwards}
+.mz.lit .mz-hall .mz-orn{animation:softIn .9s .3s backwards}
+.mz.lit .mz-ar{animation:softIn 1.2s 1.9s backwards}
+.mz.lit .mz-ar + .mz-orn{animation-delay:2.2s}
+.mz.lit .mz-hall .mz-btn{animation:softIn 1s 2.4s backwards}
+.mz.lit .mz-hall .back{animation:softIn 1s 2.7s backwards}
+.mz .mz-btn{position:relative;overflow:hidden;margin-top:6px;padding:14px 30px;border-radius:3px;border:1px solid #F3E5AB;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 38%,#9c7a1c 72%,#D4AF37 100%);color:#2D0812;font:600 1.15rem "Cormorant Garamond",serif;letter-spacing:.06em;cursor:pointer;box-shadow:0 12px 30px -12px rgba(212,175,55,.75),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -2px 0 rgba(90,60,5,.35);transition:transform .4s cubic-bezier(.2,.9,.3,1.3),box-shadow .4s,opacity 1.2s;-webkit-tap-highlight-color:transparent}
+.mz .mz-btn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent);transform:skewX(-20deg);animation:shimmer 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes shimmer{0%{left:-60%}55%,100%{left:130%}}
+.mz .mz-btn:hover{box-shadow:0 16px 38px -10px rgba(243,229,171,.9),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(90,60,5,.35)}
+.mz .mz-btn.exit{border-radius:30px;border-color:#fff;background:linear-gradient(135deg,#F3E5AB,#f7cfdb 55%,#ffb3cf);color:#5b2d3d;padding:14px 22px;font-size:1.1rem;letter-spacing:.02em}
+/* exhibits */
+.mz-exhibit{justify-content:flex-start}
+.mz-cat{margin:0;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:600 .8rem/1.5 "Cormorant Garamond",serif;letter-spacing:.3em;color:#D4AF37}
+.mz-cat::before,.mz-cat::after{content:"";flex:1 1 20px;min-width:14px;max-width:70px;height:1px;background:linear-gradient(90deg,transparent,#D4AF37)}
+.mz-cat::after{transform:scaleX(-1)}
+@media (max-width:480px){.mz-cat{font-size:.72rem;letter-spacing:.2em}.mz-badge{letter-spacing:.24em}}
+.mz-wall{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;padding-top:56px}
+.mz-wall::after{content:"";position:absolute;left:50%;top:52%;width:130%;height:105%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at 50% 42%,rgba(243,229,171,.2),transparent 62%);pointer-events:none}
+.mz-lamp{position:absolute;top:8px;left:50%;width:108px;height:12px;margin-left:-54px;border-radius:3px 3px 40px 40px / 3px 3px 12px 12px;background:linear-gradient(#F3E5AB,#D4AF37 45%,#7a5a12);box-shadow:0 0 26px 8px rgba(243,229,171,.5),0 1px 0 #5c430d;z-index:1}
+.mz-lamp::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:80px;margin-left:-1px;background:linear-gradient(transparent,#D4AF37)}
+.mz-cone{position:absolute;top:16px;left:50%;width:min(150%,760px);height:calc(100% + 24px);transform:translateX(-50%);filter:blur(14px);pointer-events:none;opacity:.9}
+.mz-cone::before{content:"";position:absolute;inset:0;clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);background:linear-gradient(180deg,rgba(243,229,171,.5),rgba(243,229,171,.16) 45%,rgba(243,229,171,0) 96%)}
+.mz.lit .mz-cone{animation:lampOn 1.5s .35s backwards}
+@keyframes lampOn{0%{opacity:0}18%{opacity:.75}26%{opacity:.15}38%{opacity:.9}46%{opacity:.5}60%,100%{opacity:.9}}
+.mz-frame{position:relative;z-index:2;display:block;max-width:100%;padding:clamp(13px,3.8vw,24px);border-radius:3px;cursor:zoom-in;background:var(--goldgrad);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),inset 0 0 0 4px #b8922a,inset 0 0 0 5px rgba(60,40,5,.7),inset 0 0 0 9px #e9cf7a,inset 0 0 0 10px rgba(60,40,5,.6),0 2px 0 #5c430d,0 34px 60px -18px rgba(0,0,0,.9),0 0 70px -12px rgba(212,175,55,.4);transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .5s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mz-frame.tilting{transition:transform .08s linear,box-shadow .5s}
+.mz-frame::before{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(45deg,rgba(255,255,255,.15) 0 2px,transparent 2px 5px),repeating-linear-gradient(-45deg,rgba(60,40,5,.17) 0 2px,transparent 2px 5px);pointer-events:none}
+.mz-frame::after{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.24) 50%,transparent 58%) 120% 0 / 260% 100% no-repeat;animation:sheen 7s ease-in-out 1.4s infinite;pointer-events:none}
+@keyframes sheen{0%{background-position:120% 0}35%,100%{background-position:-60% 0}}
+.mz-mat{position:relative;z-index:1;display:block;padding:clamp(5px,1.6vw,10px);background:var(--velvet),#380A14;box-shadow:inset 0 0 0 1px rgba(212,175,55,.7),inset 0 0 20px rgba(0,0,0,.85),0 0 0 1px rgba(60,40,5,.8)}
+.mz-mat img{display:block;width:auto;height:auto;max-width:100%;max-height:min(56svh,600px);box-shadow:0 0 0 1px rgba(212,175,55,.8),0 4px 16px rgba(0,0,0,.6)}
+.mz-mat.empty{min-width:220px;min-height:280px;display:grid;place-items:center;padding:20px;color:#D8B8BE;font-style:italic;text-align:center}
+.mz-glare{position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.32),transparent 46%);opacity:0;transition:opacity .4s}
+.mz-frame.tilting .mz-glare{opacity:1}
+.mz-frame svg.c{position:absolute;z-index:4;width:clamp(26px,7.5vw,42px);height:clamp(26px,7.5vw,42px);pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.55))}
+.mz-frame .c.tl{top:-7px;left:-7px;transform:translateZ(18px)}
+.mz-frame .c.tr{top:-7px;right:-7px;transform:translateZ(18px) scaleX(-1)}
+.mz-frame .c.bl{bottom:-7px;left:-7px;transform:translateZ(18px) scaleY(-1)}
+.mz-frame .c.br{bottom:-7px;right:-7px;transform:translateZ(18px) scale(-1,-1)}
+.mz-frame svg.mz-crest{position:absolute;z-index:4;left:50%;top:0;width:clamp(66px,19vw,100px);height:clamp(46px,13vw,70px);transform:translate(-50%,-80%) translateZ(24px);pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.mz-zoom{position:relative;z-index:2;margin:0;font-style:italic;font-size:.98rem;color:#D8B8BE;opacity:.9}
+.mz-plaque{position:relative;z-index:2;width:min(560px,100%);padding:26px 24px 22px;border:1px solid rgba(212,175,55,.6);outline:1px solid rgba(212,175,55,.25);outline-offset:-7px;border-radius:3px;text-align:center;background:radial-gradient(circle at 13px 13px,#F3E5AB 0 2px,#8a6914 2.6px,transparent 3.4px),radial-gradient(circle at calc(100% - 13px) 13px,#F3E5AB 0 2px,#8a6914 2.6px,transparent 3.4px),radial-gradient(circle at 13px calc(100% - 13px),#F3E5AB 0 2px,#8a6914 2.6px,transparent 3.4px),radial-gradient(circle at calc(100% - 13px) calc(100% - 13px),#F3E5AB 0 2px,#8a6914 2.6px,transparent 3.4px),var(--velvet),linear-gradient(160deg,#42101d,#380A14 45%,#2a070f);box-shadow:0 24px 50px -22px rgba(0,0,0,.9),inset 0 1px 0 rgba(243,229,171,.18)}
+.mz-title{margin:0 0 6px;font:700 clamp(1.45rem,5vw,2.05rem)/1.2 "Playfair Display","Cormorant Garamond",serif;background:linear-gradient(100deg,#D4AF37,#F3E5AB 45%,#D4AF37 70%,#b8922a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.mz-sub{margin:0;font:italic 500 1.12rem/1.35 "Cormorant Garamond",serif;color:#D8B8BE}
+.mz-rule{width:90px;height:1px;margin:14px auto;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+.mz-cap{margin:0;font:italic 500 1.22rem/1.6 "Cormorant Garamond",serif;color:#FAF6F0}
+.mz-note{margin:16px 0 0;padding-top:12px;border-top:1px dashed rgba(212,175,55,.35);font:italic 400 1.08rem/1.45 "Playfair Display","Cormorant Garamond",serif;color:#F3E5AB}
+.mz-note span{display:block;margin-bottom:4px;font:600 .72rem "Cormorant Garamond",serif;letter-spacing:.3em;text-transform:uppercase;color:#D4AF37}
+.mz-nav{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px}
+.mz-cat,.mz-badge,.mz-quote,.mz-title,.mz-sub,.mz-cap,.mz-note{font-variant-numeric:lining-nums}
+/* the crown jewel gets a grander frame */
+.mz-crown .mz-wall{padding-top:92px}
+.mz-crown .mz-frame{padding:clamp(17px,4.8vw,32px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),inset 0 0 0 5px #b8922a,inset 0 0 0 6px rgba(60,40,5,.7),inset 0 0 0 12px #e9cf7a,inset 0 0 0 13px rgba(60,40,5,.6),inset 0 0 0 17px #caa233,inset 0 0 0 18px rgba(60,40,5,.5),0 2px 0 #5c430d,0 40px 70px -18px rgba(0,0,0,.95),0 0 110px -8px rgba(243,229,171,.55)}
+.mz-crown .mz-wall::after{animation:aura 4.5s ease-in-out infinite}
+@keyframes aura{50%{opacity:.55}}
+.mz-crown .mz-plaque{outline-color:rgba(212,175,55,.5);box-shadow:0 24px 50px -22px rgba(0,0,0,.9),0 0 60px -20px rgba(212,175,55,.5),inset 0 1px 0 rgba(243,229,171,.25)}
+@media (min-width:940px){
+.mz-exhibit{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"cat cat" "wall plaque" "wall nav";column-gap:64px;row-gap:22px;align-content:center;align-items:center;justify-items:center;padding-left:max(24px,calc(50% - 580px));padding-right:max(24px,calc(50% - 580px))}
+.mz-exhibit.alt{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-areas:"cat cat" "plaque wall" "nav wall"}
+.mz-cat{grid-area:cat}.mz-wall{grid-area:wall}.mz-plaque{grid-area:plaque;align-self:end}.mz-nav{grid-area:nav;align-self:start}
+.mz-mat img{max-height:min(48svh,600px)}
+.mz-cap{font-size:1.32rem}
+.mz-hall{gap:16px;padding-top:66px}.mz-quote{font-size:2.1rem}.mz-ar{font-size:1.3rem}
+}
+#lb.mz-lb{z-index:150;background:rgba(12,2,5,.95)}
+#lb.mz-lb img{border:0;max-height:82svh;box-shadow:0 0 0 2px #D4AF37,0 0 0 9px #380A14,0 0 0 11px #D4AF37,0 0 0 12px #5c430d,0 30px 90px rgba(0,0,0,.9)}
+#lb.mz-lb p{margin-top:24px;font:italic 500 1.25rem "Playfair Display","Cormorant Garamond",serif;color:#F3E5AB}
+/* floating glass dock */
+#dock{position:fixed;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;align-items:center;gap:6px;width:max-content;max-width:calc(100% - 14px);pointer-events:none}
+#dock[hidden]{display:none}
+#dock > *{pointer-events:auto}
+#dock:not([hidden]){animation:dockIn .7s cubic-bezier(.2,.9,.3,1.2) backwards}
+@keyframes dockIn{from{opacity:0;transform:translateX(-50%) translateY(30px)}}
+.dk-glass{border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 14px 34px -16px rgba(150,60,90,.65);color:var(--ink);transition:background-color 1.2s,border-color 1.2s,color 1.2s,box-shadow 1.2s}
+.dk-sub{display:flex;align-items:center;gap:5px;max-width:100%;padding:3px 12px;border-radius:16px;font-size:.98rem}
+.dk-sub[hidden]{display:none}
+.dk-label{font-style:italic;white-space:nowrap;margin-right:2px}
+.dk-bar{display:flex;align-items:center;gap:4px;max-width:100%;padding:6px;border-radius:28px}
+.dk-strip{display:flex;gap:4px;min-width:0;overflow-x:auto;scrollbar-width:none;padding:3px 2px;-webkit-overflow-scrolling:touch}
+.dk-strip::-webkit-scrollbar{display:none}
+.dk-item,.dk-arrow{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid transparent;background:transparent;padding:0;display:grid;place-items:center;font-size:1.25rem;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .3s cubic-bezier(.3,1.5,.5,1),background-color .4s,border-color .4s,box-shadow .4s,color .4s}
+.dk-arrow{width:36px;font-size:1.55rem;font-weight:600;border-color:#e6b3c3;background:rgba(255,255,255,.7)}
+.dk-arrow:disabled{opacity:.35;cursor:default}
+.dk-item.on{background:#fff;border-color:var(--rose);box-shadow:0 6px 14px -8px rgba(201,112,139,.9);transform:translateY(-2px) scale(1.08)}
+@media (hover:hover){.dk-item:hover{transform:scale(1.18)}.dk-item.on:hover{transform:translateY(-2px) scale(1.18)}}
+.dk-item:active,.dk-arrow:not(:disabled):active{transform:scale(.9)}
+.dk-dot{width:20px;height:26px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center;font:600 .82rem "Cormorant Garamond",serif;color:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.dk-dot::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35;transition:transform .3s,opacity .3s,background-color .3s}
+.dk-dot.on::before{opacity:1;transform:scale(1.45);background:var(--rose)}
+.dk-dot.num{width:auto;min-width:22px;padding:0 3px;opacity:.6;transition:opacity .3s,color .3s}
+.dk-dot.num::before{content:none}
+.dk-dot.num.on{opacity:1;color:var(--rose);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:400px){.dk-item{width:37px;height:37px;font-size:1.12rem}.dk-arrow{width:32px;height:37px}.dk-label{font-size:.9rem}}
+body.dock-on .page{padding-bottom:190px}
+body.dock-on .kitty{bottom:104px}
+/* the player and the dock dress in burgundy and gold inside the museum */
+#cc{transition:background-color 1.2s,border-color 1.2s,color 1.2s,box-shadow 1.2s}
+#cc .cc-btn,#cc .track,#cc .cc-disc,#cc .cc-info span{transition:background-color 1s,border-color 1s,color 1s}
+body.museum .dk-glass,body.museum #cc{background:rgba(45,8,18,.62);border-color:rgba(212,175,55,.55);color:#FAF6F0;box-shadow:0 14px 34px -14px rgba(0,0,0,.8),inset 0 1px 0 rgba(243,229,171,.15)}
+body.museum .dk-arrow,body.museum #cc .cc-btn{background:rgba(26,5,10,.6);border-color:rgba(212,175,55,.5);color:#F3E5AB}
+body.museum .dk-item.on{background:linear-gradient(135deg,#F3E5AB,#D4AF37 55%,#9c7a1c);border-color:#F3E5AB;box-shadow:0 6px 16px -6px rgba(212,175,55,.8)}
+body.museum .dk-dot.on::before{background:#D4AF37}
+body.museum .dk-dot.num.on{color:#F3E5AB}
+body.museum #cc .cc-main{background:linear-gradient(135deg,#F3E5AB,#D4AF37 55%,#9c7a1c);border-color:#F3E5AB;color:#2D0812}
+body.museum #cc .cc-info span{color:#D8B8BE}
+body.museum #cc .cc-disc{border-color:#D4AF37}
+body.museum #cc .track{background:rgba(56,10,20,.75);border-color:rgba(212,175,55,.3);color:#FAF6F0}
+body.museum #cc .track.on{background:#420D1B;border-color:#D4AF37;box-shadow:0 8px 18px -10px rgba(212,175,55,.7)}
+body.museum #cc .track .ic{background:rgba(212,175,55,.22);color:#F3E5AB}
+body.museum #cc .note{color:#D8B8BE}
+@media (prefers-reduced-motion:reduce){
+.page.leaving,.page.entering > *,#lb:not([hidden]),#lb:not([hidden]) img,#dock:not([hidden]),.mz.lit .mz-badge,.mz.lit .mz-hall .mz-orn,.mz.lit .mz-ar,.mz.lit .mz-hall .mz-btn,.mz.lit .mz-hall .back,.mz.lit .mz-cone,.mz .mz-btn::after,.mz-frame::after,.mz-crown .mz-wall::after{animation:none}
+.mz-quote .w{opacity:1;transform:none;filter:none}.mz.lit .mz-quote .w{animation:none}
+.mote{display:none}#mzBg,#mzSpot,#fx{transition-duration:.01s}
+}
+/* v6: cleaner museum - matte frame, richer burgundy, decluttered UI */
+#mzBg{background:var(--velvet),radial-gradient(circle at 35% 45%,#4A0D1D 0%,#2B0610 55%,#160207 100%)}
+#mzBg::after{background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.35) 100%)}
+.mz-plaque,.mz-crown .mz-plaque{border:1px solid rgba(243,229,171,.16);outline:0;border-radius:20px;background:rgba(74,13,29,.36);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 22px 50px -26px rgba(0,0,0,.85),inset 0 1px 0 rgba(243,229,171,.1)}
+.mz-note{border-top-style:solid;border-top-color:rgba(243,229,171,.14)}
+.mz-exhibit .mz-nav .back,.mz-exhibit .mz-nav .mz-btn:not(.exit){display:none}
 </style>
 </head>
 <body>
@@ -445,6 +616,33 @@ body.playing #cc .cc-disc{animation:spin 8s linear infinite}
 </section>
 <section id="apology" class="stage page" hidden><article class="apology-page"><h2 class="script">Can we make this right? 💗</h2><p>I am truly sorry from the bottom of my heart. Seeing you upset hurts me deeply, especially knowing that my actions may have caused it. You are the most important person in my world, and I never want you to feel that your feelings do not matter.</p><p>I know loving you means more than saying beautiful things. It means listening to you, understanding how my actions affected you, and taking responsibility instead of making excuses. You deserved more care from me, and I am truly sorry that I hurt you. I may not always express myself well or make the right choices, but I want to learn from this and show you through my actions that I can do better.</p><p>You mean everything to me, and I care so much about your happiness and your smile. I don’t want to leave things unresolved while you’re hurting. Can we talk and try to figure this out together now, if you’re willing? I’ll listen and do my best to understand what you need.</p><section class="questions"><h3 class="script">Can you forgive me, at least for trying? 💗</h3><div class="choices"><button data-q="forgive" data-a="yes">Yes 💗</button><button data-q="forgive" data-a="no">No</button></div><p class="answer" id="forgiveAnswer" aria-live="polite"></p><h3 class="script">Do you still love me? 💞</h3><div class="choices"><button data-q="love" data-a="yes">Yes 💗</button><button data-q="love" data-a="no">No</button></div><p class="answer" id="loveAnswer" aria-live="polite"></p></section><img class="apology-photo" src="9.jpg" alt="A favorite memory of us together"><p>i love you to the moon and back marioumty. im truly sorry, hbibty.</p><p class="sign">With all my love 💗</p><div class="sweet-gift"><h3 class="script">A little something for you</h3><button id="chocoGift" type="button" aria-expanded="false"><span class="choco" aria-hidden="true">🍫</span><span>Open your chocolate gift</span></button><div id="ringReveal" hidden><svg class="ring-art" viewBox="0 0 220 180" role="img" aria-label="Cartoon silver ring with pink stones"><ellipse cx="110" cy="110" rx="37" ry="57" fill="none" stroke="#b9bcc5" stroke-width="13"/><ellipse cx="110" cy="110" rx="27" ry="48" fill="none" stroke="#fff" stroke-width="5"/><path d="M76 56Q110 43 144 56" fill="none" stroke="#aeb2bd" stroke-width="8" stroke-linecap="round"/><path d="M79 51L88 36M141 51L132 36" stroke="#aeb2bd" stroke-width="5"/><path d="M88 33l9-10 9 10-9 10zM112 33l9-10 9 10-9 10z" fill="#ff91b5" stroke="#dc638c" stroke-width="3"/><circle cx="97" cy="31" r="3" fill="#fff"/><circle cx="121" cy="31" r="3" fill="#fff"/></svg><p class="ring-caption">Here is your ring, baby 💍<br>I love you so much</p></div></div></article><button class="apology-back" type="button" id="backApology">‹ Back to your surprise</button></section>
 
+<!-- v5: museum backdrop, cursor spotlight, gold ornaments, floating dock -->
+<div id="mzBg" aria-hidden="true"></div>
+<div id="mzSpot" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="mzGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3E5AB"/><stop offset=".5" stop-color="#D4AF37"/><stop offset="1" stop-color="#8a6914"/></linearGradient>
+    <linearGradient id="mzGoldV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E5AB"/><stop offset=".55" stop-color="#D4AF37"/><stop offset="1" stop-color="#8a6914"/></linearGradient>
+    <symbol id="mzCorner" viewBox="0 0 48 48">
+      <path d="M2 2h34c-2 5-7 8-14 8 6 2 9 6 9 12-5-4-9-5-14-4 4 4 5 8 4 14-4-5-7-7-11-8 1 6 0 10-3 14C4 38 3 22 2 2z" fill="url(#mzGold)" stroke="#5c430d" stroke-width="1.2" stroke-linejoin="round"/>
+      <circle cx="13" cy="13" r="4.5" fill="#F3E5AB" stroke="#5c430d" stroke-width="1.2"/><circle cx="13" cy="13" r="1.6" fill="#8a6914"/>
+    </symbol>
+    <symbol id="mzCrown" viewBox="0 0 120 84">
+      <path d="M14 66L6 24l28 20L60 10l26 34 28-20-8 42z" fill="url(#mzGoldV)" stroke="#5c430d" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="12" y="62" width="96" height="14" rx="3" fill="url(#mzGoldV)" stroke="#5c430d" stroke-width="2"/>
+      <g fill="#F3E5AB" stroke="#5c430d" stroke-width="1.5"><circle cx="6" cy="22" r="5"/><circle cx="60" cy="8" r="6"/><circle cx="114" cy="22" r="5"/></g>
+      <g fill="#7a1026" stroke="#5c430d" stroke-width="1"><circle cx="36" cy="69" r="3.2"/><circle cx="60" cy="69" r="3.8"/><circle cx="84" cy="69" r="3.2"/></g>
+    </symbol>
+  </defs>
+</svg>
+<nav id="dock" hidden aria-label="Jump to any part of the website">
+  <div class="dk-sub dk-glass" id="dkSub" hidden></div>
+  <div class="dk-bar dk-glass">
+    <button class="dk-arrow" id="dkPrev" type="button" aria-label="Previous page">‹</button>
+    <div class="dk-strip" id="dkStrip"></div>
+    <button class="dk-arrow" id="dkNext" type="button" aria-label="Next page">›</button>
+  </div>
+</nav>
 <div id="cc" hidden>
   <div class="cc-bar">
     <button class="cc-btn" id="ccToggle" type="button" aria-expanded="false" aria-label="Show or hide the song list">♪</button>
@@ -483,13 +681,15 @@ const CONFIG = {
       "I really really love you so much, it hurts sometimes because my heart is so full of you. I do not want anything else from this world at all. I just want to be with you every day and look deep into your beautiful eyes forever. I absolutely love playing with your cute soft cheeks and making you laugh. You will always be the beauty queen of the whole universe in my eyes, and the only queen of my heart forever and ever.",
       "I just love you so much, my beautiful Marioumy." ] }
   ],
-  // Put the mp3 files in the "music" folder with these names
+  // The mp3 files live in the "songs" folder next to index.html, with exactly these names
   songs: [
     { title: "Zay Manty", artist: "Amr Diab", file: "songs/zay-manty.mp3" },
     { title: "Nefsy Ahebk", artist: "Cairokee", file: "songs/nefsy-ahebk.mp3" },
     { title: "Shoft Kalam", artist: "Marwan Pablo, Lege-Cy & Hatem Bas", file: "songs/Shoft kalam.mp3" },
     { title: "Habibty Malak", artist: "Amr Diab", file: "songs/Habibty malak.mp3" },
-    { title: "Lovesong", artist: "Adele", file: "songs/Lovesong.mp3" }
+    { title: "Lovesong", artist: "Adele", file: "songs/Lovesong.mp3" },
+    { title: "Helm Baeed", artist: "Mahmoud El Esseily", file: "songs/Mahmoud El Esseily - 7elm B3eed - Exclusive Music Video 2018 محمود العسيلى - حلم بعيد.mp3" },
+    { title: "Amarain", artist: "Amr Diab", file: "songs/قمرين عمرو دياب.mp3" }
   ],
   // Optional: your own sticker pictures (PNG with transparent background) in the "stickers" folder
   // ---- v3 extras: edit all the new text here ----
@@ -600,6 +800,65 @@ const CONFIG = {
   finalTitle: "To be continued...",
   finalText: "This is just the beginning.\nThis little website is a living project, and it will grow with us.\nWait for the next update, my pretty girl \u{1F497}",
   finalSign: "Dodo",
+  // ---- v5: Mariam's Personal Museum, the floating dock, song crossfade ----
+  crossfadeSeconds: 1.8,   // how long one song melts into the next (iPhones switch instantly: iOS does not allow volume fades)
+  museum: {
+    badge: "PRIVATE EXHIBITION • CURATED FOR MARIAM",
+    quote: `"In a room full of priceless art, I would still spend eternity staring at you... because you are the real masterpiece."`,
+    arabic: `"الناس بتروح المتاحف عشان تشوف الفن، وأنا عملتلك متحف خاص بيكي عشان إنتي الفن نفسه."`,
+    enterButton: "Step Inside The Gallery →",
+    nextButton: "Next Exhibit →",
+    exitButton: "Continue to Our Fun & Quizzes ✨",
+    backButton: "‹ Back",
+    curatorLabel: "Curator's Note",
+    zoomHint: "Tap the frame to view it full screen",
+    // The song that gently crossfades in the first time she walks into the museum ("" = keep whatever is playing)
+    enterSong: "songs/قمرين عمرو دياب.mp3",
+    // Photos live in the "museuem" folder next to index.html. Each line notes the original WhatsApp filename of the same photo.
+    exhibits: [
+      { image: "museuem/Exhibit I.jpg.jpeg",     // = WhatsApp Image 2026-11-10 at 2.24.28 AM (3).jpeg
+        catalog: "ARCHIVE NO. 001 • PERMANENT COLLECTION",
+        title: `Exhibit I: Where the Noise Stops`,
+        subtitle: `The Sanctuary of Her Gaze`,
+        caption: `"There is a quietness in her eyes that makes the rest of the world disappear. Every time I look at them, I feel like I’ve finally found my way home."`,
+        note: `"Look closely—you'll see my favorite place in the world."` },
+      { image: "museuem/Exhibit II.jpg.jpeg",    // = WhatsApp Image 2026-11-10 at 2.24.28 AM (2).jpeg
+        catalog: "ARCHIVE NO. 002 • UNSCRIPTED SERIES",
+        title: `Exhibit II: Unscripted Poetry`,
+        subtitle: `Effortless & Pure`,
+        caption: `"She doesn't try to be breathtaking—she simply breathes, and somehow turns the most ordinary moments into something I want to remember forever."`,
+        note: `"My favorite version of you is every single version of you."` },
+      { image: "museuem/Exhibit III.jpg.jpeg",   // = WhatsApp Image 2026-11-10 at 2.27.39 AM.jpeg
+        catalog: "ARCHIVE NO. 003 • GOLDEN HOUR WING",
+        title: `Exhibit III: Touched by Gold`,
+        subtitle: `Afternoon Light & Softness`,
+        caption: `"Even the sunlight seems to linger a little longer on her, as if the afternoon itself didn't want to let her go."`,
+        note: `"If I could freeze one moment in time, it would be every moment with you."` },
+      { image: "museuem/Exhibit IV.jpg.jpeg",    // = WhatsApp Image 2026-11-10 at 2.24.28 AM (1).jpeg
+        crown: true,                             // the grand royal centerpiece: bigger frame, crown crest, golden aura
+        catalog: "ARCHIVE NO. 004 • THE CROWN JEWEL",
+        title: `Exhibit IV: A Quiet Masterpiece`,
+        subtitle: `Serenity in Bloom`,
+        caption: `"Eyes closed, completely at peace—she carries a softness that no artist could ever paint, and a beauty that makes everything around her fall silent."`,
+        note: `"If peace and elegance had a face, it would look exactly like this."` },
+      { image: "museuem/Exhibit V.jpg.jpeg",     // = WhatsApp Image 2026-11-10 at 2.24.28 AM.jpeg
+        catalog: "ARCHIVE NO. 005 • THE GRAND SALON",
+        title: `Exhibit V: Every Version of Her`,
+        subtitle: `The Permanent Collection`,
+        caption: `"One frame could never hold all of who she is. Every glance, every little expression is a different verse of my favorite poem."`,
+        note: `"Four frames in one, and I'm still greedy for a million more."` }
+    ]
+  },
+  // The floating dock at the bottom. "letter" = every letter page, "museum" = every museum page, anything else = that page's id.
+  dock: [
+    { icon: "🎁", label: "Intro", pages: ["gift"] },
+    { icon: "💌", label: "Love Letter", pages: ["letter", "gift2"] },
+    { icon: "🖼️", label: "Museum", pages: ["museum"] },
+    { icon: "💞", label: "Our Little World", pages: ["us"] },
+    { icon: "🎟️", label: "Coupons & Open When", pages: ["treats", "openwhen"] },
+    { icon: "💭", label: "Quizzes", pages: ["quiz", "mood"] },
+    { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
+  ],
   stickers: []   // e.g. ["stickers/1.png", "stickers/2.png", "stickers/3.png"]
 };
 /* ========================================= */
@@ -607,9 +866,10 @@ const CONFIG = {
 const $ = s => document.querySelector(s);
 const lb = $("#lb");
 
-function openLb(src, cap){
+function openLb(src, cap, mz){
   lb.querySelector("img").src = src;
   lb.querySelector("p").textContent = cap || "";
+  lb.classList.toggle("mz-lb", !!mz);      // museum photos open in a gold-framed full-screen view
   lb.hidden = false;
 }
 function polaroid(src, cap, rot, note){
@@ -682,6 +942,61 @@ document.title = "For " + CONFIG.herName;
 $("#lockTitle").textContent = "For " + CONFIG.herName;
 $("#hintText").textContent = CONFIG.pinHint;
 
+/* ============ v5: Mariam's Personal Museum (built from CONFIG.museum, placed right after the love letter) ============ */
+(function(){
+  const M = CONFIG.museum, anchor = $("#us");
+  const btn = (cls, txt) => { const b = mk("button", cls, txt); b.type = "button"; return b; };
+  const orn = () => { const d = mk("div", "mz-orn", "◆"); d.setAttribute("aria-hidden", "true"); return d; };
+
+  /* Entrance hall */
+  const hall = mk("section", "stage page mz mz-entrance");
+  hall.id = "mz0"; hall.hidden = true;
+  const box = mk("div", "mz-hall"), q = mk("blockquote", "mz-quote");
+  const words = M.quote.split(/\s+/);
+  words.forEach((w, i) => {
+    const s = mk("span", "w" + (i === words.length - 1 ? " gold" : ""), w);
+    s.style.setProperty("--w", i);
+    q.append(s, " ");
+  });
+  const ar = mk("p", "mz-ar", M.arabic);
+  ar.lang = "ar"; ar.dir = "rtl";
+  box.append(mk("p", "mz-badge", M.badge), orn(), q, ar, orn(), btn("next mz-btn", M.enterButton), btn("back", M.backButton));
+  hall.append(box);
+  anchor.before(hall);
+
+  /* Exhibits */
+  const corners = ["tl", "tr", "bl", "br"].map(c => `<svg class="c ${c}" aria-hidden="true"><use href="#mzCorner"/></svg>`).join("");
+  M.exhibits.forEach((ex, i) => {
+    const s = mk("section", "stage page mz mz-exhibit" + (ex.crown ? " mz-crown" : "") + (i % 2 ? " alt" : ""));
+    s.id = "mz" + (i + 1); s.hidden = true;
+    const wall = mk("div", "mz-wall");
+    wall.insertAdjacentHTML("beforeend", '<div class="mz-lamp" aria-hidden="true"></div><div class="mz-cone" aria-hidden="true"></div>');
+    const fr = mk("div", "mz-frame");
+    fr.tabIndex = 0;
+    fr.setAttribute("role", "button");
+    fr.setAttribute("aria-label", ex.title + ". Open full screen");
+    const mat = mk("span", "mz-mat"), img = new Image();
+    img.alt = ex.title; img.draggable = false;
+    img.onerror = () => { img.remove(); mat.classList.add("empty"); mat.textContent = "Add this photo: " + ex.image; };
+    img.src = ex.image;
+    mat.append(img);
+    const glare = mk("span", "mz-glare");
+    glare.setAttribute("aria-hidden", "true");
+    fr.append(mat, glare);
+    fr.insertAdjacentHTML("beforeend", corners + (ex.crown ? '<svg class="mz-crest" aria-hidden="true"><use href="#mzCrown"/></svg>' : ""));
+    const zoom = () => { if (!mat.classList.contains("empty")) openLb(ex.image, ex.title, true); };
+    fr.onclick = zoom;
+    fr.onkeydown = e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); zoom(); } };
+    wall.append(fr, mk("p", "mz-zoom", M.zoomHint));
+    const pl = mk("article", "mz-plaque"), note = mk("p", "mz-note");
+    note.append(mk("span", "", M.curatorLabel), ex.note);
+    pl.append(mk("h2", "mz-title", ex.title), mk("p", "mz-sub", ex.subtitle), mk("div", "mz-rule"), mk("p", "mz-cap", ex.caption), note);
+    const nav = mk("div", "mz-nav"), last = i === M.exhibits.length - 1;
+    nav.append(btn("next mz-btn" + (last ? " exit" : ""), last ? M.exitButton : M.nextButton), btn("back", M.backButton));
+    s.append(mk("p", "mz-cat", ex.catalog), wall, pl, nav);
+    anchor.before(s);
+  });
+})();
 /* Pages */
 const pages = [...document.querySelectorAll(".page")];
 document.querySelector("#openApology").onclick = () => go(pages.indexOf(document.querySelector("#apology")));
@@ -748,12 +1063,36 @@ document.querySelectorAll("[data-q]").forEach(b => {
   };
 });
 document.querySelector("#chocoGift").onclick = e => { const r=document.querySelector("#ringReveal"); r.hidden=false; e.currentTarget.setAttribute("aria-expanded","true"); e.currentTarget.querySelector("span:last-child").textContent="A little sweetness, just for you 💗"; };
-let idx = 0;
+let idx = 0, goT = 0, enterT = 0;
+/* Page change: the old page melts out (fade + scale + blur), then the new one rises in piece by piece */
 function go(i){
-  idx = Math.max(0, Math.min(i, pages.length - 1));
-  pages.forEach((p, k) => p.hidden = k !== idx);
-  if (typeof onPage === "function") onPage(pages[idx]);
-  window.scrollTo(0, 0);
+  const n = Math.max(0, Math.min(i, pages.length - 1));
+  const from = pages[idx], to = pages[n];
+  const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  clearTimeout(goT); clearTimeout(enterT);
+  pages.forEach(p => { if (p !== from && p !== to){ p.hidden = true; p.classList.remove("leaving", "big", "entering", "lit"); } });
+  idx = n;
+  if (!unlocked && n >= 1 && to.id !== "apology") enterSite();
+  onNav(from, to);                       // theme melt, dock and music start right away, so they overlap the page change
+  const show = () => {
+    if (from !== to){ from.hidden = true; from.classList.remove("leaving", "big", "entering", "lit"); }
+    to.hidden = false;
+    to.classList.remove("leaving", "big");
+    [...to.children].forEach((c, k) => c.style.setProperty("--i", Math.min(k, 9)));
+    window.scrollTo(0, 0);
+    to.classList.remove("entering", "lit");
+    void to.offsetWidth;
+    to.classList.add("lit");
+    if (!still){ to.classList.add("entering"); enterT = setTimeout(() => to.classList.remove("entering"), 1900); }
+    if (typeof onPage === "function") onPage(to);
+  };
+  if (from === to || from.hidden || still) show();
+  else {
+    from.style.setProperty("--sy", window.scrollY + "px");
+    from.classList.toggle("big", from.scrollHeight > window.innerHeight * 3);
+    from.classList.add("leaving");
+    goT = setTimeout(show, 340);
+  }
 }
 document.querySelectorAll(".next").forEach(b => b.onclick = () => go(idx + 1));
 document.querySelectorAll(".back").forEach(b => b.onclick = () => go(idx - 1));
@@ -819,11 +1158,15 @@ CONFIG.stickers.forEach((src, i) => {
   document.body.append(im);
 });
 
-/* Music: floating Control Center */
-const audio = new Audio();
-audio.preload = "none";
-audio.setAttribute("playsinline", "");
+/* Music: floating Control Center, with two players so one song can melt into the next */
+const players = [new Audio(), new Audio()];
+players.forEach(a => { a.preload = "none"; a.setAttribute("playsinline", ""); });
+let audio = players[0];                 // the player that is "now playing"
 let cur = -1, srcTry = 0;
+/* iPhones ignore volume changes, so a crossfade there would just be two songs at once: detect it and switch instantly instead */
+const canFade = (() => { try { const t = new Audio(); t.volume = .35; return Math.abs(t.volume - .35) < .01; } catch (e){ return false; } })();
+const safePlay = a => { const p = a.play(); if (p && p.catch) p.catch(() => {}); };
+const pauseAll = () => players.forEach(a => { clearInterval(a._ramp); a.pause(); if (canFade) a.volume = 1; });
 function songSources(s){
   const f = s.file, enc = encodeURI(decodeURI(f));
   return enc === f ? [f] : [f, enc];
@@ -834,6 +1177,15 @@ function loadTrack(i, k){
   srcTry = k;
   audio.src = list[k];
   return true;
+}
+function ramp(el, to, ms, done){
+  clearInterval(el._ramp);
+  const from = el.volume, t0 = Date.now();
+  el._ramp = setInterval(() => {
+    const p = Math.min(1, (Date.now() - t0) / ms);
+    try { el.volume = Math.max(0, Math.min(1, from + (to - from) * p)); } catch (e){}
+    if (p >= 1){ clearInterval(el._ramp); el._ramp = 0; if (done) done(); }
+  }, 40);
 }
 function renderSongs(){
   const t = $("#tracks"); t.innerHTML = "";
@@ -851,34 +1203,60 @@ function renderSongs(){
   $("#ccPlay").textContent = audio.paused ? "▶" : "❚❚";
 }
 function playTrack(i, force){
-  if (!force && i === cur && !audio.paused){ audio.pause(); return; }
-  if (i !== cur || force){ cur = i; loadTrack(i, 0); }
+  if (!force && i === cur && !audio.paused){ pauseAll(); return; }
   $("#note").textContent = "";
-  const p = audio.play();
-  if (p && p.catch) p.catch(() => {});
-}
-audio.onplay = audio.onpause = () => {
-  document.body.classList.toggle("playing", !audio.paused);
+  if (!force && i === cur){ safePlay(audio); return; }            // resume the paused song
+  const old = audio, ms = (CONFIG.crossfadeSeconds || 0) * 1000;
+  const melt = canFade && ms > 0 && cur >= 0 && !old.paused && !old.ended;
+  cur = i;
+  if (melt){
+    audio = players[old === players[0] ? 1 : 0];
+    clearInterval(audio._ramp);
+    audio.pause();
+    audio.volume = 0;
+    loadTrack(i, 0);
+    safePlay(audio);
+    ramp(audio, 1, ms);
+    ramp(old, 0, ms, () => { old.pause(); old.volume = 1; });
+  } else {
+    players.forEach(a => { clearInterval(a._ramp); if (a !== audio) a.pause(); if (canFade) a.volume = 1; });
+    loadTrack(i, 0);
+    safePlay(audio);
+  }
   renderSongs();
-};
-audio.onended = () => playTrack((cur + 1) % CONFIG.songs.length, true);
-audio.onerror = () => {
-  if (cur >= 0 && loadTrack(cur, srcTry + 1)){ const p = audio.play(); if (p && p.catch) p.catch(() => {}); return; }
-  $("#note").textContent = "I couldn't find " + (cur >= 0 ? CONFIG.songs[cur].file : "this song") + ". Check that it is uploaded in the songs folder with exactly that name.";
-};
-$("#ccPlay").onclick = () => { if (cur < 0) playTrack(0, true); else if (audio.paused){ const p = audio.play(); if (p && p.catch) p.catch(() => {}); } else audio.pause(); };
+}
+players.forEach(a => {
+  a.onplay = a.onpause = () => {
+    if (a !== audio) return;
+    document.body.classList.toggle("playing", !audio.paused);
+    renderSongs();
+  };
+  a.onended = () => { if (a === audio) playTrack((cur + 1) % CONFIG.songs.length, true); };
+  a.onerror = () => {
+    if (a !== audio) return;
+    if (cur >= 0 && loadTrack(cur, srcTry + 1)){ safePlay(audio); return; }
+    $("#note").textContent = "I couldn't find " + (cur >= 0 ? CONFIG.songs[cur].file : "this song") + ". Check that it is uploaded in the songs folder with exactly that name.";
+  };
+});
+$("#ccPlay").onclick = () => { if (cur < 0) playTrack(0, true); else if (audio.paused) safePlay(audio); else pauseAll(); };
 $("#ccNext").onclick = () => playTrack(((cur < 0 ? -1 : cur) + 1) % CONFIG.songs.length, true);
 $("#ccPrev").onclick = () => playTrack(((cur < 0 ? 0 : cur) - 1 + CONFIG.songs.length) % CONFIG.songs.length, true);
 $("#ccToggle").onclick = () => { const o = $("#cc").classList.toggle("open"); $("#ccToggle").setAttribute("aria-expanded", o); };
 $("#ccImg").src = CONFIG.photos.songs;
 $("#ccImg").onerror = e => e.target.style.visibility = "hidden";
 renderSongs();
-function unlock(){
-  go(1); fx();
+/* Everything that switches on once she is inside: hearts, the music player, the dock */
+function enterSite(){
+  unlocked = true;
+  fx();
   $("#cc").hidden = false;
   document.body.classList.add("cc-on");
   if (cur < 0) playTrack(0, true);
-  document.querySelector("#gift .scene").focus();
+}
+function unlock(){
+  enterSite();
+  go(1);
+  setTimeout(() => { const s = document.querySelector("#gift .scene"); if (s && !$("#gift").hidden) s.focus({ preventScroll: true }); }, 520);
 }
 
 /* ============ v3 extras ============ */
@@ -1194,6 +1572,174 @@ CONFIG.bucket.forEach(t => {
     }
   };
 })();
+/* ============ v5: theme melting, floating dock, arrow keys + swipe, micro-interactions ============ */
+let unlocked = false, mzSongDone = false;
+const isMz = p => !!p && p.classList.contains("mz");
+const metaTheme = (() => {
+  let m = document.querySelector('meta[name="theme-color"]');
+  if (!m){ m = document.createElement("meta"); m.name = "theme-color"; document.head.append(m); }
+  return m;
+})();
+metaTheme.content = "#fdf0f3";
+
+/* The dock: one button per section, plus dots for the pages inside the current section */
+const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+const SECTIONS = (CONFIG.dock || []).map(d => ({
+  icon: d.icon, label: d.label,
+  list: d.pages.reduce((a, tok) => a.concat(pages.filter(p => tok === "letter" ? p.classList.contains("letter-page") : tok === "museum" ? isMz(p) : p.id === tok)), [])
+})).filter(s => s.list.length);
+const FIRST = 1, LAST = pages.indexOf($("#final"));
+function flowNext(){ if (unlocked && idx >= FIRST && idx < LAST) go(idx + 1); }
+function flowPrev(){ if (unlocked && idx > FIRST && idx <= LAST) go(idx - 1); }
+const dkStrip = $("#dkStrip"), dkSub = $("#dkSub");
+SECTIONS.forEach(s => {
+  const b = mk("button", "dk-item", s.icon);
+  b.type = "button"; b.title = s.label; b.setAttribute("aria-label", s.label);
+  b.onclick = () => go(pages.indexOf(s.list[0]));
+  dkStrip.append(b);
+});
+$("#dkPrev").onclick = flowPrev;
+$("#dkNext").onclick = flowNext;
+function updateDock(){
+  const dock = $("#dock"), show = unlocked && idx > 0;
+  dock.hidden = !show;
+  document.body.classList.toggle("dock-on", show);
+  const pg = pages[idx], si = SECTIONS.findIndex(s => s.list.includes(pg));
+  [...dkStrip.children].forEach((b, k) => {
+    b.classList.toggle("on", k === si);
+    if (k === si) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+  });
+  dkSub.innerHTML = "";
+  dkSub.hidden = si < 0;
+  if (si >= 0){
+    const s = SECTIONS[si], mz = isMz(s.list[0]);
+    dkSub.append(mk("span", "dk-label", s.label));
+    if (s.list.length > 1) s.list.forEach((p, k) => {
+      const d = mk("button", "dk-dot" + (mz ? " num" : "") + (p === pg ? " on" : ""), mz ? (k === 0 ? "✦" : ROMAN[k - 1] || String(k)) : "");
+      d.type = "button";
+      d.setAttribute("aria-label", s.label + ", page " + (k + 1) + " of " + s.list.length);
+      d.onclick = () => go(pages.indexOf(p));
+      dkSub.append(d);
+    });
+    const it = dkStrip.children[si];
+    if (show && it && dkStrip.scrollWidth > dkStrip.clientWidth) dkStrip.scrollLeft = it.offsetLeft - dkStrip.clientWidth / 2 + it.offsetWidth / 2;
+  }
+  $("#dkPrev").disabled = !(idx > FIRST && idx <= LAST);
+  $("#dkNext").disabled = !(idx >= FIRST && idx < LAST);
+}
+
+/* Runs at the very start of every page change */
+function enterMuseumAudio(){
+  const f = CONFIG.museum.enterSong;
+  if (!f || mzSongDone) return;
+  mzSongDone = true;
+  const i = CONFIG.songs.findIndex(s => s.file === f);
+  if (i < 0 || i === cur || cur < 0 || audio.paused) return;     // only when music is already playing, and never over her own pause
+  playTrack(i, true);
+}
+function onNav(from, to){
+  const m = isMz(to);
+  document.body.classList.toggle("museum", m);                    // pink <-> royal burgundy melt (CSS does the fading)
+  metaTheme.content = m ? "#1A050A" : "#fdf0f3";
+  if (m && !isMz(from)){
+    enterMuseumAudio();
+    document.querySelectorAll(".mz-mat img").forEach(im => { if (im.decode) im.decode().catch(() => {}); });   // have every photo ready before she reaches it
+  }
+  updateDock();
+}
+
+/* Keyboard arrows */
+document.addEventListener("keydown", e => {
+  if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const t = e.target;
+  if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+  if (!lb.hidden || !$("#ow").hidden) return;
+  if (e.key === "ArrowRight"){ flowNext(); }
+  else if (e.key === "ArrowLeft"){ flowPrev(); }
+});
+
+/* Swipe left / right on phones (never on the scratch cards, text boxes, the player or the dock) */
+(function(){
+  let sw = null;
+  document.addEventListener("touchstart", e => {
+    sw = null;
+    if (e.touches.length !== 1) return;
+    const t = e.target, c = e.touches[0];
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, .dodge")) return;
+    if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
+    sw = { x: c.clientX, y: c.clientY, t: Date.now() };
+  }, { passive: true });
+  document.addEventListener("touchend", e => {
+    if (!sw) return;
+    const c = e.changedTouches[0], dx = c.clientX - sw.x, dy = c.clientY - sw.y, dt = Date.now() - sw.t;
+    sw = null;
+    if (dt < 700 && Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 2){ if (dx < 0) flowNext(); else flowPrev(); }
+  }, { passive: true });
+  document.addEventListener("touchcancel", () => { sw = null; }, { passive: true });
+})();
+
+/* Warm gold spotlight that follows the cursor (or finger) inside the museum */
+(function(){
+  const spot = $("#mzSpot");
+  let raf = 0, x = 0, y = 0;
+  const put = () => { raf = 0; spot.style.setProperty("--mx", x + "px"); spot.style.setProperty("--my", y + "px"); };
+  const move = (cx, cy) => {
+    if (!document.body.classList.contains("museum")) return;
+    x = cx; y = cy;
+    if (!raf) raf = requestAnimationFrame(put);
+  };
+  document.addEventListener("pointermove", e => move(e.clientX, e.clientY), { passive: true });
+  document.addEventListener("touchmove", e => { const t = e.touches[0]; if (t) move(t.clientX, t.clientY); }, { passive: true });
+  /* slow gold dust drifting up through the gallery */
+  const bg = $("#mzBg");
+  for (let i = 0; i < 20; i++){
+    const m = document.createElement("i");
+    m.className = "mote";
+    m.style.cssText = `left:${(Math.random() * 100).toFixed(1)}%;--d:${(2 + Math.random() * 3).toFixed(1)}px;--dx:${Math.round(Math.random() * 80 - 40)}px;animation-duration:${(14 + Math.random() * 16).toFixed(1)}s;animation-delay:${(-Math.random() * 20).toFixed(1)}s`;
+    bg.append(m);
+  }
+})();
+
+/* 3D tilt on cards and frames */
+function addTilt(el, max, touch){
+  const set = e => {
+    if (e.pointerType !== "mouse" && !touch) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    el.classList.add("tilting");
+    el.style.setProperty("--ry", (x * max).toFixed(2) + "deg");
+    el.style.setProperty("--rx", (-y * max).toFixed(2) + "deg");
+    el.style.setProperty("--gx", ((x + .5) * 100).toFixed(1) + "%");
+    el.style.setProperty("--gy", ((y + .5) * 100).toFixed(1) + "%");
+  };
+  const rest = () => { el.classList.remove("tilting"); el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg"); };
+  el.addEventListener("pointermove", set);
+  if (touch) el.addEventListener("pointerdown", set);
+  el.addEventListener("pointerleave", rest);
+  el.addEventListener("pointercancel", rest);
+  el.addEventListener("pointerup", e => { if (e.pointerType !== "mouse") rest(); });
+}
+if (!reduceMotion){
+  document.querySelectorAll(".mz-frame").forEach(el => addTilt(el, 16, true));
+  document.querySelectorAll(".mz-plaque, .mile, .qcard, .capsule, .apology-teaser").forEach(el => { el.classList.add("tilt"); addTilt(el, el.classList.contains("mile") ? 10 : 6, false); });
+  /* magnetic buttons: they lean toward the cursor (mouse only) */
+  if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches){
+    document.querySelectorAll(".next, .apology-teaser button, .apology-back").forEach(b => {
+      b.classList.add("magnet");
+      b.addEventListener("pointermove", e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${((e.clientX - r.left - r.width / 2) * .22).toFixed(1)}px,${((e.clientY - r.top - r.height / 2) * .35).toFixed(1)}px)`;
+      });
+      b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+    });
+  }
+}
+
+/* First paint: the lock screen rises in too */
+[...pages[0].children].forEach((c, k) => c.style.setProperty("--i", Math.min(k, 9)));
+pages[0].classList.add("lit");
+if (!reduceMotion){ pages[0].classList.add("entering"); enterT = setTimeout(() => pages[0].classList.remove("entering"), 1900); }
+updateDock();
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 </script>
