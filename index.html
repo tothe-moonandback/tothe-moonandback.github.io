@@ -524,6 +524,8 @@ body.e11 .page,body.e11 .xpage{padding-top:128px}
 #elBg,#elFx,.el-sub{transition-duration:.01s}
 #elFx{display:none}
 }
+/* v8: the touch / cursor light works on the whole website (warm pastel glow outside the museum, gold inside) */
+body.spot-on:not(.museum) #mzSpot{opacity:1;mix-blend-mode:normal;background:radial-gradient(circle 250px at var(--mx,50%) var(--my,32%),rgba(255,222,140,.44),rgba(255,160,200,.22) 45%,transparent 72%)}
 </style>
 </head>
 <body>
@@ -1800,7 +1802,7 @@ document.addEventListener("keydown", e => {
   let raf = 0, x = 0, y = 0;
   const put = () => { raf = 0; spot.style.setProperty("--mx", x + "px"); spot.style.setProperty("--my", y + "px"); };
   const move = (cx, cy) => {
-    if (!document.body.classList.contains("museum")) return;
+    document.body.classList.add("spot-on");            // the light follows her on every page, not only in the museum
     x = cx; y = cy;
     if (!raf) raf = requestAnimationFrame(put);
   };
