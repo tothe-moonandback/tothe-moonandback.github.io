@@ -526,6 +526,134 @@ body.e11 .page,body.e11 .xpage{padding-top:128px}
 }
 /* v8: the touch / cursor light works on the whole website (warm pastel glow outside the museum, gold inside) */
 body.spot-on:not(.museum) #mzSpot{opacity:1;mix-blend-mode:normal;background:radial-gradient(circle 250px at var(--mx,50%) var(--my,32%),rgba(255,222,140,.44),rgba(255,160,200,.22) 45%,transparent 72%)}
+/* v9: Major Update 2.0 - hub, flip cards, emergency popups, voice cassettes, date ticket, contract, photo booth, heartbeat */
+.u2-small{font-size:1.05rem;opacity:.85}
+#hubTitle{font-size:clamp(2rem,9.2vw,3rem)}
+.u2-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;padding:12px 26px;border-radius:30px;border:1px solid var(--rose);background:#fff;color:var(--ink);font:600 1.2rem "Cormorant Garamond",serif;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .25s,box-shadow .25s}
+.u2-btn:active{transform:scale(.96)}
+.u2-btn.main{border-color:#fff;background:linear-gradient(120deg,#ffa9cb,#ffd27a 52%,#a9d6ff);box-shadow:0 12px 28px -12px rgba(255,140,185,.85)}
+.u2-btn:focus-within{outline:3px solid var(--rose);outline-offset:3px}
+.u2-ghost{background:none;border:1px dashed #e4adbe;border-radius:22px;padding:9px 18px;font:italic 1.05rem "Cormorant Garamond",serif;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.u2-file{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
+/* hub */
+.u2-hub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(620px,100%)}
+.u2-hub button{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 10px 14px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;color:var(--ink);font:600 1.1rem/1.25 "Cormorant Garamond",serif;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .25s}
+.u2-hub button:active{transform:scale(.97)}
+.u2-hub .ic{font-size:2.1rem;line-height:1.1}
+.u2-hub .n{font:italic .92rem "Cormorant Garamond",serif;color:#9a5268;font-variant-numeric:lining-nums}
+.u2-hub button:last-child{grid-column:1 / -1;flex-direction:row;justify-content:center;gap:12px;background:linear-gradient(120deg,#ffe0ec,#fff1d6 50%,#e2f0ff)}
+.u2-hub button::after{content:"\1F380";position:absolute;top:7px;right:10px;font-size:.95rem;transform:rotate(16deg);opacity:.85}
+@media (min-width:700px){.u2-hub{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* 1: flip cards */
+.lt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(640px,100%)}
+@media (min-width:820px){.lt-grid{grid-template-columns:repeat(4,minmax(0,1fr));width:min(980px,100%)}}
+.lt-card{position:relative;height:238px;perspective:900px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;outline-offset:4px;border-radius:22px}
+.lt-in{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .75s cubic-bezier(.3,1.2,.4,1)}
+.lt-card.flipped .lt-in{transform:rotateY(180deg)}
+.lt-face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 12px;border-radius:22px;border:1px solid #efbdcc;-webkit-backface-visibility:hidden;backface-visibility:hidden;text-align:center;box-shadow:0 12px 26px -18px #9d536a}
+.lt-front{background:linear-gradient(145deg,#fffdf8,#fce8e8)}
+.lt-front::before{content:"\1F380";position:absolute;top:9px;left:11px;font-size:1rem;transform:rotate(-18deg)}
+.lt-front .ic{font-size:2.6rem;line-height:1.1}
+.lt-front b{font:600 1.22rem/1.2 "Cormorant Garamond",serif}
+.lt-front small{font:italic .92rem "Cormorant Garamond",serif;color:#b37a8c}
+.lt-back{transform:rotateY(180deg);-webkit-transform:rotateY(180deg);background:linear-gradient(145deg,#fff6fa,#e9f3ff);font:italic 500 1rem/1.32 "Cormorant Garamond",serif;justify-content:flex-start;overflow:auto}
+.lt-back span{margin:auto 0}
+/* 2: emergency buttons + comfort popup */
+.sos-list{display:flex;flex-direction:column;gap:12px;width:min(520px,100%)}
+.sos-btn{display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;border-radius:20px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;color:var(--ink);font:600 1.2rem/1.25 "Cormorant Garamond",serif;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .25s}
+.sos-btn:active{transform:scale(.98)}
+.sos-btn .ic{flex:none;width:46px;height:46px;border-radius:50%;background:var(--petal);display:grid;place-items:center;font-size:1.5rem;line-height:1}
+#u2m{position:fixed;inset:0;z-index:200;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;padding:18px;background:radial-gradient(circle at 50% 40%,rgba(255,244,250,.86),rgba(222,236,255,.84) 60%,rgba(255,236,206,.82));touch-action:none}
+#u2m[hidden]{display:none}
+#u2m:not([hidden]){animation:lbFade .4s ease}
+.u2m-card{position:relative;width:min(480px,100%);max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 20px 20px;border-radius:28px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,240,247,.66) 50%,rgba(232,244,255,.7));-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 30px 80px -24px rgba(140,90,160,.6),0 0 0 1px rgba(255,236,190,.5),inset 0 1px 0 #fff;color:var(--ink);text-align:center;outline:0;animation:elCardIn .7s cubic-bezier(.2,.9,.25,1.12) backwards}
+.u2m-title{margin:0;font:600 1.3rem/1.3 "Cormorant Garamond",serif}
+.u2m-text{margin:0;font:italic 500 1.28rem/1.55 "Cormorant Garamond",serif}
+.u2m-note{margin:0;font:italic 1rem/1.35 "Cormorant Garamond",serif;color:#9a5268}
+.u2m-note[hidden]{display:none}
+/* 3: voice note cassettes */
+.vn-list{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;width:min(520px,100%)}
+@media (min-width:820px){.vn-list{grid-template-columns:repeat(2,minmax(0,1fr));width:min(880px,100%)}}
+.vn{position:relative;display:flex;flex-direction:column;gap:10px;width:100%;padding:14px 14px 12px;border-radius:20px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;color:var(--ink);text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .25s,box-shadow .3s}
+.vn:active{transform:scale(.985)}
+.vn.playing{box-shadow:0 14px 30px -14px rgba(201,112,139,.9),0 0 0 2px rgba(255,143,180,.55)}
+.vn-label{display:block;padding:7px 12px;border-radius:12px;border:1px dashed #e9b5c4;background:#fff;font:600 1.2rem/1.25 "Cormorant Garamond",serif;text-align:center}
+.vn-win{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:16px;background:linear-gradient(180deg,#6a3348,#4a2232)}
+.vn-reel{flex:none;width:42px;height:42px;border-radius:50%;border:3px solid #ffb3cf;background:radial-gradient(circle,#4a2232 0 20%,transparent 21%),repeating-conic-gradient(#ffe3ee 0 30deg,#ff9fc4 30deg 60deg)}
+.vn.playing .vn-reel{animation:spin 2.4s linear infinite}
+.vn-bars{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:34px}
+.vn-bars i{width:5px;height:22%;border-radius:3px;background:linear-gradient(#ffe3ee,#ff8fb4)}
+.vn-bars b{font-size:1.15rem;line-height:1;color:#ff8fb4;margin:0 3px}
+.vn.playing .vn-bars i{animation:vnBar .9s ease-in-out infinite}
+.vn.playing .vn-bars i:nth-child(2n){animation-duration:.7s}
+.vn.playing .vn-bars i:nth-child(3n){animation-duration:1.1s;animation-delay:-.3s}
+.vn.playing .vn-bars i:nth-child(4n){animation-delay:-.5s}
+.vn.playing .vn-bars b{animation:vnHeart .8s ease-in-out infinite}
+@keyframes vnBar{0%,100%{height:20%}50%{height:100%}}
+@keyframes vnHeart{50%{transform:scale(1.35)}}
+.vn-play{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid #ffb3cf;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:1rem;line-height:1}
+.vn-prog{display:block;height:4px;border-radius:2px;background:#f7cfdb;overflow:hidden}
+.vn-prog i{display:block;width:0;height:100%;border-radius:2px;background:var(--rose)}
+/* 4: date ticket builder */
+.tk-steps{display:flex;flex-direction:column;gap:14px;width:min(640px,100%)}
+.tk-step{padding:16px 14px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;text-align:center}
+.tk-step h3{margin:0 0 10px;font:600 1.32rem/1.2 "Cormorant Garamond",serif}
+.tk-step p{margin:0 0 10px;font-style:italic;font-size:1.1rem}
+.tk-n{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:8px;border-radius:50%;background:var(--rose);color:#fff;font:600 1rem "Cormorant Garamond",serif;font-variant-numeric:lining-nums;vertical-align:middle}
+.tk-opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tk-step input{width:100%;border:1px solid #e6b3c3;border-radius:14px;background:rgba(255,255,255,.9);padding:10px 12px;font:italic 1.1rem "Cormorant Garamond",serif;color:var(--ink);-webkit-appearance:none;appearance:none}
+.tk-step input:focus{outline:2px solid var(--rose);outline-offset:1px}
+.tk-step.miss{border-color:var(--rose);box-shadow:0 0 0 3px rgba(201,112,139,.35)}
+.tk-out,.pb-out{display:flex;flex-direction:column;align-items:center;gap:12px;width:min(640px,100%)}
+.tk-out[hidden],.pb-out[hidden]{display:none}
+.tk-out img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 18px 40px -20px #9d536a;animation:softIn .8s backwards}
+/* 5: forever contract */
+.ct-card{position:relative;width:min(600px,100%);padding:26px 20px 20px;border-radius:22px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fff3f6);box-shadow:0 18px 42px -22px #9d536a,inset 0 0 0 6px #fff,inset 0 0 0 7px rgba(233,181,196,.8);text-align:center;overflow:hidden}
+.ct-card h3{margin:0;font-size:2.6rem;font-weight:400;line-height:1.1;color:var(--rose)}
+.ct-parties{margin:2px 0 14px;font-style:italic;font-size:1.15rem}
+.ct-clauses{margin:0 0 16px;padding:0 4px 0 26px;text-align:left;font-size:1.2rem;line-height:1.42;font-variant-numeric:lining-nums}
+.ct-clauses li{margin-bottom:8px}
+.ct-clauses li::marker{color:var(--rose);font-weight:600}
+.ct-label{margin:0 0 6px;font-style:italic;font-size:1.05rem;color:#9a5268}
+.ct-pad{position:relative;width:100%;height:170px;border-radius:16px;border:1px dashed #e4adbe;background:#fff}
+.ct-pad::before{content:"\2715";position:absolute;left:18px;bottom:38px;color:rgba(201,112,139,.6);font-size:.9rem;pointer-events:none}
+.ct-pad::after{content:"";position:absolute;left:18px;right:18px;bottom:34px;border-bottom:1.5px solid rgba(201,112,139,.45);pointer-events:none}
+.ct-pad canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:16px;touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ct-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-top:12px}
+.ct-date{margin:10px 0 0;min-height:1.2em;font-style:italic;font-size:1.08rem;font-variant-numeric:lining-nums}
+.ct-seal{position:absolute;right:12px;bottom:74px;width:126px;height:126px;display:grid;place-items:center;padding:14px;border-radius:47% 53% 50% 50% / 52% 48% 52% 48%;background:radial-gradient(circle at 34% 30%,#ffc0d6,#ff7fa8 55%,#d9507f);color:#fff;font:700 .92rem/1.2 "Cormorant Garamond",serif;letter-spacing:.06em;text-align:center;box-shadow:0 10px 22px -8px rgba(217,80,127,.9),inset 0 0 0 5px rgba(255,255,255,.35),inset 0 0 0 9px rgba(217,80,127,.5);transform:rotate(-12deg);pointer-events:none}
+.ct-seal[hidden]{display:none}
+.ct-seal.stamp{animation:ctStamp .75s cubic-bezier(.2,1.5,.4,1) backwards}
+@keyframes ctStamp{0%{opacity:0;transform:rotate(-30deg) scale(2.6)}60%{opacity:1;transform:rotate(-10deg) scale(.92)}100%{transform:rotate(-12deg) scale(1)}}
+.ct-card.sealed .ct-pad canvas{pointer-events:none}
+.ct-card.sealed .ct-actions{display:none}
+/* 6: photo booth */
+.pb-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pb-thumbs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pb-thumbs figure{position:relative;margin:0;width:84px;height:84px;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 18px -10px #9d536a}
+.pb-thumbs img{display:block;width:100%;height:100%;object-fit:cover}
+.pb-thumbs button{position:absolute;top:2px;right:2px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(91,45,61,.82);color:#fff;font-size:.8rem;line-height:1;padding:0;cursor:pointer}
+.pb-out{width:min(360px,100%)}
+.pb-out img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 18px 40px -20px #9d536a;animation:softIn .8s backwards}
+/* 7: floating heartbeat button, screen pulse, toast */
+#hbBtn{position:fixed;right:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 104px);z-index:92;width:52px;height:52px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 32% 28%,#ffd3e3,#ff8fb4 60%,#e9638f);box-shadow:0 10px 24px -8px rgba(233,99,143,.9);font-size:1.6rem;line-height:1;padding:0;display:grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;animation:hbBeat 1.6s ease-in-out infinite}
+#hbBtn[hidden]{display:none}
+@keyframes hbBeat{0%,100%{transform:scale(1);box-shadow:0 10px 24px -8px rgba(233,99,143,.9),0 0 0 0 rgba(255,143,180,.55)}14%{transform:scale(1.12)}28%{transform:scale(1)}42%{transform:scale(1.08)}70%{transform:scale(1);box-shadow:0 10px 24px -8px rgba(233,99,143,.9),0 0 0 14px rgba(255,143,180,0)}}
+body.museum #hbBtn{border-color:#F3E5AB}
+body.dock-on .kitty.r{right:72px}
+#hbPulse{position:fixed;inset:0;z-index:180;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,transparent 36%,rgba(255,120,170,.42) 100%)}
+#hbPulse.go{animation:hbPulse 1s ease-out}
+@keyframes hbPulse{0%{opacity:0}12%{opacity:1}30%{opacity:.25}46%{opacity:.9}100%{opacity:0}}
+#toast{position:fixed;left:50%;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 172px);transform:translateX(-50%);z-index:260;width:max-content;max-width:calc(100% - 28px);padding:10px 18px;border-radius:22px;border:1px solid var(--rose);background:rgba(255,255,255,.97);color:var(--ink);font:600 1.08rem/1.3 "Cormorant Garamond",serif;text-align:center;box-shadow:0 12px 30px -12px rgba(150,60,90,.7);pointer-events:none}
+#toast[hidden]{display:none}
+#toast.show{animation:toastIn .4s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(14px) scale(.94)}}
+/* one more icon in the dock: keep it on one row on phones */
+@media (max-width:400px){.dk-item{width:33px;height:34px;font-size:1.02rem}.dk-arrow{width:29px;height:34px}.dk-strip,.dk-bar{gap:3px}.dk-sub{gap:3px;padding:3px 9px}}
+@media (prefers-reduced-motion:reduce){
+#hbBtn,#hbPulse.go,#toast.show,.vn.playing .vn-reel,.vn.playing .vn-bars i,.vn.playing .vn-bars b,.ct-seal.stamp,#u2m:not([hidden]),.u2m-card,.tk-out img,.pb-out img{animation:none}
+.lt-in{transition-duration:.01s}
+}
 </style>
 </head>
 <body>
@@ -666,6 +794,86 @@ body.spot-on:not(.museum) #mzSpot{opacity:1;mix-blend-mode:normal;background:rad
   <button class="back" type="button">‹ Back</button>
   <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
+<!-- v9: Major Update 2.0 — the hub and six feature pages (filled in from CONFIG.update2) -->
+<section id="hub" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="hubTitle"></h2>
+  <p class="sub" id="hubSub"></p>
+  <div class="u2-hub" id="hubGrid"></div>
+  <p class="sub u2-small" id="hubHint"></p>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2little" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="ltTitle"></h2>
+  <p class="sub" id="ltSub"></p>
+  <div class="lt-grid" id="ltGrid"></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2sos" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="sosTitle"></h2>
+  <p class="sub" id="sosSub"></p>
+  <div class="sos-list" id="sosList"></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2voice" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="vnTitle"></h2>
+  <p class="sub" id="vnSub"></p>
+  <div class="vn-list" id="vnList"></div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2ticket" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="tkTitle"></h2>
+  <p class="sub" id="tkSub"></p>
+  <div class="tk-steps" id="tkSteps"></div>
+  <button class="u2-btn main" id="tkGo" type="button"></button>
+  <div class="tk-out" id="tkOut" hidden>
+    <img id="tkImg" alt="Our date boarding pass">
+    <button class="u2-btn" id="tkDl" type="button"></button>
+  </div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2contract" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="ctTitle"></h2>
+  <article class="ct-card" id="ctCard">
+    <h3 class="script" id="ctHeading"></h3>
+    <p class="ct-parties" id="ctParties"></p>
+    <ol class="ct-clauses" id="ctClauses"></ol>
+    <p class="ct-label" id="ctLabel"></p>
+    <div class="ct-pad"><canvas id="ctCanvas" aria-label="Signature pad"></canvas></div>
+    <div class="ct-actions"><button class="u2-ghost" id="ctClear" type="button"></button><button class="u2-btn main" id="ctSeal" type="button"></button></div>
+    <p class="ct-date" id="ctDate" role="status"></p>
+    <div class="ct-seal" id="ctStamp" hidden></div>
+  </article>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<section id="u2booth" class="stage page xpage u2" hidden>
+  <h2 class="script big" id="pbTitle"></h2>
+  <p class="sub" id="pbSub"></p>
+  <div class="pb-actions">
+    <label class="u2-btn main"><input class="u2-file" id="pbPick" type="file" accept="image/*" multiple><span id="pbPickTxt"></span></label>
+    <label class="u2-btn"><input class="u2-file" id="pbSnap" type="file" accept="image/*" capture="user"><span id="pbSnapTxt"></span></label>
+  </div>
+  <div class="pb-thumbs" id="pbThumbs"></div>
+  <div class="pb-out" id="pbOut" hidden>
+    <img id="pbImg" alt="Our photo booth strip">
+    <button class="u2-btn main" id="pbDl" type="button"></button>
+    <button class="u2-ghost" id="pbReset" type="button"></button>
+  </div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
+  <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
 <!-- 10. Bucket list + promise capsule -->
 <section id="future" class="stage page xpage" hidden>
   <h2 class="script big" id="bucketTitle"></h2>
@@ -739,6 +947,18 @@ body.spot-on:not(.museum) #mzSpot{opacity:1;mix-blend-mode:normal;background:rad
     <button class="dk-arrow" id="dkNext" type="button" aria-label="Next page">›</button>
   </div>
 </nav>
+<!-- v9: Update 2.0 - screen pulse, floating heartbeat button, toast, comfort popup -->
+<div id="hbPulse" aria-hidden="true"></div>
+<button id="hbBtn" type="button" hidden><span aria-hidden="true">💓</span></button>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<div id="u2m" hidden role="dialog" aria-modal="true" aria-labelledby="u2mTitle">
+  <div class="u2m-card" id="u2mCard" tabindex="-1">
+    <p class="u2m-title" id="u2mTitle"></p>
+    <p class="u2m-text" id="u2mText"></p>
+    <p class="u2m-note" id="u2mNote" hidden></p>
+    <button class="el-go" id="u2mClose" type="button"></button>
+  </div>
+</div>
 <div id="cc" hidden>
   <div class="cc-bar">
     <button class="cc-btn" id="ccToggle" type="button" aria-expanded="false" aria-label="Show or hide the song list">♪</button>
@@ -953,6 +1173,8 @@ const CONFIG = {
     { icon: "💞", label: "Our Little World", pages: ["us"] },
     { icon: "🎟️", label: "Coupons & Open When", pages: ["treats", "openwhen"] },
     { icon: "💭", label: "Quizzes", pages: ["quiz", "mood"] },
+    // marks = the little jump icons shown above the bottom bar for this section's pages (hub first, then features 1 to 6)
+    { icon: "✨", label: "Update 2.0 Hub", pages: ["hub", "u2little", "u2sos", "u2voice", "u2ticket", "u2contract", "u2booth"], marks: ["✨", "🎀", "🚨", "🎙️", "🎟️", "💍", "📸"] },
     { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
   ],
   // ---- v7: 11/11 • 11:11 Special Edition (starts right after the correct PIN) ----
@@ -975,6 +1197,128 @@ const CONFIG = {
     signoff: `I love you to the moon and back, Mimi. 💗✨`,
     button: "Explore Our 11:11 World 💗✨",
     particles: ["✨", "💗", "🫧", "🎀"]   // what floats up in the background of the 11:11 theme
+  },
+  // ---- v9: Major Update 2.0 — The Ultimate MiMi Expansion (every word of it lives here) ----
+  update2: {
+    hubTitle: "✨ Update 2.0 Hub ✨",
+    hubSub: "Major Update 2.0 — The Ultimate MiMi Expansion",
+    hubHint: "Tap a card to jump there. The little icons above the bottom bar take you between them anytime.",
+    // The hub cards. page = the page each card opens ("heartbeat" sends a heartbeat instead of opening a page)
+    features: [
+      { icon: "🎀", title: "Little Things Only I Notice About You", page: "u2little" },
+      { icon: "🚨", title: "Your Emergency Adham", page: "u2sos" },
+      { icon: "🎙️", title: "Hear My Voice Whenever You Need Me", page: "u2voice" },
+      { icon: "🎟️", title: "Pick Our Next Date Ticket", page: "u2ticket" },
+      { icon: "💍", title: "The Official Forever Contract", page: "u2contract" },
+      { icon: "📸", title: "Hello Kitty & Bubbles Photo Booth", page: "u2booth" },
+      { icon: "💓", title: "Send Adham a Live Heartbeat", page: "heartbeat" }
+    ],
+    // FEATURE 1: flip cards
+    little: {
+      title: "Little Things Only I Notice About You 🎀🔍",
+      sub: "Tap a card to flip it and read my secret note.",
+      flipHint: "tap to flip 🎀",
+      cards: [
+        { front: `🙈 Your Shy Smile`, back: `The way you try so hard to hide your smile when you get shy, looking away like I won’t notice—when it’s literally my favorite view in the entire world.` },
+        { front: `😤 Your 'Sulking' Voice`, back: `That specific tone in your voice when you’re sulking and trying to sound serious and mad at me, even though you just end up sounding ten times cuter.` },
+        { front: `✨ Your Eyes When I Compliment You`, back: `That instant sparkle in your eyes the exact second I say something sweet to you, right before you get shy and don't know where to look.` },
+        { front: `🤪 Your Goofy Side Around Me`, back: `How completely silly, crazy, and unfiltered you let yourself be when it’s just the two of us—knowing only I get to see that adorable side of you.` },
+        { front: `🍔 The Food Mood-Switch`, back: `How you can be in the worst mood ever, but the moment you take the first bite of good food, your whole face lights up and you’re suddenly the happiest girl alive.` },
+        { front: `🥺 Fake 'Mad' For Extra Attention`, back: `When you pretend to be upset out of nowhere just because you want me to baby you and spoil you—and the best part is, I fall for it every single time.` },
+        { front: `🍼 Your Little Baby Voice`, back: `That soft little baby voice that comes out automatically when you’re feeling sleepy or spoiled—it melts my entire heart in half a second.` },
+        { front: `😢 Dramatic Fake Crying`, back: `When you’re upset and start doing that little fake cry just to make me fold and spoil you immediately—knowing full well I can never resist it.` }
+      ]
+    },
+    // FEATURE 2: comfort popups + an alert email to Adham ({button} in the subject becomes the button she tapped)
+    sos: {
+      title: "Your Emergency Adham 🚨💗",
+      sub: `If I'm asleep or busy and you need me right now, tap how you're feeling:`,
+      subject: "🚨 EMERGENCY ADHAM ALERT: MiMi clicked {button}!",
+      close: "Okay 💗",
+      failed: "The alert didn't reach me just now (check your connection), so message me too 💗",
+      buttons: [
+        { title: `😔 I'm feeling down & overwhelmed`, message: `Take a deep breath, my love. Whatever is stressing you out right now is temporary, and you don't have to carry it alone. Put everything down for a second, drink some water, and remember that I'm always in your corner. I just got an alert that you pressed this, so I'm coming to check on you very soon. I love you.` },
+        { title: `🌀 I'm overthinking everything`, message: `Hey, stop letting your mind play tricks on you. Nothing has changed, my heart is completely yours, and you are safe with me. Don't believe the loud thoughts in your head—believe how much I love you. Relax your mind, MiMi. I'm right here.` },
+        { title: `😤 I miss you (but I'm acting tough)`, message: `I knew it! You don't even have to admit it out loud, I already know when you want attention. Stop acting tough—I miss you way more anyway. Check your phone soon, I just got notified that you miss me 😉💗` },
+        { title: `🌸 I just need reassurance & sweet words`, message: `You are the prettiest, sweetest, most irreplaceable girl in my world. I don't need a reason to spoil you or remind you that you're my forever person. Praying for your peace and happiness until I talk to you.` }
+      ]
+    },
+    // FEATURE 3: voice notes. For each one the player tries the files in order and plays the first that exists.
+    voice: {
+      title: "Hear My Voice Whenever You Need Me 🎙️💗",
+      sub: "Tap a cassette to play it. Our music pauses by itself so you can hear me clearly.",
+      soon: "Voice note coming soon 🎙️💗",
+      notes: [
+        { title: `💭 Play when you miss me`, files: ["songs/voice1.mp3", "songs/voice1.m4a", "songs/Voice1.m4a.mp4"] },
+        { title: `🌙 Play right before you sleep`, files: ["songs/voice2.mp3", "songs/voice2.m4a", "songs/Voice2.m4a.mp4"] },
+        { title: `🌸 Play when you're having a hard day`, files: ["songs/voice3.mp3", "songs/voice3.m4a", "songs/Voice3.m4a.mp4"] },
+        { title: `💗 Play to remember who you are to me`, files: ["songs/voice4.mp3", "songs/voice4.m4a", "songs/Voice4.m4a.mp4"] }
+      ]
+    },
+    // FEATURE 4: date builder + boarding pass
+    ticket: {
+      title: "Pick Our Next Date Ticket 🎟️✨",
+      sub: "Four little choices and our next outing is planned.",
+      steps: [
+        { name: "The Vibe", options: ["Chill & Cozy Drive 🚗", "Cute Dinner Outing 🍝", "Spontaneous Adventure ✨"] },
+        { name: "The Craving", options: ["Seafood 🦐", "Chinese 🥡", "Pizza & Fast Food 🍕", "Surprise Me! 🎁"] },
+        { name: "Sweet Treat", options: ["Cold Dessert & Ice Cream 🍦", "Chocolate & Pastry 🍰", "Iced Coffee Together ☕"] }
+      ],
+      ruleName: "Her Secret Rule",
+      ruleHint: "One demand I must fulfill on that day without arguing:",
+      rulePlaceholder: "Type your secret rule here...",
+      noRule: "No secret rule this time",
+      generate: "Generate Our Date Boarding Pass 🎟️",
+      missing: "Pick one from each step first 🎀",
+      download: "Download Boarding Pass ⬇️",
+      passHeader: "DATE BOARDING PASS",
+      passAirline: "Hello Kitty & Bubbles Airlines",
+      passenger: "MiMi",
+      pilot: "Adham",
+      passFlight: "AM 1410",
+      passSeat: "Right next to me",
+      passFooter: "Valid for one unforgettable date 💗",
+      subject: "🎟️ MiMi just designed your next outing!"
+    },
+    // FEATURE 5: the contract she signs with her finger
+    contract: {
+      title: "The Official Forever Contract 💍✍️",
+      heading: "Forever Contract",
+      parties: "An official agreement between Adham & MiMi",
+      clauses: [
+        `MiMi is officially recognized as the cutest, most spoiled girl in the universe.`,
+        `Fake crying, sulking, and baby voices are legally guaranteed to receive immediate sweet words, spoiling, and full attention.`,
+        `No matter how busy or hard a day gets, we never go to sleep upset with each other.`,
+        `This love and promise are valid to the moon and back, forever and ever.`
+      ],
+      signLabel: "MiMi's signature (draw it with your finger):",
+      clear: "Clear",
+      seal: "Seal Our Forever 💗",
+      sealText: "SEALED FOREVER 💗✨",
+      needSign: "Sign it first, my love ✍️",
+      sealedOn: "Signed and sealed on",
+      subject: "💍 MiMi just signed the Forever Contract!"
+    },
+    // FEATURE 6: photo strip (photos stay on her phone, nothing is uploaded)
+    booth: {
+      title: "Hello Kitty & Bubbles Photo Booth 📸🎀",
+      sub: "Pick 1 to 3 photos, or snap new ones, and I'll turn them into a cute strip. Your photos never leave your phone.",
+      choose: "Choose photos 🖼️",
+      snap: "Take a photo 📸",
+      reset: "Start over",
+      max: "A strip holds three photos at most 🎀",
+      stripHeader: "Photo Booth",
+      footer: "Adham & MiMi Forever 💗",
+      download: "Download Photo Strip ⬇️"
+    },
+    // FEATURE 7: the floating heart button
+    heartbeat: {
+      label: "Send Adham a live heartbeat",
+      toast: `💓 Heartbeat sent to Adham's phone right now!`,
+      failed: "It didn't reach Adham just now. Check your connection and tap again 💗",
+      subject: "💓 MiMi just sent you a live heartbeat right now!",
+      cooldownSeconds: 10     // taps closer together than this still show hearts, but send only one email (0 = an email for every tap)
+    }
   },
   stickers: []   // e.g. ["stickers/1.png", "stickers/2.png", "stickers/3.png"]
 };
@@ -1567,6 +1911,7 @@ CONFIG.coupons.forEach(c => {
 /* Hook: set up canvases once their page is visible */
 function onPage(pg){
   if (pg && pg.id === "treats") setTimeout(() => document.querySelectorAll(".coupon canvas").forEach(initScratch), 60);
+  if (typeof u2OnPage === "function") u2OnPage(pg);
 }
 /* ============ v4: quiz, mood, bucket, capsule, send, final ============ */
 const ANS = {
@@ -1703,7 +2048,7 @@ metaTheme.content = "#fdf0f3";
 /* The dock: one button per section, plus dots for the pages inside the current section */
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 const SECTIONS = (CONFIG.dock || []).map(d => ({
-  icon: d.icon, label: d.label,
+  icon: d.icon, label: d.label, marks: d.marks,
   list: d.pages.reduce((a, tok) => a.concat(pages.filter(p => tok === "letter" ? p.classList.contains("letter-page") : tok === "museum" ? isMz(p) : p.id === tok)), [])
 })).filter(s => s.list.length);
 const FIRST = 1, LAST = pages.indexOf($("#final"));
@@ -1722,6 +2067,7 @@ function updateDock(){
   const dock = $("#dock"), show = unlocked && idx > 0;
   dock.hidden = !show;
   document.body.classList.toggle("dock-on", show);
+  $("#hbBtn").hidden = !show;                         // the floating heartbeat button appears and hides with the dock
   const pg = pages[idx], si = SECTIONS.findIndex(s => s.list.includes(pg));
   [...dkStrip.children].forEach((b, k) => {
     b.classList.toggle("on", k === si);
@@ -1730,10 +2076,10 @@ function updateDock(){
   dkSub.innerHTML = "";
   dkSub.hidden = si < 0;
   if (si >= 0){
-    const s = SECTIONS[si], mz = isMz(s.list[0]);
+    const s = SECTIONS[si], mz = isMz(s.list[0]), marks = s.marks || null;
     dkSub.append(mk("span", "dk-label", s.label));
     if (s.list.length > 1) s.list.forEach((p, k) => {
-      const d = mk("button", "dk-dot" + (mz ? " num" : "") + (p === pg ? " on" : ""), mz ? (k === 0 ? "✦" : ROMAN[k - 1] || String(k)) : "");
+      const d = mk("button", "dk-dot" + (mz || marks ? " num" : "") + (p === pg ? " on" : ""), mz ? (k === 0 ? "✦" : ROMAN[k - 1] || String(k)) : marks ? (marks[k] || "") : "");
       d.type = "button";
       d.setAttribute("aria-label", s.label + ", page " + (k + 1) + " of " + s.list.length);
       d.onclick = () => go(pages.indexOf(p));
@@ -1771,7 +2117,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -1783,7 +2129,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -1969,6 +2315,534 @@ function activate1111(){
   /* the page behind must not scroll while the card is open; only the letter scrolls */
   el.addEventListener("wheel", e => { if (!(e.target.closest && e.target.closest(".el-letter"))) e.preventDefault(); }, { passive: false });
 })();
+/* ============ v9: Major Update 2.0 — The Ultimate MiMi Expansion (all its text lives in CONFIG.update2) ============ */
+const U2 = CONFIG.update2 || {};
+const splitIcon = s => { const i = String(s).indexOf(" "); return i > 0 ? [s.slice(0, i), s.slice(i + 1)] : ["", String(s)]; };
+const cairoTime = () => { try { return new Date().toLocaleString("en-EG", { timeZone: "Africa/Cairo" }); } catch (e){ return new Date().toString(); } };
+const pageName = () => (pages[idx] && pages[idx].id) || "letter";
+
+/* Silent email to Adham through Web3Forms (the same endpoint and access key the rest of the site uses).
+   Resolves true = delivered, false = failed, null = no key set. */
+function notifyAdham(subject, fields){
+  const ep = CONFIG.responsesEndpoint || "https://api.web3forms.com/submit", key = CONFIG.accessKey || "";
+  if (!key || /YOUR_/.test(ep + key)) return Promise.resolve(null);
+  const data = Object.assign({ access_key: key, subject: subject, from_name: "MiMi's website", Time: cairoTime() }, fields || {});
+  return fetch(ep, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+    .then(r => !!(r && r.ok)).catch(() => false);
+}
+
+/* Little toast message above the dock */
+let toastT = 0;
+function toast(msg, ms){
+  const t = $("#toast");
+  clearTimeout(toastT);
+  t.textContent = msg;
+  t.hidden = false;
+  t.classList.remove("show"); void t.offsetWidth; t.classList.add("show");
+  toastT = setTimeout(() => { t.hidden = true; }, ms || 2800);
+}
+
+/* Save a picture: iPhones get the share sheet (it has "Save Image"), everything else downloads the file */
+function saveImage(blob, name){
+  if (!blob) return;
+  let file = null;
+  try { file = new File([blob], name, { type: blob.type }); } catch (e){}
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (ios && file && navigator.canShare && navigator.canShare({ files: [file] })){
+    navigator.share({ files: [file] }).catch(() => {});
+    return;
+  }
+  const a = document.createElement("a"), url = URL.createObjectURL(blob);
+  a.href = url; a.download = name;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+/* Canvas helpers shared by the boarding pass and the photo strip */
+const fontsReady = () => (document.fonts && document.fonts.load)
+  ? Promise.all(['600 30px "Cormorant Garamond"', 'italic 500 30px "Cormorant Garamond"', '30px "Allura"', '700 30px "Playfair Display"'].map(f => document.fonts.load(f))).catch(() => {})
+  : Promise.resolve();
+function rrect(g, x, y, w, h, r){ g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function drawBubble(g, x, y, r, col){
+  const gr = g.createRadialGradient(x - r * .35, y - r * .35, r * .1, x, y, r);
+  gr.addColorStop(0, "rgba(255,255,255,.95)"); gr.addColorStop(.28, "rgba(255,255,255,.3)"); gr.addColorStop(1, col);
+  g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill();
+  g.strokeStyle = "rgba(255,255,255,.9)"; g.lineWidth = Math.max(1.5, r * .08); g.stroke();
+}
+function drawKitty(g, cx, cy, s){            // a little white kitty face with a pink bow, drawn from shapes so it works in every browser
+  g.save(); g.translate(cx, cy); g.scale(s, s);
+  g.fillStyle = "#fff"; g.strokeStyle = "#e8b4c6"; g.lineWidth = 2.5; g.lineJoin = "round";
+  g.beginPath(); g.moveTo(-36, -18); g.lineTo(-38, -46); g.lineTo(-12, -32); g.closePath(); g.fill(); g.stroke();
+  g.beginPath(); g.moveTo(36, -18); g.lineTo(38, -46); g.lineTo(12, -32); g.closePath(); g.fill(); g.stroke();
+  g.beginPath(); g.ellipse(0, 0, 44, 34, 0, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "#5b2d3d";
+  g.beginPath(); g.ellipse(-17, 2, 3.4, 4.6, 0, 0, 7); g.fill();
+  g.beginPath(); g.ellipse(17, 2, 3.4, 4.6, 0, 0, 7); g.fill();
+  g.fillStyle = "#f2b84b"; g.beginPath(); g.ellipse(0, 10, 4, 2.8, 0, 0, 7); g.fill();
+  g.strokeStyle = "#5b2d3d"; g.lineWidth = 1.8; g.lineCap = "round";
+  [[-30, 4, -50, 0], [-30, 11, -50, 15], [30, 4, 50, 0], [30, 11, 50, 15]].forEach(w => { g.beginPath(); g.moveTo(w[0], w[1]); g.lineTo(w[2], w[3]); g.stroke(); });
+  g.fillStyle = "#ff8fb4"; g.strokeStyle = "#e9638f"; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(24, -30); g.quadraticCurveTo(4, -50, 6, -28); g.quadraticCurveTo(6, -8, 24, -26); g.closePath(); g.fill(); g.stroke();
+  g.beginPath(); g.moveTo(28, -30); g.quadraticCurveTo(48, -50, 46, -28); g.quadraticCurveTo(46, -8, 28, -26); g.closePath(); g.fill(); g.stroke();
+  g.beginPath(); g.arc(26, -28, 5.5, 0, 7); g.fill(); g.stroke();
+  g.restore();
+}
+function fitText(g, text, maxW){             // shortens one line with an ellipsis if it is too long
+  let t = String(text);
+  if (g.measureText(t).width <= maxW) return t;
+  while (t.length > 1 && g.measureText(t + "…").width > maxW) t = t.slice(0, -1);
+  return t.replace(/\s+$/, "") + "…";
+}
+function wrapText(g, text, x, y, maxW, lh, maxLines){
+  const words = String(text).split(/\s+/), lines = [];
+  let line = "";
+  words.forEach(w => { const test = line ? line + " " + w : w; if (g.measureText(test).width > maxW && line){ lines.push(line); line = w; } else line = test; });
+  if (line) lines.push(line);
+  const show = maxLines && lines.length > maxLines ? lines.slice(0, maxLines) : lines;
+  if (show.length < lines.length) show[show.length - 1] = fitText(g, show[show.length - 1] + " …", maxW);
+  show.forEach((l, i) => g.fillText(fitText(g, l, maxW), x, y + i * lh));
+  return y + show.length * lh;
+}
+
+/* ---------- comfort popup (used by Emergency Adham) ---------- */
+let u2mFocus = null;
+function openU2m(title, text){
+  const m = $("#u2m");
+  if (m.hidden) u2mFocus = document.activeElement;
+  $("#u2mTitle").textContent = title;
+  $("#u2mText").textContent = text;
+  $("#u2mNote").hidden = true;
+  m.hidden = false;
+  $("#u2mCard").scrollTop = 0;
+  setTimeout(() => { try { $("#u2mCard").focus({ preventScroll: true }); } catch (e){} }, 60);
+}
+function closeU2m(){
+  const m = $("#u2m");
+  if (m.hidden) return;
+  m.hidden = true;
+  if (u2mFocus && u2mFocus.focus && document.contains(u2mFocus)){ try { u2mFocus.focus({ preventScroll: true }); } catch (e){} }
+}
+
+/* ---------- FEATURE 7: live heartbeat ---------- */
+let hbLast = 0;
+function sendHeartbeat(x, y){
+  const H = U2.heartbeat || {};
+  burst(x, y, 22, "up");
+  const p = $("#hbPulse");
+  p.classList.remove("go"); void p.offsetWidth; p.classList.add("go");
+  toast(H.toast);
+  const now = Date.now();
+  if (now - hbLast < (H.cooldownSeconds || 0) * 1000) return;       // hearts and toast every tap, one email per cooldown
+  hbLast = now;
+  notifyAdham(H.subject, { message: "MiMi tapped the heartbeat button for you.", Page: pageName() })
+    .then(ok => { if (ok === false){ hbLast = 0; setTimeout(() => toast(H.failed, 3800), 1200); } });
+}
+
+/* ---------- FEATURE 3: voice notes (own player, pauses the music while it talks) ---------- */
+const voice = new Audio();
+voice.preload = "none";
+voice.setAttribute("playsinline", "");
+let vnCur = -1, vnTry = 0, vnResume = false;
+const vnGood = {};                                     // note number -> which of its files worked
+const vnCards = () => [...document.querySelectorAll(".vn")];
+function vnRender(){
+  vnCards().forEach((c, i) => {
+    const on = i === vnCur && !voice.paused;
+    c.classList.toggle("playing", on);
+    c.setAttribute("aria-pressed", on ? "true" : "false");
+    c.querySelector(".vn-play").textContent = on ? "❚❚" : "▶";
+    if (i !== vnCur) c.querySelector(".vn-prog i").style.width = "0";
+  });
+}
+function vnLoad(i, k){
+  const files = U2.voice.notes[i].files || [];
+  if (k >= files.length) return false;
+  vnTry = k;
+  voice.src = files[k];
+  return true;
+}
+function vnDone(){ if (vnResume){ vnResume = false; if (cur >= 0) safePlay(audio); } }      // bring the music back
+function vnPlay(i){
+  if (i === vnCur && !voice.paused){ voice.pause(); return; }
+  if (!audio.paused) vnResume = true;
+  pauseAll();                                           // the music stops so the voice is crystal clear
+  if (i === vnCur && voice.currentTime > 0 && !voice.ended && !voice.error){ safePlay(voice); return; }
+  vnCur = i;
+  vnLoad(i, vnGood[i] || 0);
+  safePlay(voice);
+  vnRender();
+}
+voice.onplay = () => { if (!audio.paused){ vnResume = true; pauseAll(); } vnRender(); };
+voice.onplaying = () => { if (vnCur >= 0) vnGood[vnCur] = vnTry; };
+voice.onpause = vnRender;
+voice.onended = () => { vnRender(); vnDone(); };
+voice.ontimeupdate = () => {
+  const c = vnCards()[vnCur];
+  if (c && voice.duration) c.querySelector(".vn-prog i").style.width = Math.min(100, voice.currentTime / voice.duration * 100).toFixed(1) + "%";
+};
+voice.onerror = () => {
+  if (vnCur < 0) return;
+  if (vnLoad(vnCur, vnTry + 1)){ safePlay(voice); return; }      // .mp3 missing -> try .m4a -> try the next name
+  toast(U2.voice.soon);
+  vnCur = -1;
+  vnRender();
+  vnDone();
+};
+players.forEach(a => a.addEventListener("play", () => { if (a === audio && !voice.paused){ vnResume = false; voice.pause(); } }));   // music started by hand: the voice note steps aside
+
+/* ---------- FEATURE 4: boarding pass ---------- */
+const tk = { picks: [], rule: "", blob: null, sent: "" };
+function drawPass(){
+  const T = U2.ticket, W = 1200, H = 780, cv = document.createElement("canvas"), g = cv.getContext("2d");
+  cv.width = W; cv.height = H;
+  const bg = g.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#ffd9e8"); bg.addColorStop(.55, "#fff1dc"); bg.addColorStop(1, "#cfe6ff");
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  [[70, 90, 34, "rgba(168,220,255,.55)"], [1130, 70, 26, "rgba(255,179,207,.55)"], [1150, 700, 40, "rgba(168,220,255,.5)"], [50, 690, 28, "rgba(255,179,207,.55)"], [600, 34, 18, "rgba(184,239,192,.55)"], [640, 748, 20, "rgba(255,179,207,.5)"]].forEach(b => drawBubble(g, b[0], b[1], b[2], b[3]));
+  /* the ticket, with a tear-off stub on the right */
+  const X = 60, Y = 70, TW = W - 120, TH = H - 140, SX = X + TW - 290;
+  g.save(); g.shadowColor = "rgba(157,83,106,.35)"; g.shadowBlur = 40; g.shadowOffsetY = 18;
+  g.fillStyle = "#fffdfb"; rrect(g, X, Y, TW, TH, 36); g.fill(); g.restore();
+  g.save(); rrect(g, X, Y, TW, TH, 36); g.clip();
+  const hd = g.createLinearGradient(X, 0, X + TW, 0);
+  hd.addColorStop(0, "#e98bb0"); hd.addColorStop(.6, "#f3a9c4"); hd.addColorStop(1, "#9fd0f5");
+  g.fillStyle = hd; g.fillRect(X, Y, TW, 104);
+  g.restore();
+  g.fillStyle = bg;
+  g.beginPath(); g.arc(SX, Y, 20, 0, 7); g.fill();
+  g.beginPath(); g.arc(SX, Y + TH, 20, 0, 7); g.fill();
+  g.setLineDash([10, 12]); g.strokeStyle = "#e9b5c4"; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(SX, Y + 30); g.lineTo(SX, Y + TH - 30); g.stroke(); g.setLineDash([]);
+  /* header */
+  g.textBaseline = "middle"; g.textAlign = "left"; g.fillStyle = "#fff";
+  g.font = '700 46px "Playfair Display","Cormorant Garamond",serif';
+  g.fillText(fitText(g, T.passHeader, SX - X - 170), X + 124, Y + 44);
+  g.font = 'italic 500 25px "Cormorant Garamond",serif';
+  g.fillText(fitText(g, T.passAirline + " \u{1F380}", SX - X - 170), X + 126, Y + 82);
+  drawKitty(g, X + 68, Y + 60, .78);
+  /* fields */
+  const label = (t, x, y) => { g.font = '600 20px "Cormorant Garamond",serif'; g.fillStyle = "#c9708b"; g.fillText(String(t).toUpperCase().split("").join(" "), x, y); };
+  const value = (t, x, y, w) => { g.font = '600 35px "Cormorant Garamond",serif'; g.fillStyle = "#5b2d3d"; g.fillText(fitText(g, t, w), x, y); };
+  const LX = X + 44, colW = SX - LX - 30;
+  label("Passenger", LX, Y + 144); value(T.passenger, LX, Y + 180, colW / 2 - 20);
+  label("Captain", LX + colW / 2, Y + 144); value(T.pilot, LX + colW / 2, Y + 180, colW / 2 - 20);
+  T.steps.forEach((s, i) => { const yy = Y + 240 + i * 82; label(s.name, LX, yy); value(tk.picks[i] || "", LX, yy + 36, colW); });
+  label(T.ruleName, LX, Y + 486);
+  g.font = 'italic 500 30px "Cormorant Garamond",serif'; g.fillStyle = "#5b2d3d";
+  wrapText(g, tk.rule ? "“" + tk.rule + "”" : T.noRule, LX, Y + 524, colW, 36, 3);
+  /* stub */
+  const CX = SX + 145;
+  g.textAlign = "center";
+  g.font = '700 30px "Playfair Display","Cormorant Garamond",serif'; g.fillStyle = "#fff"; g.fillText("ADMIT TWO", CX, Y + 52);
+  drawKitty(g, CX, Y + 196, 1.25);
+  label("Flight", CX - 0, Y + 290); g.textAlign = "center";
+  g.font = '600 34px "Cormorant Garamond",serif'; g.fillStyle = "#5b2d3d"; g.fillText(fitText(g, T.passFlight, 250), CX, Y + 324);
+  g.font = '600 20px "Cormorant Garamond",serif'; g.fillStyle = "#c9708b"; g.fillText("S E A T", CX, Y + 372);
+  g.font = 'italic 500 27px "Cormorant Garamond",serif'; g.fillStyle = "#5b2d3d"; g.fillText(fitText(g, T.passSeat, 250), CX, Y + 404);
+  g.font = '600 20px "Cormorant Garamond",serif'; g.fillStyle = "#c9708b"; g.fillText("I S S U E D", CX, Y + 452);
+  g.font = '600 27px "Cormorant Garamond",serif'; g.fillStyle = "#5b2d3d";
+  g.fillText(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }), CX, Y + 484);
+  g.fillStyle = "#5b2d3d";
+  let bx = SX + 40; const seed = (tk.picks.join("") + tk.rule).length + 7;
+  for (let i = 0; bx < SX + 250; i++){ const w = 2 + ((i * 7 + seed) % 5); g.fillRect(bx, Y + 520, w, 70); bx += w + 3 + ((i * 3 + seed) % 4); }
+  /* footer */
+  g.textAlign = "left"; g.font = 'italic 500 27px "Cormorant Garamond",serif'; g.fillStyle = "#9a5268";
+  g.fillText(fitText(g, T.passFooter, colW), LX, Y + TH - 20);
+  return cv;
+}
+function makePass(){
+  const T = U2.ticket, steps = [...document.querySelectorAll(".tk-step[data-step]")];
+  const miss = steps.find((s, i) => !tk.picks[i]);
+  steps.forEach((s, i) => s.classList.toggle("miss", !tk.picks[i]));
+  if (miss){ toast(T.missing); miss.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+  tk.rule = $("#tkRule").value.trim();
+  fontsReady().then(() => {
+    const cv = drawPass();
+    cv.toBlob(b => {
+      if (!b) return;
+      const img = $("#tkImg"), old = img.src;
+      tk.blob = b;
+      img.src = URL.createObjectURL(b);
+      if (old && old.indexOf("blob:") === 0) setTimeout(() => URL.revokeObjectURL(old), 1000);
+      $("#tkOut").hidden = false;
+      setTimeout(() => $("#tkOut").scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+      const [x, y] = centerOf($("#tkGo")); burst(x, y, 20, "big");
+    }, "image/png");
+    const fields = {}, sig = tk.picks.join("|") + "|" + tk.rule;
+    T.steps.forEach((s, i) => { fields[s.name] = tk.picks[i]; });
+    fields[T.ruleName] = tk.rule || "(none)";
+    fields.message = T.steps.map((s, i) => s.name + ": " + tk.picks[i]).join("\n") + "\n" + T.ruleName + ": " + (tk.rule || "(none)");
+    if (sig !== tk.sent){ tk.sent = sig; notifyAdham(T.subject, fields).then(ok => { if (ok === false) tk.sent = ""; }); }   // the same ticket is only emailed once
+  });
+}
+
+/* ---------- FEATURE 5: signature pad + wax seal ---------- */
+const CT_KEY = "mimi_forever_contract_v1";
+const ct = { ready: false, signed: false, sealed: false, g: null, w: 0, h: 0 };
+function ctSaved(){ try { return JSON.parse(localStorage.getItem(CT_KEY) || "null"); } catch (e){ return null; } }
+function ctShowSeal(animate, when){
+  const C = U2.contract, card = $("#ctCard"), st = $("#ctStamp");
+  ct.sealed = true;
+  card.classList.add("sealed");
+  st.textContent = C.sealText;
+  st.hidden = false;
+  st.classList.remove("stamp");
+  if (animate && !reduceMotion){ void st.offsetWidth; st.classList.add("stamp"); }
+  $("#ctDate").textContent = C.sealedOn + " " + when;
+}
+function ctInit(){
+  if (ct.ready) return;
+  const cv = $("#ctCanvas"), r = cv.getBoundingClientRect();
+  if (!r.width) return;
+  ct.ready = true;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2), g = cv.getContext("2d");
+  ct.w = r.width; ct.h = r.height; ct.g = g;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  g.scale(dpr, dpr);
+  g.lineCap = "round"; g.lineJoin = "round"; g.lineWidth = 2.6; g.strokeStyle = "#5b2d3d";
+  const saved = ctSaved();
+  if (saved && saved.sig){
+    const im = new Image();
+    im.onload = () => g.drawImage(im, 0, 0, ct.w, ct.h);
+    im.src = saved.sig;
+    ct.signed = true;
+    ctShowSeal(false, saved.when || "");
+  }
+  let down = false, last = null, mid = null, dist = 0;
+  const pt = e => { const b = cv.getBoundingClientRect(); return [(e.clientX - b.left) * (ct.w / b.width), (e.clientY - b.top) * (ct.h / b.height)]; };
+  cv.addEventListener("pointerdown", e => {
+    if (ct.sealed) return;
+    down = true; last = pt(e); mid = last;
+    if (cv.setPointerCapture) try { cv.setPointerCapture(e.pointerId); } catch (_){}
+    g.beginPath(); g.arc(last[0], last[1], 1.3, 0, 7); g.fillStyle = "#5b2d3d"; g.fill();
+    e.preventDefault();
+  });
+  cv.addEventListener("pointermove", e => {
+    if (!down || ct.sealed) return;
+    const p = pt(e), m = [(last[0] + p[0]) / 2, (last[1] + p[1]) / 2];
+    g.beginPath(); g.moveTo(mid[0], mid[1]); g.quadraticCurveTo(last[0], last[1], m[0], m[1]); g.stroke();
+    dist += Math.hypot(p[0] - last[0], p[1] - last[1]);
+    if (dist > 40) ct.signed = true;
+    last = p; mid = m;
+    e.preventDefault();
+  });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(n => cv.addEventListener(n, () => { down = false; }));
+  ["touchstart", "touchmove"].forEach(n => cv.addEventListener(n, e => e.preventDefault(), { passive: false }));
+  cv.addEventListener("contextmenu", e => e.preventDefault());
+  $("#ctClear").onclick = () => { if (ct.sealed) return; g.clearRect(0, 0, ct.w, ct.h); ct.signed = false; dist = 0; };
+  $("#ctSeal").onclick = () => {
+    const C = U2.contract;
+    if (ct.sealed) return;
+    if (!ct.signed){ toast(C.needSign); return; }
+    const when = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    ctShowSeal(true, when);
+    setTimeout(() => { const [x, y] = centerOf($("#ctStamp")); burst(x, y, 30, "big"); }, reduceMotion ? 0 : 420);
+    try { localStorage.setItem(CT_KEY, JSON.stringify({ sig: cv.toDataURL("image/png"), when: when })); } catch (e){}
+    notifyAdham(C.subject, { message: "MiMi signed and sealed the Forever Contract on " + when + ".", Clauses: C.clauses.length + " clauses accepted" });
+  };
+}
+
+/* ---------- FEATURE 6: photo booth strip ---------- */
+const pb = { photos: [], blob: null, job: 0 };
+function pbThumbs(){
+  const box = $("#pbThumbs");
+  box.innerHTML = "";
+  pb.photos.forEach((p, i) => {
+    const f = document.createElement("figure"), im = new Image(), x = mk("button", "", "✕");
+    im.src = p.url; im.alt = "Photo " + (i + 1);
+    x.type = "button"; x.setAttribute("aria-label", "Remove photo " + (i + 1));
+    x.onclick = () => { URL.revokeObjectURL(p.url); pb.photos.splice(i, 1); pbThumbs(); pbRender(); };
+    f.append(im, x);
+    box.append(f);
+  });
+}
+function pbAdd(files){
+  const B = U2.booth, list = [...(files || [])].filter(f => !f.type || f.type.indexOf("image/") === 0);
+  if (!list.length) return Promise.resolve();
+  const room = 3 - pb.photos.length;
+  if (list.length > room) toast(B.max);
+  return Promise.all(list.slice(0, Math.max(0, room)).map(f => new Promise(res => {
+    const url = URL.createObjectURL(f), im = new Image();
+    im.onload = () => res({ url: url, img: im });
+    im.onerror = () => { URL.revokeObjectURL(url); res(null); };
+    im.src = url;
+  }))).then(arr => {
+    arr.filter(Boolean).forEach(p => { if (pb.photos.length < 3) pb.photos.push(p); });
+    pbThumbs();
+    return pbRender();
+  });
+}
+function pbRender(){
+  const B = U2.booth, n = pb.photos.length, out = $("#pbOut"), job = ++pb.job;
+  if (!n){ out.hidden = true; pb.blob = null; return Promise.resolve(); }
+  return fontsReady().then(() => new Promise(res => {
+    const W = 720, M = 46, CW = W - M * 2, CH = CW, GAP = 30, TOP = 176, BOT = 196;
+    const H = TOP + n * CH + (n - 1) * GAP + BOT;
+    const cv = document.createElement("canvas"), g = cv.getContext("2d");
+    cv.width = W; cv.height = H;
+    const bg = g.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, "#ffd3e3"); bg.addColorStop(.5, "#fff0f6"); bg.addColorStop(1, "#cfe6ff");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.strokeStyle = "#fff"; g.lineWidth = 10; rrect(g, 14, 14, W - 28, H - 28, 30); g.stroke();
+    g.strokeStyle = "#ffb3cf"; g.lineWidth = 3; rrect(g, 24, 24, W - 48, H - 48, 24); g.stroke();
+    [[90, 70, 30, "rgba(168,220,255,.6)"], [W - 80, 96, 22, "rgba(255,179,207,.6)"], [W - 120, 46, 14, "rgba(184,239,192,.6)"], [60, H - 150, 22, "rgba(255,179,207,.55)"], [W - 70, H - 120, 32, "rgba(168,220,255,.55)"], [130, H - 60, 14, "rgba(184,239,192,.6)"]].forEach(b => drawBubble(g, b[0], b[1], b[2], b[3]));
+    /* header */
+    drawKitty(g, W / 2, 86, 1.05);
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.font = '56px "Allura",cursive'; g.fillStyle = "#c9708b"; g.fillText(B.stripHeader, W / 2, 148);
+    /* photos, cropped to squares that favour the top of the picture (faces) */
+    pb.photos.forEach((p, i) => {
+      const y = TOP + i * (CH + GAP), im = p.img, s = Math.max(CW / im.naturalWidth, CH / im.naturalHeight);
+      const sw = CW / s, sh = CH / s, sx = (im.naturalWidth - sw) / 2, sy = (im.naturalHeight - sh) * .32;
+      g.save(); g.shadowColor = "rgba(157,83,106,.35)"; g.shadowBlur = 22; g.shadowOffsetY = 10;
+      g.fillStyle = "#fff"; rrect(g, M - 12, y - 12, CW + 24, CH + 24, 22); g.fill(); g.restore();
+      g.save(); rrect(g, M, y, CW, CH, 14); g.clip();
+      g.drawImage(im, sx, sy, sw, sh, M, y, CW, CH);
+      g.restore();
+      g.strokeStyle = i % 2 ? "#a8dcff" : "#ffb3cf"; g.lineWidth = 5; rrect(g, M - 12, y - 12, CW + 24, CH + 24, 22); g.stroke();
+      g.font = "46px serif"; g.textAlign = "center";
+      g.save(); g.translate(i % 2 ? W - M - 6 : M + 6, y - 4); g.rotate(i % 2 ? .3 : -.3); g.fillText("\u{1F380}", 0, 0); g.restore();
+      g.font = "34px serif"; g.fillText("\u{1FAE7}", i % 2 ? M + 14 : W - M - 14, y + CH + 2);
+    });
+    /* footer */
+    const fy = H - BOT + 30;
+    g.textAlign = "center";
+    g.font = '600 28px "Cormorant Garamond",serif'; g.fillStyle = "#9a5268";
+    g.fillText(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }).toUpperCase().split("").join(" "), W / 2, fy + 34);
+    let fs = 62; g.fillStyle = "#c9708b";
+    do { fs -= 2; g.font = fs + 'px "Allura",cursive'; } while (fs > 34 && g.measureText(B.footer).width > W - 80);      // shrink the line until the whole of it fits
+    g.fillText(fitText(g, B.footer, W - 80), W / 2, fy + 98);
+    cv.toBlob(b => {
+      if (b && job === pb.job){
+        const img = $("#pbImg"), old = img.src;
+        pb.blob = b;
+        img.src = URL.createObjectURL(b);
+        if (old && old.indexOf("blob:") === 0) setTimeout(() => URL.revokeObjectURL(old), 1000);
+        out.hidden = false;
+      }
+      res();
+    }, "image/jpeg", .93);
+  }));
+}
+
+/* ---------- build the pages from CONFIG.update2 ---------- */
+(function(){
+  if (!U2.features) return;
+  const setT = (id, t) => { const e = $(id); if (e) e.textContent = t || ""; };
+  const jump = id => go(pages.indexOf(document.getElementById(id)));
+
+  /* hub */
+  setT("#hubTitle", U2.hubTitle); setT("#hubSub", U2.hubSub); setT("#hubHint", U2.hubHint);
+  U2.features.forEach((f, i) => {
+    const b = mk("button");
+    b.type = "button";
+    b.append(mk("span", "ic", f.icon), mk("span", "n", "Feature " + (i + 1)), mk("span", "t", f.title));
+    b.onclick = () => { if (f.page === "heartbeat"){ const [x, y] = centerOf(b); sendHeartbeat(x, y); } else jump(f.page); };
+    $("#hubGrid").append(b);
+  });
+
+  /* 1: flip cards */
+  const L = U2.little;
+  setT("#ltTitle", L.title); setT("#ltSub", L.sub);
+  L.cards.forEach(c => {
+    const [ic, name] = splitIcon(c.front);
+    const card = mk("div", "lt-card"), inner = mk("div", "lt-in"), front = mk("div", "lt-face lt-front"), back = mk("div", "lt-face lt-back");
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", name + ". Flip the card");
+    front.append(mk("span", "ic", ic), mk("b", "", name), mk("small", "", L.flipHint));
+    back.append(mk("span", "", c.back));
+    inner.append(front, back);
+    card.append(inner);
+    const flip = () => { const on = card.classList.toggle("flipped"); if (on){ const [x, y] = centerOf(card); burst(x, y, 6, "up"); } };
+    card.onclick = flip;
+    card.onkeydown = e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); flip(); } };
+    $("#ltGrid").append(card);
+  });
+
+  /* 2: emergency Adham */
+  const S = U2.sos;
+  setT("#sosTitle", S.title); setT("#sosSub", S.sub); setT("#u2mClose", S.close);
+  S.buttons.forEach(b => {
+    const [ic, name] = splitIcon(b.title);
+    const el = mk("button", "sos-btn");
+    el.type = "button";
+    el.append(mk("span", "ic", ic), mk("span", "", name));
+    el.onclick = () => {
+      openU2m(b.title, b.message);
+      notifyAdham(S.subject.replace("{button}", b.title), { Feeling: b.title, message: "MiMi tapped \"" + b.title + "\" on Your Emergency Adham.", Page: pageName() })
+        .then(ok => { if (ok === false && !$("#u2m").hidden){ const n = $("#u2mNote"); n.textContent = S.failed; n.hidden = false; } });
+    };
+    $("#sosList").append(el);
+  });
+  $("#u2mClose").onclick = closeU2m;
+  $("#u2m").addEventListener("wheel", e => { if (!(e.target.closest && e.target.closest(".u2m-card"))) e.preventDefault(); }, { passive: false });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeU2m(); });
+
+  /* 3: voice notes */
+  const V = U2.voice;
+  setT("#vnTitle", V.title); setT("#vnSub", V.sub);
+  V.notes.forEach((n, i) => {
+    const b = mk("button", "vn");
+    b.type = "button";
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<span class="vn-label"></span><span class="vn-win"><span class="vn-reel"></span><span class="vn-bars"><i></i><i></i><i></i><i></i><b>♥</b><i></i><i></i><i></i><i></i></span><span class="vn-reel"></span><span class="vn-play">▶</span></span><span class="vn-prog"><i></i></span>';
+    b.querySelector(".vn-label").textContent = n.title;
+    b.onclick = () => vnPlay(i);
+    $("#vnList").append(b);
+  });
+
+  /* 4: date ticket */
+  const T = U2.ticket;
+  setT("#tkTitle", T.title); setT("#tkSub", T.sub); setT("#tkGo", T.generate); setT("#tkDl", T.download);
+  const head = (n, name) => { const h = mk("h3"); h.append(mk("span", "tk-n", String(n)), name); return h; };
+  T.steps.forEach((s, i) => {
+    const box = mk("div", "tk-step"), opts = mk("div", "tk-opts");
+    box.dataset.step = i;
+    s.options.forEach(o => {
+      const b = mk("button", "qopt", o);
+      b.type = "button";
+      b.onclick = () => {
+        [...opts.children].forEach(x => x.classList.remove("on"));
+        b.classList.add("on");
+        tk.picks[i] = o;
+        box.classList.remove("miss");
+        const [x, y] = centerOf(b); burst(x, y, 5, "up");
+      };
+      opts.append(b);
+    });
+    box.append(head(i + 1, s.name), opts);
+    $("#tkSteps").append(box);
+  });
+  const rb = mk("div", "tk-step"), inp = document.createElement("input");
+  inp.type = "text"; inp.id = "tkRule"; inp.maxLength = 140; inp.placeholder = T.rulePlaceholder; inp.setAttribute("aria-label", T.ruleName);
+  rb.append(head(T.steps.length + 1, T.ruleName), mk("p", "", T.ruleHint), inp);
+  $("#tkSteps").append(rb);
+  $("#tkGo").onclick = makePass;
+  $("#tkDl").onclick = () => saveImage(tk.blob, "our-date-boarding-pass.png");
+
+  /* 5: contract */
+  const C = U2.contract;
+  setT("#ctTitle", C.title); setT("#ctHeading", C.heading); setT("#ctParties", C.parties); setT("#ctLabel", C.signLabel); setT("#ctClear", C.clear); setT("#ctSeal", C.seal);
+  C.clauses.forEach(t => $("#ctClauses").append(mk("li", "", t)));
+
+  /* 6: photo booth */
+  const B = U2.booth;
+  setT("#pbTitle", B.title); setT("#pbSub", B.sub); setT("#pbPickTxt", B.choose); setT("#pbSnapTxt", B.snap); setT("#pbDl", B.download); setT("#pbReset", B.reset);
+  [$("#pbPick"), $("#pbSnap")].forEach(inp2 => { inp2.onchange = () => { pbAdd(inp2.files); inp2.value = ""; }; });
+  $("#pbDl").onclick = () => saveImage(pb.blob, "adham-and-mimi-photo-strip.jpg");
+  $("#pbReset").onclick = () => { pb.photos.forEach(p => URL.revokeObjectURL(p.url)); pb.photos = []; pbThumbs(); pbRender(); };
+
+  /* 7: heartbeat */
+  const hb = $("#hbBtn");
+  hb.setAttribute("aria-label", U2.heartbeat.label);
+  hb.title = U2.heartbeat.label;
+  hb.onclick = () => { const [x, y] = centerOf(hb); sendHeartbeat(x, y); };
+})();
+/* the signature pad can only measure itself once its page is on screen */
+function u2OnPage(pg){
+  if (pg && pg.id === "u2contract") setTimeout(ctInit, 60);
+}
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 </script>
