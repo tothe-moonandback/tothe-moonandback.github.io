@@ -1,0 +1,18 @@
+{
+  "name": "Our Safe Space 🎀",
+  "short_name": "Us 💗",
+  "description": "Signed, sealed, and yours forever.",
+  "display": "standalone",
+  "background_color": "#fff5f8",
+  "theme_color": "#fbcfe8",
+  "orientation": "portrait",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
