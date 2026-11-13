@@ -659,6 +659,46 @@ body.dock-on .kitty.r{right:72px}
 #hbBtn,#hbPulse.go,#toast.show,.vn.playing .vn-reel,.vn.playing .vn-bars i,.vn.playing .vn-bars b,.ct-seal.stamp,#u2m:not([hidden]),.u2m-card,.tk-out img,.pb-out img{animation:none}
 .lt-in{transition-duration:.01s}
 }
+/* ============ v10: one month anniversary surprise (its text lives in CONFIG.anniversary) ============ */
+#an{position:fixed;inset:0;z-index:240;--dim:2s;color:#fdf2f8;background:radial-gradient(72% 52% at 50% 44%,rgba(255,196,150,.1),transparent 72%),rgba(20,12,16,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);opacity:0;transition:opacity var(--dim) ease-in-out;-webkit-tap-highlight-color:transparent}
+#an[hidden]{display:none}
+#an.dim{opacity:1}
+.an-step{position:absolute;inset:0;display:grid;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top) + 28px) 22px calc(env(safe-area-inset-bottom) + 28px);opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform .9s ease;pointer-events:none}
+.an-step[hidden]{display:none}
+.an-step.on{opacity:1;transform:none;pointer-events:auto}
+.an-in{margin:auto;display:flex;flex-direction:column;align-items:center;gap:26px;width:100%;max-width:520px;text-align:center}
+.an-say{margin:0;max-width:430px;font:italic 500 clamp(1.5rem,6vw,1.95rem)/1.45 "Cormorant Garamond",Georgia,serif;color:#fdf2f8;text-shadow:0 0 26px rgba(251,207,232,.4)}
+.an-btn{padding:13px 28px;border:1px solid rgba(255,255,255,.75);border-radius:999px;background:linear-gradient(135deg,#fdf2f8,#fbcfe8);color:#a23d62;font:600 1.08rem/1.2 "Playfair Display",Georgia,serif;letter-spacing:.01em;box-shadow:0 0 24px rgba(244,114,182,.45),0 12px 28px -14px rgba(244,114,182,.9);cursor:pointer;touch-action:manipulation;transition:transform .2s ease;animation:anBtnGlow 3.2s ease-in-out infinite}
+.an-btn:active{transform:scale(.96)}
+@keyframes anBtnGlow{50%{box-shadow:0 0 40px rgba(244,114,182,.7),0 12px 28px -14px rgba(244,114,182,.9)}}
+.an-frame{margin:0;width:min(320px,100%);border-radius:24px;overflow:hidden;border:1.5px solid rgba(236,190,165,.8);background:#1a1014;line-height:0;box-shadow:0 0 0 5px rgba(251,207,232,.07),0 0 46px rgba(244,165,150,.3),0 24px 50px -24px rgba(0,0,0,.85)}
+.an-frame video{display:block;width:100%;height:auto;max-height:62vh;max-height:calc(100svh - 200px);object-fit:cover;pointer-events:none}
+.an-frame.missing video{display:none}
+.an-frame.missing::after{content:attr(data-missing);display:grid;place-items:center;min-height:240px;padding:24px;font:italic 500 1.25rem/1.4 "Cormorant Garamond",Georgia,serif;color:#fbcfe8}
+.an-card{width:100%;padding:30px 24px 26px;border-radius:24px;background:linear-gradient(160deg,#fffaf5,#fdf2f8 60%,#fde8ef);border:1px solid rgba(236,190,165,.95);color:#6e3040;box-shadow:0 0 0 6px rgba(251,207,232,.1),0 0 60px rgba(244,165,150,.26),0 30px 60px -30px rgba(0,0,0,.85)}
+.an-card p{margin:0 0 16px;font:italic 500 clamp(1.18rem,4.7vw,1.4rem)/1.55 "Cormorant Garamond",Georgia,serif}
+.an-card p:first-child,.an-card p:last-child{font-family:"Allura",cursive;font-style:normal;font-weight:400;color:#c4577d}
+.an-card p:first-child{font-size:clamp(1.9rem,7.6vw,2.4rem);line-height:1.15;margin-bottom:20px}
+.an-card p:last-child{font-size:clamp(1.8rem,7vw,2.2rem);line-height:1.2;margin:22px 0 0}
+.an-vow{transition-duration:3s}
+.an-vowtxt{margin:0;max-width:460px;font:italic 500 clamp(1.6rem,6.6vw,2.2rem)/1.45 "Cormorant Garamond",Georgia,serif;color:#fbe9d7;text-shadow:0 0 30px rgba(244,114,182,.42)}
+.an-vow .an-btn{opacity:0;transition:opacity 1.6s ease,transform .2s ease}
+.an-vow.on .an-btn{opacity:1;transition-delay:2.6s,0s}
+@media (prefers-reduced-motion:reduce){
+.an-btn{animation:none}
+#an,.an-step,.an-vow .an-btn{transition-duration:.01s!important;transition-delay:0s!important}
+}
+/* ============ phones: no text may print over other text ============ */
+@media (max-width:768px){
+/* letter heading: sized to fit on one line; if it ever wraps, its box grows by whole ruled lines instead of covering the letter */
+.letter h2{height:auto;min-height:68px;font-size:min(3rem,10vw)}
+/* long "Open when..." labels stay clear of the heart seal */
+.env .e-label{font-size:1.1rem;line-height:1.2}
+/* pop-up cards are never taller than the screen; long text scrolls inside them */
+.el-card,.u2m-card{max-height:min(100%,90vh)}
+.u2m-card,#ow .sheet{overflow-y:auto;-webkit-overflow-scrolling:touch}
+#ow .sheet{max-height:90vh;max-height:min(86svh,90vh)}
+}
 </style>
 </head>
 <body>
@@ -964,6 +1004,32 @@ body.dock-on .kitty.r{right:72px}
     <button class="el-go" id="u2mClose" type="button"></button>
   </div>
 </div>
+<div id="an" hidden role="dialog" aria-modal="true" aria-label="A little surprise">
+  <div class="an-step" hidden><div class="an-in">
+    <p class="an-say" id="anIntro"></p>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+  <div class="an-step" hidden><div class="an-in">
+    <figure class="an-frame"><video src="videos/video1.mp4" autoplay loop muted playsinline webkit-playsinline disablepictureinpicture></video></figure>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+  <div class="an-step" hidden><div class="an-in">
+    <figure class="an-frame"><video src="videos/video2.mp4" autoplay loop muted playsinline webkit-playsinline disablepictureinpicture></video></figure>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+  <div class="an-step" hidden><div class="an-in">
+    <figure class="an-frame"><video src="videos/video3.mp4" autoplay loop muted playsinline webkit-playsinline disablepictureinpicture></video></figure>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+  <div class="an-step" hidden><div class="an-in">
+    <div class="an-card" id="anLetter"></div>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+  <div class="an-step an-vow" hidden><div class="an-in">
+    <p class="an-vowtxt" id="anVow"></p>
+    <button class="an-btn" type="button"></button>
+  </div></div>
+</div>
 <div id="cc" hidden>
   <div class="cc-bar">
     <button class="cc-btn" id="ccToggle" type="button" aria-expanded="false" aria-label="Show or hide the song list">♪</button>
@@ -1182,9 +1248,29 @@ const CONFIG = {
     { icon: "✨", label: "Update 2.0 Hub", pages: ["hub", "u2little", "u2sos", "u2voice", "u2ticket", "u2contract", "u2booth"], marks: ["✨", "🎀", "🚨", "🎙️", "🎟️", "💍", "📸"] },
     { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
   ],
+  // ---- v10: one month anniversary surprise (the site opens normally, then softly dims into this little story) ----
+  anniversary: {
+    enabled: true,       // false = no surprise, the site just opens like before
+    delaySeconds: 2.5,   // how long she sees the normal site before it starts to dim
+    dimSeconds: 2,       // how slowly the screen dims (and brightens again at the very end)
+    intro: "Wait a second, Mariouma... there is a little surprise for you tonight 🤍",
+    introButton: "See Surprise ✨",
+    videoButtons: ["Next Memory 🤍", "Next Memory 🤍", "Read My Letter 💌"],   // the button under video 1, 2 and 3
+    letter: [
+      "Happy one month since our anniversary, my beautiful Mariouma.",
+      "Looking at the clock hitting midnight, I just thought about how lucky I am to have you. Your pure soul and those beautiful eyes deserve nothing but peace and happiness. I promise to protect that warm smile on your cheeks always.",
+      "Thank you for being my safe space and my everything. I love you more than words could ever say.",
+      "Endlessly yours, Dodo!"
+    ],
+    letterButton: "One Last Thing... 💗",
+    vow: `"We belong to each other until the very last day of our lives, and I promise I will love you until my very last breath."`,
+    vowButton: "Back to Our Safe Space 🎀",
+    missingVideo: "this little memory is on its way 🤍"   // shown in the frame if a video file isn't uploaded
+  },
   // ---- v7: 11/11 • 11:11 Special Edition (starts right after the correct PIN) ----
   eleven: {
     enabled: true,      // false = switch the whole special edition off
+    autoOpen: false,    // true = the 11:11 letter pops up by itself after the PIN again (the top pill always opens it)
     onlyOn: "",         // "" = every day. "11-11" = only on November 11, going by the clock of the phone that opens the site
     pill: "✨ 11:11 Special Edition Active • Read 11/11 Letter 💌",
     badge: "✨ 11/11 • SPECIAL CHAPTER UNLOCKED ✨",
@@ -1203,10 +1289,10 @@ const CONFIG = {
     button: "Explore Our 11:11 World 💗✨",
     particles: ["✨", "💗", "🫧", "🎀"]   // what floats up in the background of the 11:11 theme
   },
-  // ---- v9: Major Update 2.0 — The Ultimate MiMi Expansion (every word of it lives here) ----
+  // ---- v9: Major Update 2.0 — The Ultimate Mimi Expansion (every word of it lives here) ----
   update2: {
     hubTitle: "✨ Update 2.0 Hub ✨",
-    hubSub: "Major Update 2.0 — The Ultimate MiMi Expansion",
+    hubSub: "Major Update 2.0 — The Ultimate Mimi Expansion",
     hubHint: "Tap a card to jump there. The little icons above the bottom bar take you between them anytime.",
     // The hub cards. page = the page each card opens ("heartbeat" sends a heartbeat instead of opening a page)
     features: [
@@ -1238,12 +1324,12 @@ const CONFIG = {
     sos: {
       title: "Your Emergency Adham 🚨💗",
       sub: `If I'm asleep or busy and you need me right now, tap how you're feeling:`,
-      subject: "🚨 EMERGENCY ADHAM ALERT: MiMi clicked {button}!",
+      subject: "🚨 EMERGENCY ADHAM ALERT: Mimi clicked {button}!",
       close: "Okay 💗",
       failed: "The alert didn't reach me just now (check your connection), so message me too 💗",
       buttons: [
         { title: `😔 I'm feeling down & overwhelmed`, message: `Take a deep breath, my love. Whatever is stressing you out right now is temporary, and you don't have to carry it alone. Put everything down for a second, drink some water, and remember that I'm always in your corner. I just got an alert that you pressed this, so I'm coming to check on you very soon. I love you.` },
-        { title: `🌀 I'm overthinking everything`, message: `Hey, stop letting your mind play tricks on you. Nothing has changed, my heart is completely yours, and you are safe with me. Don't believe the loud thoughts in your head—believe how much I love you. Relax your mind, MiMi. I'm right here.` },
+        { title: `🌀 I'm overthinking everything`, message: `Hey, stop letting your mind play tricks on you. Nothing has changed, my heart is completely yours, and you are safe with me. Don't believe the loud thoughts in your head—believe how much I love you. Relax your mind, Mimi. I'm right here.` },
         { title: `😤 I miss you (but I'm acting tough)`, message: `I knew it! You don't even have to admit it out loud, I already know when you want attention. Stop acting tough—I miss you way more anyway. Check your phone soon, I just got notified that you miss me 😉💗` },
         { title: `🌸 I just need reassurance & sweet words`, message: `You are the prettiest, sweetest, most irreplaceable girl in my world. I don't need a reason to spoil you or remind you that you're my forever person. Praying for your peace and happiness until I talk to you.` }
       ]
@@ -1278,31 +1364,31 @@ const CONFIG = {
       download: "Download Boarding Pass ⬇️",
       passHeader: "DATE BOARDING PASS",
       passAirline: "Hello Kitty & Bubbles Airlines",
-      passenger: "MiMi",
+      passenger: "Mimi",
       pilot: "Adham",
       passFlight: "AM 1410",
       passSeat: "Right next to me",
       passFooter: "Valid for one unforgettable date 💗",
-      subject: "🎟️ MiMi just designed your next outing!"
+      subject: "🎟️ Mimi just designed your next outing!"
     },
     // FEATURE 5: the contract she signs with her finger
     contract: {
       title: "The Official Forever Contract 💍✍️",
       heading: "Forever Contract",
-      parties: "An official agreement between Adham & MiMi",
+      parties: "An official agreement between Adham & Mimi",
       clauses: [
-        `MiMi is officially recognized as the cutest, most spoiled girl in the universe.`,
+        `Mimi is officially recognized as the cutest, most spoiled girl in the universe.`,
         `Fake crying, sulking, and baby voices are legally guaranteed to receive immediate sweet words, spoiling, and full attention.`,
         `No matter how busy or hard a day gets, we never go to sleep upset with each other.`,
         `This love and promise are valid to the moon and back, forever and ever.`
       ],
-      signLabel: "MiMi's signature (draw it with your finger):",
+      signLabel: "Mimi's signature (draw it with your finger):",
       clear: "Clear",
       seal: "Seal Our Forever 💗",
       sealText: "SEALED FOREVER 💗✨",
       needSign: "Sign it first, my love ✍️",
       sealedOn: "Signed and sealed on",
-      subject: "💍 MiMi just signed the Forever Contract!"
+      subject: "💍 Mimi just signed the Forever Contract!"
     },
     // FEATURE 6: photo strip (photos stay on her phone, nothing is uploaded)
     booth: {
@@ -1313,7 +1399,7 @@ const CONFIG = {
       reset: "Start over",
       max: "A strip holds three photos at most 🎀",
       stripHeader: "Photo Booth",
-      footer: "Adham & MiMi Forever 💗",
+      footer: "Adham & Mimi Forever 💗",
       download: "Download Photo Strip ⬇️"
     },
     // FEATURE 7: the floating heart button
@@ -1321,7 +1407,7 @@ const CONFIG = {
       label: "Send Adham a live heartbeat",
       toast: `💓 Heartbeat sent to Adham's phone right now!`,
       failed: "It didn't reach Adham just now. Check your connection and tap again 💗",
-      subject: "💓 MiMi just sent you a live heartbeat right now!",
+      subject: "💓 Mimi just sent you a live heartbeat right now!",
       cooldownSeconds: 10     // taps closer together than this still show hearts, but send only one email (0 = an email for every tap)
     }
   },
@@ -1722,6 +1808,10 @@ function enterSite(){
 }
 function unlock(){
   enterSite();
+  showGift();
+  scheduleAnniv();                     // one month anniversary surprise: the site shows first, then it softly dims
+}
+function showGift(){
   go(1);
   setTimeout(() => { const s = document.querySelector("#gift .scene"); if (s && !$("#gift").hidden) s.focus({ preventScroll: true }); }, 520);
 }
@@ -2122,7 +2212,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -2134,7 +2224,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -2279,7 +2369,7 @@ function activate1111(){
     setTimeout(() => { w.hidden = true; }, 2400);
     burst(window.innerWidth / 2, window.innerHeight / 2, 22, "big");
   }
-  setTimeout(open1111, reduceMotion ? 0 : 900);       // then the announcement card
+  if (EL.autoOpen) setTimeout(open1111, reduceMotion ? 0 : 900);   // the card only pops up by itself when autoOpen is true
 }
 (function(){
   if (!EL.enabled) return;
@@ -2320,7 +2410,7 @@ function activate1111(){
   /* the page behind must not scroll while the card is open; only the letter scrolls */
   el.addEventListener("wheel", e => { if (!(e.target.closest && e.target.closest(".el-letter"))) e.preventDefault(); }, { passive: false });
 })();
-/* ============ v9: Major Update 2.0 — The Ultimate MiMi Expansion (all its text lives in CONFIG.update2) ============ */
+/* ============ v9: Major Update 2.0 — The Ultimate Mimi Expansion (all its text lives in CONFIG.update2) ============ */
 const U2 = CONFIG.update2 || {};
 const splitIcon = s => { const i = String(s).indexOf(" "); return i > 0 ? [s.slice(0, i), s.slice(i + 1)] : ["", String(s)]; };
 const cairoTime = () => { try { return new Date().toLocaleString("en-EG", { timeZone: "Africa/Cairo" }); } catch (e){ return new Date().toString(); } };
@@ -2331,7 +2421,7 @@ const pageName = () => (pages[idx] && pages[idx].id) || "letter";
 function notifyAdham(subject, fields){
   const ep = CONFIG.responsesEndpoint || "https://api.web3forms.com/submit", key = CONFIG.accessKey || "";
   if (!key || /YOUR_/.test(ep + key)) return Promise.resolve(null);
-  const data = Object.assign({ access_key: key, subject: subject, from_name: "MiMi's website", Time: cairoTime() }, fields || {});
+  const data = Object.assign({ access_key: key, subject: subject, from_name: "Mimi's website", Time: cairoTime() }, fields || {});
   return fetch(ep, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
     .then(r => !!(r && r.ok)).catch(() => false);
 }
@@ -2439,7 +2529,7 @@ function sendHeartbeat(x, y){
   const now = Date.now();
   if (now - hbLast < (H.cooldownSeconds || 0) * 1000) return;       // hearts and toast every tap, one email per cooldown
   hbLast = now;
-  notifyAdham(H.subject, { message: "MiMi tapped the heartbeat button for you.", Page: pageName() })
+  notifyAdham(H.subject, { message: "Mimi tapped the heartbeat button for you.", Page: pageName() })
     .then(ok => { if (ok === false){ hbLast = 0; setTimeout(() => toast(H.failed, 3800), 1200); } });
 }
 
@@ -2643,7 +2733,7 @@ function ctInit(){
     ctShowSeal(true, when);
     setTimeout(() => { const [x, y] = centerOf($("#ctStamp")); burst(x, y, 30, "big"); }, reduceMotion ? 0 : 420);
     try { localStorage.setItem(CT_KEY, JSON.stringify({ sig: cv.toDataURL("image/png"), when: when })); } catch (e){}
-    notifyAdham(C.subject, { message: "MiMi signed and sealed the Forever Contract on " + when + ".", Clauses: C.clauses.length + " clauses accepted" });
+    notifyAdham(C.subject, { message: "Mimi signed and sealed the Forever Contract on " + when + ".", Clauses: C.clauses.length + " clauses accepted" });
   };
 }
 
@@ -2775,7 +2865,7 @@ function pbRender(){
     el.append(mk("span", "ic", ic), mk("span", "", name));
     el.onclick = () => {
       openU2m(b.title, b.message);
-      notifyAdham(S.subject.replace("{button}", b.title), { Feeling: b.title, message: "MiMi tapped \"" + b.title + "\" on Your Emergency Adham.", Page: pageName() })
+      notifyAdham(S.subject.replace("{button}", b.title), { Feeling: b.title, message: "Mimi tapped \"" + b.title + "\" on Your Emergency Adham.", Page: pageName() })
         .then(ok => { if (ok === false && !$("#u2m").hidden){ const n = $("#u2mNote"); n.textContent = S.failed; n.hidden = false; } });
     };
     $("#sosList").append(el);
@@ -2850,6 +2940,93 @@ function u2OnPage(pg){
 }
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
+
+/* ============ v10: one month anniversary surprise (all its text lives in CONFIG.anniversary) ============ */
+const AN = CONFIG.anniversary || {};
+let anT = 0, anStep = null, anBusy = false;
+const anSteps = () => [...document.querySelectorAll("#an .an-step")];
+const anDimMs = () => reduceMotion ? 0 : (AN.dimSeconds || 2) * 1000;
+/* the videos are silent, always: this runs every time one plays or its volume changes */
+const anHush = v => { try { v.muted = true; v.volume = 0; } catch (e){} };
+/* fade the current step out, then the next one in (its video starts muted and from the beginning) */
+function anShow(next){
+  const prev = anStep;
+  if (anBusy || !next || next === prev) return;
+  anBusy = true;
+  const v = next.querySelector("video");
+  if (v){ anHush(v); safePlay(v); }                    // started inside her tap so iPhones always allow it
+  if (prev){
+    const pv = prev.querySelector("video");
+    if (pv) pv.pause();
+    prev.classList.remove("on");
+  }
+  setTimeout(() => {
+    if (prev) prev.hidden = true;
+    anStep = next;
+    next.hidden = false;
+    next.scrollTop = 0;
+    void next.offsetWidth;                             // let the hidden state paint first so the fade really runs
+    next.classList.add("on");
+    if (v){ anHush(v); try { v.currentTime = 0; } catch (e){} safePlay(v); }
+    const b = next.querySelector("button");
+    if (b){ try { b.focus({ preventScroll: true }); } catch (e){} }
+    anBusy = false;
+  }, prev && !reduceMotion ? 900 : 0);
+}
+/* Called from unlock(): she sees the normal site first, then it slowly dims */
+function scheduleAnniv(){
+  if (!AN.enabled) return;
+  clearTimeout(anT);
+  anT = setTimeout(openAnniv, (AN.delaySeconds || 0) * 1000);
+}
+function openAnniv(){
+  const an = $("#an");
+  if (!an.hidden) return;
+  anSteps().forEach(s => { s.hidden = true; s.classList.remove("on"); });
+  anStep = null; anBusy = false;
+  an.hidden = false;
+  void an.offsetWidth;
+  an.classList.add("dim");
+  anT = setTimeout(() => anShow(anSteps()[0]), anDimMs());
+}
+function closeAnniv(){
+  const an = $("#an");
+  if (an.hidden || !an.classList.contains("dim")) return;
+  an.querySelectorAll("video").forEach(v => v.pause());
+  if (anStep) anStep.classList.remove("on");
+  an.classList.remove("dim");                          // the dark slowly lifts and the site is back
+  anT = setTimeout(() => {
+    an.hidden = true;
+    anSteps().forEach(s => { s.hidden = true; });
+    anStep = null;
+    const s = document.querySelector("#gift .scene");
+    if (s && !$("#gift").hidden){ try { s.focus({ preventScroll: true }); } catch (e){} }
+  }, anDimMs());
+}
+(function(){
+  if (!AN.enabled) return;
+  const an = $("#an"), steps = anSteps();
+  an.style.setProperty("--dim", (AN.dimSeconds || 2) + "s");
+  $("#anIntro").textContent = AN.intro;
+  $("#anVow").textContent = AN.vow;
+  (AN.letter || []).forEach(t => $("#anLetter").append(mk("p", "", t)));
+  const labels = [AN.introButton].concat(AN.videoButtons || [], [AN.letterButton, AN.vowButton]);
+  steps.forEach((s, i) => {
+    const b = s.querySelector("button");
+    b.textContent = labels[i] || "";
+    b.onclick = () => { if (i < steps.length - 1) anShow(steps[i + 1]); else closeAnniv(); };
+  });
+  an.querySelectorAll("video").forEach(v => {
+    const fig = v.parentNode;
+    anHush(v);
+    v.pause();                                         // nothing plays until its own step is on screen
+    fig.dataset.missing = AN.missingVideo;
+    v.addEventListener("play", () => anHush(v));
+    v.addEventListener("volumechange", () => { if (!v.muted || v.volume) anHush(v); });
+    v.addEventListener("error", () => fig.classList.add("missing"));
+    fig.addEventListener("click", () => { anHush(v); safePlay(v); });   // a tap restarts it if the phone held it back (Low Power Mode)
+  });
+})();
 </script>
 </body>
 <script>
