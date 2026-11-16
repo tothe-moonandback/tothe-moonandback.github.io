@@ -699,25 +699,35 @@ body.dock-on .kitty.r{right:72px}
 .u2m-card,#ow .sheet{overflow-y:auto;-webkit-overflow-scrolling:touch}
 #ow .sheet{max-height:90vh;max-height:min(86svh,90vh)}
 }
-/* ============ v11: floating side buttons, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.monthly / CONFIG.comfort) ============ */
-/* floating buttons sit in the same band as the heartbeat button, inside the empty space every page keeps above the dock */
-.fl-btn{position:fixed;z-index:92;border:2px solid #fff;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .2s ease}
-.fl-btn[hidden]{display:none}
-.fl-btn:active{transform:scale(.94)}
-#anBtn{right:72px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 104px);width:52px;height:52px;border-radius:50%;padding:0;display:grid;place-items:center;font-size:1.5rem;line-height:1;background:radial-gradient(circle at 32% 28%,#fffaf5,#fde6ec 60%,#f6ccd6);box-shadow:0 10px 24px -8px rgba(229,169,184,.95),0 0 0 1px rgba(236,190,165,.85)}
-#anBtn i{position:absolute;top:-7px;right:-7px;min-width:23px;height:23px;padding:0 5px;border-radius:12px;border:1.5px solid #fff;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:700 .72rem/20px "Playfair Display",Georgia,serif;text-align:center}
-#cfBtn{left:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 108px);height:44px;padding:0 15px;border-radius:22px;background:linear-gradient(135deg,#FFF5F7,#FCE7F3);color:#4A2532;font:600 1.02rem/1 "Cormorant Garamond",Georgia,serif;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(229,169,184,.95),0 0 0 1px #E5A9B8}
-body.museum #anBtn,body.museum #cfBtn{border-color:#F3E5AB}
-#cfHint{position:fixed;z-index:93;left:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 166px);max-width:min(250px,calc(100% - 90px));padding:10px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#FFF5F7;color:#4A2532;font:italic 600 1.04rem/1.4 "Cormorant Garamond",Georgia,serif;text-align:left;box-shadow:0 12px 28px -12px rgba(229,169,184,.95);cursor:pointer;-webkit-tap-highlight-color:transparent;animation:cfHintBob 1.5s ease-in-out infinite}
+/* ============ v11 + v12: four bottom tabs, Home, tab menus, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.tabs / home / monthly / comfort) ============ */
+/* the bottom bar: four tabs; the small row above it shows where she is inside the current tab */
+.dk-tabs{display:flex;gap:4px}
+.dk-tab{flex:none;min-width:76px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 8px 6px;border-radius:21px;border:1px solid transparent;background:transparent;color:inherit;font:600 .84rem/1.1 "Cormorant Garamond",Georgia,serif;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .3s cubic-bezier(.3,1.5,.5,1),background-color .4s,border-color .4s,box-shadow .4s,color .4s}
+.dk-tab .ic{font-size:1.35rem;line-height:1.1}
+.dk-tab.on{background:#fff;border-color:var(--rose);box-shadow:0 6px 14px -8px rgba(201,112,139,.9)}
+.dk-tab:active{transform:scale(.93)}
+body.museum .dk-tab.on{background:linear-gradient(135deg,#F3E5AB,#D4AF37 55%,#9c7a1c);border-color:#F3E5AB;color:#2a0a10;box-shadow:0 6px 16px -6px rgba(212,175,55,.8)}
+.dk-chev{flex:none;width:22px;height:26px;border:0;background:none;padding:0;color:inherit;font:600 1.35rem/1 "Cormorant Garamond",Georgia,serif;cursor:pointer;opacity:.85;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.dk-chev:disabled{opacity:.25;cursor:default}
+@media (max-width:360px){.dk-tab{min-width:66px;padding:6px 4px 5px;font-size:.78rem}.dk-chev{display:none}}
+/* first-time pointer: sits above the bar and points down at the Comfort tab (its position is set by the script) */
+#cfHint{position:fixed;z-index:93;left:8px;bottom:96px;max-width:min(250px,calc(100% - 16px));padding:10px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#FFF5F7;color:#4A2532;font:italic 600 1.04rem/1.4 "Cormorant Garamond",Georgia,serif;text-align:left;box-shadow:0 12px 28px -12px rgba(229,169,184,.95);cursor:pointer;-webkit-tap-highlight-color:transparent;animation:cfHintBob 1.5s ease-in-out infinite}
 #cfHint[hidden]{display:none}
-#cfHint::after{content:"";position:absolute;left:34px;bottom:-8px;width:14px;height:14px;background:#FFF5F7;border-right:1px solid #E5A9B8;border-bottom:1px solid #E5A9B8;transform:rotate(45deg)}
+#cfHint::after{content:"";position:absolute;left:calc(var(--ax,50%) - 7px);bottom:-8px;width:14px;height:14px;background:#FFF5F7;border-right:1px solid #E5A9B8;border-bottom:1px solid #E5A9B8;transform:rotate(45deg)}
 #cfHint i{display:inline-block;margin-left:4px;font-style:normal}
 @keyframes cfHintBob{50%{transform:translateY(7px)}}
-/* they step aside while a letter or a photo is open on top of the page */
-body:has(#ow:not([hidden])) .fl-btn,body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) .fl-btn,body:has(#lb:not([hidden])) #cfHint{display:none}
-body.dock-on .kitty.r{right:132px}
+body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:none}
+/* Home: the calm first screen */
+.hm{gap:26px}
+.hm h2.big{font-size:clamp(2.6rem,11vw,3.4rem);line-height:1.2}
+.hm .sub{line-height:1.5}
+.hm-sur{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:6px}
+.hm-sur[hidden]{display:none}
+#anBtn{padding:11px 24px;border-radius:999px;border:1px solid rgba(236,190,165,.95);background:linear-gradient(135deg,#fffaf5,#fde6ec 60%,#f6ccd6);color:#4A2532;font:700 1.15rem/1.2 "Playfair Display",Georgia,serif;letter-spacing:.02em;box-shadow:0 0 0 5px rgba(251,207,232,.35),0 12px 26px -12px rgba(229,169,184,.95);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .2s ease}
+#anBtn:active{transform:scale(.95)}
+.hm-sur small{font:italic 1rem/1.4 "Cormorant Garamond",Georgia,serif;opacity:.8}
 /* monthly countdown card */
-.mc{display:flex;align-items:center;gap:12px;width:min(360px,100%);padding:10px 16px 10px 10px;border-radius:20px;border:1px solid #E5A9B8;background:linear-gradient(135deg,#FFF5F7,#FCE7F3);color:#4A2532;text-align:left;box-shadow:0 12px 26px -16px rgba(229,169,184,.95)}
+.mc{display:flex;align-items:center;gap:12px;width:min(360px,100%);padding:12px 18px 12px 12px;border-radius:20px;border:1px solid #E5A9B8;background:linear-gradient(135deg,#FFF5F7,#FCE7F3);color:#4A2532;text-align:left;box-shadow:0 12px 26px -16px rgba(229,169,184,.95)}
 .mc[hidden]{display:none}
 .mc-cal{flex:none;width:48px;border-radius:12px;overflow:hidden;background:#fff;border:1px solid #E5A9B8;text-align:center}
 .mc-cal small{display:block;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:700 .62rem/1.7 "Playfair Display",Georgia,serif;letter-spacing:.12em}
@@ -725,12 +735,27 @@ body.dock-on .kitty.r{right:132px}
 .mc p{margin:0;font:600 1.12rem/1.4 "Cormorant Garamond",Georgia,serif}
 .mc p b{font:700 1.35rem/1 "Playfair Display",Georgia,serif;color:#d9488b}
 .mc.today{border-color:#F472B6;box-shadow:0 0 0 4px rgba(244,114,182,.14),0 12px 26px -14px rgba(244,114,182,.9)}
+/* tab menus (Memories, Love Notes): one roomy card per part of the site */
+.tv{gap:22px}
+.tv .sub{line-height:1.5}
+.tv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;width:min(560px,100%);margin-top:6px}
+.tv-grid.one{grid-template-columns:1fr;width:min(420px,100%)}
+.tv-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:118px;padding:22px 14px;border-radius:24px;border:1px solid #efbdcc;background:linear-gradient(145deg,#fffdf8,#fce8e8);box-shadow:0 12px 26px -18px #9d536a;color:var(--ink);font:600 1.15rem/1.3 "Cormorant Garamond",Georgia,serif;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .25s}
+.tv-card:active{transform:scale(.97)}
+.tv-card .ic{font-size:2.2rem;line-height:1.1}
+.tv-grid:not(.one) .tv-card:last-child:nth-child(odd){grid-column:1 / -1}
 /* Mimi's Comfort Corner */
-.cf{padding-left:12px;padding-right:12px}
-.cf-wrap{width:min(600px,100%);display:flex;flex-direction:column;gap:20px;padding:28px 16px 24px;border-radius:30px;background:#FFF5F7;border:1px solid #E5A9B8;color:#4A2532;box-shadow:0 22px 50px -28px rgba(229,169,184,.95)}
+.cf{padding-left:10px;padding-right:10px}
+.cf-wrap{width:min(600px,100%);display:flex;flex-direction:column;gap:22px;padding:28px 20px 26px;border-radius:30px;background:#FFF5F7;border:1px solid #E5A9B8;color:#4A2532;box-shadow:0 22px 50px -28px rgba(229,169,184,.95)}
 .cf-wrap h2.big{font-size:clamp(2.2rem,9.5vw,3rem);line-height:1.2;color:#4A2532}
 .cf-wrap .sub{margin:0 auto;line-height:1.5;color:#4A2532}
-.cf-card{display:flex;flex-direction:column;gap:14px;padding:20px 16px;border-radius:22px;background:#FCE7F3;border:1px solid #E5A9B8;text-align:center}
+.cf-tabs{display:flex;gap:5px;padding:5px;border-radius:22px;background:#FCE7F3;border:1px solid #E5A9B8}
+.cf-tab{flex:1;min-width:0;padding:10px 6px;border-radius:17px;border:0;background:transparent;color:#4A2532;font:600 1.02rem/1.25 "Cormorant Garamond",Georgia,serif;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .3s,color .3s,box-shadow .3s}
+.cf-tab.on{background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;box-shadow:0 8px 18px -10px rgba(244,114,182,.9)}
+.cf-panel{display:flex;flex-direction:column;gap:22px}
+.cf-panel[hidden]{display:none}
+.cf-panel:not([hidden]){animation:cfFade .5s ease}
+.cf-card{display:flex;flex-direction:column;gap:16px;padding:22px 20px;border-radius:22px;background:#FCE7F3;border:1px solid #E5A9B8;text-align:center}
 .cf-card h3{margin:0;font:600 1.2rem/1.45 "Playfair Display",Georgia,serif;color:#4A2532}
 .cf-card p{margin:0;font:500 1.15rem/1.5 "Cormorant Garamond",Georgia,serif}
 .cf-level{display:flex;align-items:baseline;justify-content:center;gap:8px;font:700 2.6rem/1.2 "Playfair Display",Georgia,serif;color:#F472B6}
@@ -743,7 +768,7 @@ body.dock-on .kitty.r{right:132px}
 #cfSlider::-moz-range-thumb{width:28px;height:28px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 32% 28%,#ffd3e3,#F472B6);box-shadow:0 4px 12px -2px rgba(244,114,182,.85)}
 .cf-scale{display:flex;justify-content:space-between;font:600 .95rem/1.2 "Playfair Display",Georgia,serif;opacity:.75}
 .cf-card p.cf-status{min-height:3em;font-style:italic;font-weight:600}
-.cf-btns{display:grid;gap:10px}
+.cf-btns{display:grid;gap:12px}
 .cf-req,.cf-gift{padding:13px 14px;border-radius:18px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:600 1.12rem/1.4 "Cormorant Garamond",Georgia,serif;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .3s ease,border-color .3s ease}
 .cf-req:active,.cf-gift:active{transform:scale(.97)}
 .cf-req.sent{background:#FFF5F7;border-color:#F472B6}
@@ -755,15 +780,15 @@ body.dock-on .kitty.r{right:132px}
 .cf-card p.cf-ok[hidden]{display:none}
 .cf-ok.pop{animation:cfFade .6s ease}
 @keyframes cfFade{from{opacity:0;transform:translateY(6px)}}
-.cf-ticket{position:relative;display:flex;align-items:stretch;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#FCE7F3,#FFF5F7);border:1.5px solid #F472B6;text-align:left}
-.cf-ticket::before,.cf-ticket::after{content:"";position:absolute;left:60px;width:20px;height:20px;border-radius:50%;background:#FFF5F7;border:1.5px solid #F472B6}
+.cf-ticket{position:relative;display:flex;align-items:stretch;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#fff,#FFF5F7);border:1.5px solid #F472B6;text-align:left}
+.cf-ticket::before,.cf-ticket::after{content:"";position:absolute;left:54px;width:20px;height:20px;border-radius:50%;background:#FCE7F3;border:1.5px solid #F472B6}
 .cf-ticket::before{top:-12px}
 .cf-ticket::after{bottom:-12px}
-.cf-stub{flex:none;width:70px;display:grid;place-items:center;border-right:2px dashed #E5A9B8;font-size:2rem}
+.cf-stub{flex:none;width:64px;display:grid;place-items:center;border-right:2px dashed #E5A9B8;font-size:1.9rem}
 .cf-pass{display:flex;flex-direction:column;gap:8px;padding:20px 16px}
 .cf-pass b{font:700 1.2rem/1.4 "Playfair Display",Georgia,serif}
 .cf-pass span{font:500 1.14rem/1.5 "Cormorant Garamond",Georgia,serif}
-.cf-care{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cf-care{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cf-gift{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:76px}
 .cf-gift span{display:none;font:italic 500 1.06rem/1.5 "Cormorant Garamond",Georgia,serif}
 .cf-gift.open{background:#FFF5F7;border-color:#F472B6}
@@ -776,8 +801,8 @@ body.dock-on .kitty.r{right:132px}
 .cf-card p.cf-calm{min-height:3em;font-style:italic;transition:opacity .8s ease}
 .cf-card p.cf-calm.out{opacity:0}
 @media (max-width:520px){.cf-care{grid-template-columns:1fr}}
-@media (max-width:350px){#cfBtn{padding:0 11px;font-size:.95rem}#anBtn{right:68px}}
-@media (prefers-reduced-motion:reduce){#cfHint,.cf-ok.pop,.cf-gift.open span{animation:none}}
+@media (max-width:350px){.cf-wrap{padding-left:14px;padding-right:14px}.cf-card{padding-left:14px;padding-right:14px}.tv-grid{gap:12px}}
+@media (prefers-reduced-motion:reduce){#cfHint,.cf-ok.pop,.cf-gift.open span,.cf-panel:not([hidden]){animation:none}}
 </style>
 </head>
 <body>
@@ -819,11 +844,20 @@ body.dock-on .kitty.r{right:132px}
   <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
 <!-- 2. Gift 1 (lilies) -->
-<section id="gift" class="stage page" hidden>
+<!-- v12: Home, the calm first screen after the PIN (text in CONFIG.home, CONFIG.monthly and CONFIG.surprise) -->
+<section id="home" class="stage page hm" hidden>
+  <h2 class="script big" id="hmTitle"></h2>
+  <p class="sub" id="hmSub"></p>
   <div class="mc" id="mcCard" role="status" hidden>
     <div class="mc-cal" aria-hidden="true"><small id="mcMonth"></small><b id="mcDay"></b></div>
     <p id="mcText"></p>
   </div>
+  <div class="hm-sur" id="hmSur" hidden>
+    <button id="anBtn" type="button"></button>
+    <small id="anCap"></small>
+  </div>
+</section>
+<section id="gift" class="stage page" hidden>
   <button class="scene" aria-label="Open the gift">
     <div class="bloom">
       <svg viewBox="0 0 300 330" aria-hidden="true">
@@ -922,49 +956,6 @@ body.dock-on .kitty.r{right:132px}
   <button class="back" type="button">‹ Back</button>
   <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
-<!-- v11: Mimi's Comfort Corner (filled in from CONFIG.comfort) -->
-<section id="comfort" class="stage page xpage cf" hidden>
-  <div class="cf-wrap">
-    <h2 class="script big" id="cfTitle"></h2>
-    <p class="sub" id="cfSub"></p>
-    <div class="cf-card">
-      <h3 id="cfPainTitle"></h3>
-      <p id="cfPainQ"></p>
-      <div class="cf-level"><b id="cfNum">1</b><small>/ 10</small><span id="cfFace" aria-hidden="true"></span></div>
-      <input type="range" id="cfSlider" min="1" max="10" step="0.1" value="1" aria-labelledby="cfPainQ">
-      <div class="cf-scale" aria-hidden="true"><span>1</span><span>10</span></div>
-      <p class="cf-status" id="cfPainLabel" role="status" aria-live="polite"></p>
-    </div>
-    <div class="cf-card">
-      <h3 id="cfCraveTitle"></h3>
-      <div class="cf-btns" id="cfReqs"></div>
-      <input type="text" id="cfCustom" maxlength="200" autocomplete="off" enterkeyhint="send">
-      <button class="cf-send" id="cfCustomSend" type="button"></button>
-      <p class="cf-ok" id="cfSent" role="status" aria-live="polite" hidden></p>
-    </div>
-    <div class="cf-card">
-      <h3 id="cfPassHead"></h3>
-      <div class="cf-ticket">
-        <div class="cf-stub" aria-hidden="true">🎟️</div>
-        <div class="cf-pass"><b id="cfPassTitle"></b><span id="cfPassText"></span></div>
-      </div>
-    </div>
-    <div class="cf-card">
-      <h3 id="cfCareTitle"></h3>
-      <p id="cfCareHint"></p>
-      <div class="cf-care" id="cfCare"></div>
-    </div>
-    <div class="cf-card">
-      <h3 id="cfBreathTitle"></h3>
-      <div class="cf-breath-box"><div class="cf-breath" id="cfBreath" aria-hidden="true"></div></div>
-      <p class="cf-phase" id="cfPhase" role="status" aria-live="polite"></p>
-      <p class="cf-calm" id="cfCalm"></p>
-      <button class="cf-send" id="cfBreathBtn" type="button" aria-pressed="false"></button>
-    </div>
-  </div>
-  <button class="next" type="button">Next</button>
-  <button class="back" type="button">‹ Back</button>
-</section>
 <!-- v9: Major Update 2.0 — the hub and six feature pages (filled in from CONFIG.update2) -->
 <section id="hub" class="stage page xpage u2" hidden>
   <h2 class="script big" id="hubTitle"></h2>
@@ -1018,7 +1009,7 @@ body.dock-on .kitty.r{right:132px}
     <h3 class="script" id="ctHeading"></h3>
     <p class="ct-parties" id="ctParties"></p>
     <ol class="ct-clauses" id="ctClauses"></ol>
-    <p class="ct-label" id="ctLabel"></p>
+    <p class="ct-label" id="ctSignLabel"></p>
     <div class="ct-pad"><canvas id="ctCanvas" aria-label="Signature pad"></canvas></div>
     <div class="ct-actions"><button class="u2-ghost" id="ctClear" type="button"></button><button class="u2-btn main" id="ctSeal" type="button"></button></div>
     <p class="ct-date" id="ctDate" role="status"></p>
@@ -1075,6 +1066,64 @@ body.dock-on .kitty.r{right:132px}
   <button class="back" type="button">‹ Back</button>
   <svg class="kitty" aria-hidden="true"><use href="#kitty"/></svg>
 </section>
+<!-- v12: tab views that sit outside the Next/Back story: the two menus and Mimi's Comfort Corner (filled in from CONFIG.tabs / CONFIG.comfort) -->
+<section id="memories" class="stage page xpage tv" hidden>
+  <h2 class="script big"></h2>
+  <p class="sub"></p>
+  <div class="tv-grid one"></div>
+</section>
+<section id="notes" class="stage page xpage tv" hidden>
+  <h2 class="script big"></h2>
+  <p class="sub"></p>
+  <div class="tv-grid"></div>
+</section>
+<section id="comfort" class="stage page xpage cf" hidden>
+  <div class="cf-wrap">
+    <h2 class="script big" id="cfTitle"></h2>
+    <p class="sub" id="cfSub"></p>
+    <div class="cf-tabs" id="cfTabs" role="tablist"></div>
+    <div class="cf-panel" role="tabpanel">
+      <div class="cf-card">
+        <h3 id="cfPainTitle"></h3>
+        <p id="cfPainQ"></p>
+        <div class="cf-level"><b id="cfNum">1</b><small>/ 10</small><span id="cfFace" aria-hidden="true"></span></div>
+        <input type="range" id="cfSlider" min="1" max="10" step="0.1" value="1" aria-labelledby="cfPainQ">
+        <div class="cf-scale" aria-hidden="true"><span>1</span><span>10</span></div>
+        <p class="cf-status" id="cfPainLabel" role="status" aria-live="polite"></p>
+      </div>
+      <div class="cf-card">
+        <h3 id="cfCraveTitle"></h3>
+        <div class="cf-btns" id="cfReqs"></div>
+        <input type="text" id="cfCustom" maxlength="200" autocomplete="off" enterkeyhint="send">
+        <button class="cf-send" id="cfCustomSend" type="button"></button>
+        <p class="cf-ok" id="cfSent" role="status" aria-live="polite" hidden></p>
+      </div>
+    </div>
+    <div class="cf-panel" role="tabpanel" hidden>
+      <div class="cf-card">
+        <h3 id="cfCareTitle"></h3>
+        <p id="cfCareHint"></p>
+        <div class="cf-care" id="cfCare"></div>
+      </div>
+      <div class="cf-card">
+        <h3 id="cfPassHead"></h3>
+        <div class="cf-ticket">
+          <div class="cf-stub" aria-hidden="true">🎟️</div>
+          <div class="cf-pass"><b id="cfPassTitle"></b><span id="cfPassText"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-panel" role="tabpanel" hidden>
+      <div class="cf-card">
+        <h3 id="cfBreathTitle"></h3>
+        <div class="cf-breath-box"><div class="cf-breath" id="cfBreath" aria-hidden="true"></div></div>
+        <p class="cf-phase" id="cfPhase" role="status" aria-live="polite"></p>
+        <p class="cf-calm" id="cfCalm"></p>
+        <button class="cf-send" id="cfBreathBtn" type="button" aria-pressed="false"></button>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="apology" class="stage page" hidden><article class="apology-page"><h2 class="script">Can we make this right? 💗</h2><p>I am truly sorry from the bottom of my heart. Seeing you upset hurts me deeply, especially knowing that my actions may have caused it. You are the most important person in my world, and I never want you to feel that your feelings do not matter.</p><p>I know loving you means more than saying beautiful things. It means listening to you, understanding how my actions affected you, and taking responsibility instead of making excuses. You deserved more care from me, and I am truly sorry that I hurt you. I may not always express myself well or make the right choices, but I want to learn from this and show you through my actions that I can do better.</p><p>You mean everything to me, and I care so much about your happiness and your smile. I don’t want to leave things unresolved while you’re hurting. Can we talk and try to figure this out together now, if you’re willing? I’ll listen and do my best to understand what you need.</p><section class="questions"><h3 class="script">Can you forgive me, at least for trying? 💗</h3><div class="choices"><button data-q="forgive" data-a="yes">Yes 💗</button><button data-q="forgive" data-a="no">No</button></div><p class="answer" id="forgiveAnswer" aria-live="polite"></p><h3 class="script">Do you still love me? 💞</h3><div class="choices"><button data-q="love" data-a="yes">Yes 💗</button><button data-q="love" data-a="no">No</button></div><p class="answer" id="loveAnswer" aria-live="polite"></p></section><img class="apology-photo" src="9.jpg" alt="A favorite memory of us together"><p>i love you to the moon and back marioumty. im truly sorry, hbibty.</p><p class="sign">With all my love 💗</p><div class="sweet-gift"><h3 class="script">A little something for you</h3><button id="chocoGift" type="button" aria-expanded="false"><span class="choco" aria-hidden="true">🍫</span><span>Open your chocolate gift</span></button><div id="ringReveal" hidden><svg class="ring-art" viewBox="0 0 220 180" role="img" aria-label="Cartoon silver ring with pink stones"><ellipse cx="110" cy="110" rx="37" ry="57" fill="none" stroke="#b9bcc5" stroke-width="13"/><ellipse cx="110" cy="110" rx="27" ry="48" fill="none" stroke="#fff" stroke-width="5"/><path d="M76 56Q110 43 144 56" fill="none" stroke="#aeb2bd" stroke-width="8" stroke-linecap="round"/><path d="M79 51L88 36M141 51L132 36" stroke="#aeb2bd" stroke-width="5"/><path d="M88 33l9-10 9 10-9 10zM112 33l9-10 9 10-9 10z" fill="#ff91b5" stroke="#dc638c" stroke-width="3"/><circle cx="97" cy="31" r="3" fill="#fff"/><circle cx="121" cy="31" r="3" fill="#fff"/></svg><p class="ring-caption">Here is your ring, baby 💍<br>I love you so much</p></div></div></article><button class="apology-back" type="button" id="backApology">‹ Back to your surprise</button></section>
 
 <!-- v7: 11/11 • 11:11 Special Edition: dreamy backdrop, particles, shimmer wave, top pill, announcement modal -->
@@ -1112,17 +1161,11 @@ body.dock-on .kitty.r{right:132px}
 </svg>
 <nav id="dock" hidden aria-label="Jump to any part of the website">
   <div class="dk-sub dk-glass" id="dkSub" hidden></div>
-  <div class="dk-bar dk-glass">
-    <button class="dk-arrow" id="dkPrev" type="button" aria-label="Previous page">‹</button>
-    <div class="dk-strip" id="dkStrip"></div>
-    <button class="dk-arrow" id="dkNext" type="button" aria-label="Next page">›</button>
-  </div>
+  <div class="dk-bar dk-glass"><div class="dk-tabs" id="dkTabs"></div></div>
 </nav>
 <!-- v9: Update 2.0 - screen pulse, floating heartbeat button, toast, comfort popup -->
 <div id="hbPulse" aria-hidden="true"></div>
 <button id="hbBtn" type="button" hidden><span aria-hidden="true">💓</span></button>
-<button id="anBtn" class="fl-btn" type="button" hidden><span aria-hidden="true">💌</span><i aria-hidden="true">14</i></button>
-<button id="cfBtn" class="fl-btn" type="button" hidden></button>
 <button id="cfHint" type="button" hidden></button>
 <div id="toast" role="status" aria-live="polite" hidden></div>
 <div id="u2m" hidden role="dialog" aria-modal="true" aria-labelledby="u2mTitle">
@@ -1367,18 +1410,33 @@ const CONFIG = {
   },
   // The floating dock at the bottom. "letter" = every letter page, "museum" = every museum page, anything else = that page's id.
   dock: [
-    { icon: "🎁", label: "Intro", pages: ["gift"] },
+    { icon: "🎁", label: "Intro", card: "Your Gift", pages: ["gift"] },   // card = the name on its card in the tab menu (label is used when there is none)
     { icon: "💌", label: "Love Letter", pages: ["letter", "gift2"] },
     { icon: "🖼️", label: "Museum", pages: ["museum"] },
     { icon: "💞", label: "Our Little World", pages: ["us"] },
     { icon: "🎟️", label: "Coupons & Open When", pages: ["treats", "openwhen"] },
     { icon: "💭", label: "Quizzes", pages: ["quiz", "mood"] },
-    { icon: "🧸", label: "Comfort Corner", pages: ["comfort"] },
     // marks = the little jump icons shown above the bottom bar for this section's pages (hub first, then features 1 to 6)
     { icon: "✨", label: "Update 2.0 Hub", pages: ["hub", "u2little", "u2sos", "u2voice", "u2ticket", "u2contract", "u2booth"], marks: ["✨", "🎀", "🚨", "🎙️", "🎟️", "💍", "📸"] },
     { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
   ],
-  // ---- v11: monthly countdown to the 14th (the small card at the top of the gift page) ----
+  // ---- v12: the four tabs of the bottom bar ----
+  // page  = the screen the tab opens.
+  // pages = everything that belongs to the tab ("museum" = all museum rooms). Pages listed nowhere belong to the tab with rest: true.
+  // A tab whose screen is a menu (Memories, Love Notes) shows one card for each part of the site in the "dock" list above that belongs to it.
+  tabs: [
+    { icon: "🎀", label: "Home", page: "home" },
+    { icon: "🖼️", label: "Memories", page: "memories", pages: ["memories", "museum", "us"], title: "Our Memories 🖼️", sub: "Every photo of us has a room here." },
+    { icon: "🧸", label: "Comfort", page: "comfort" },
+    { icon: "💌", label: "Love Notes", page: "notes", rest: true, title: "Love Notes 💌", sub: "Everything I wrote for you, all in one place.",
+      extra: [{ icon: "✨", label: "11:11 Letter", action: "1111" }] }   // an extra first card that opens the 11:11 letter
+  ],
+  // ---- v12: Home, the first screen after the PIN (the countdown card and the surprise button sit under these two lines) ----
+  home: {
+    title: "Our Safe Space 🎀",
+    sub: "Signed, sealed, and yours forever."
+  },
+  // ---- v11: monthly countdown to the 14th (the small card on Home) ----
   monthly: {
     enabled: true,
     day: 14,             // the day of the month you celebrate
@@ -1386,11 +1444,11 @@ const CONFIG = {
     one: "{n} day until we celebrate another month of us 💗",
     today: "Happy Monthly Anniversary, my Mimi! 💗✨"
   },
-  // ---- v11: Mimi's Comfort Corner (its own page, the 🧸 in the bottom bar, and the floating button on the left) ----
+  // ---- v11: Mimi's Comfort Corner (the 🧸 tab in the bottom bar) ----
   comfort: {
-    enabled: true,       // false = hide the floating button and its first-time hint (the page stays in the bottom bar)
-    button: "Comfort Corner 🧸",
-    hint: "Tap here whenever you need extra care 🧸✨",   // shown once, until she taps the button
+    enabled: true,       // false = never show the first-time pointer (the tab itself stays)
+    hint: "Tap here whenever you need extra care 🧸✨",   // the pointer above the 🧸 tab: shown until she taps it once
+    tabs: ["Cravings & Pain", "Care & Pass", "Breathe"],  // the three inner tabs, in the order of the panels
     title: "Mimi's Comfort Corner 🧸",
     sub: "A soft little place for the days you need extra care. Take whatever you need, I've got you.",
     painTitle: "Pain-O-Meter 🌡️",
@@ -1447,9 +1505,11 @@ const CONFIG = {
       "I'm so proud of you, always."
     ]
   },
-  // ---- v10: one month anniversary surprise (opens only when she taps the floating 💌 button, and replays from the start every time) ----
+  // ---- v10: one month anniversary surprise (opens only from the small button on Home, and replays from the start every time) ----
   surprise: {            // (not "anniversary": that name already holds the date for the "together for" counter)
-    enabled: true,       // false = hide the 💌 button
+    enabled: true,       // false = hide the button on Home
+    homeButton: "14 ✨",
+    homeCaption: "Tap to replay our anniversary surprise",
     iconLabel: "Open your anniversary surprise",
     dimSeconds: 2,       // how slowly the screen dims (and brightens again at the very end)
     intro: "Wait a second, Mariouma... there is a little surprise for you tonight 🤍",
@@ -2007,11 +2067,7 @@ function enterSite(){
 }
 function unlock(){
   enterSite();
-  showGift();
-}
-function showGift(){
-  go(1);
-  setTimeout(() => { const s = document.querySelector("#gift .scene"); if (s && !$("#gift").hidden) s.focus({ preventScroll: true }); }, 520);
+  go(pages.indexOf($("#home")));       // she lands on Home; the gift and the letter are one swipe (or the Love Notes tab) away
 }
 
 /* ============ v3 extras ============ */
@@ -2339,40 +2395,46 @@ const metaTheme = (() => {
 })();
 metaTheme.content = "#fdf0f3";
 
-/* The dock: one button per section, plus dots for the pages inside the current section */
+/* The parts of the site (CONFIG.dock): each one gets a card in its tab's menu, and dots for its pages in the small row above the tabs */
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 const SECTIONS = (CONFIG.dock || []).map(d => ({
-  icon: d.icon, label: d.label, marks: d.marks,
+  icon: d.icon, label: d.label, card: d.card, marks: d.marks,
   list: d.pages.reduce((a, tok) => a.concat(pages.filter(p => tok === "letter" ? p.classList.contains("letter-page") : tok === "museum" ? isMz(p) : p.id === tok)), [])
 })).filter(s => s.list.length);
 const FIRST = 1, LAST = pages.indexOf($("#final"));
 function flowNext(){ if (unlocked && idx >= FIRST && idx < LAST) go(idx + 1); }
 function flowPrev(){ if (unlocked && idx > FIRST && idx <= LAST) go(idx - 1); }
-const dkStrip = $("#dkStrip"), dkSub = $("#dkSub");
-SECTIONS.forEach(s => {
-  const b = mk("button", "dk-item", s.icon);
-  b.type = "button"; b.title = s.label; b.setAttribute("aria-label", s.label);
-  b.onclick = () => go(pages.indexOf(s.list[0]));
-  dkStrip.append(b);
+const dkTabs = $("#dkTabs"), dkSub = $("#dkSub");
+/* The four bottom tabs. A page belongs to the tab that lists it; every other page belongs to the tab marked rest. */
+const TABS = (CONFIG.tabs || []).map(t => ({
+  icon: t.icon, label: t.label, rest: !!t.rest, root: document.getElementById(t.page),
+  list: (t.pages || [t.page]).reduce((a, tok) => a.concat(pages.filter(p => tok === "museum" ? isMz(p) : p.id === tok)), [])
+})).filter(t => t.root);
+const tabOf = pg => { const i = TABS.findIndex(t => t.list.includes(pg)); return i >= 0 ? i : TABS.findIndex(t => t.rest); };
+TABS.forEach(t => {
+  const b = mk("button", "dk-tab");
+  b.type = "button";
+  b.append(mk("span", "ic", t.icon), mk("span", "", t.label));
+  b.onclick = () => { tabTapped(t); go(pages.indexOf(t.root)); };
+  dkTabs.append(b);
 });
-$("#dkPrev").onclick = flowPrev;
-$("#dkNext").onclick = flowNext;
 function updateDock(){
   const dock = $("#dock"), show = unlocked && idx > 0;
   dock.hidden = !show;
   document.body.classList.toggle("dock-on", show);
   $("#hbBtn").hidden = !show;                         // the floating heartbeat button appears and hides with the dock
-  updateFloats(show);                                 // so do the 💌 and Comfort Corner buttons
-  const pg = pages[idx], si = SECTIONS.findIndex(s => s.list.includes(pg));
-  [...dkStrip.children].forEach((b, k) => {
-    b.classList.toggle("on", k === si);
-    if (k === si) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+  const pg = pages[idx], si = SECTIONS.findIndex(s => s.list.includes(pg)), ti = tabOf(pg);
+  [...dkTabs.children].forEach((b, k) => {
+    b.classList.toggle("on", k === ti);
+    if (k === ti) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
+  /* the small row above the tabs: which part of the tab she is in, dots to jump between its pages, and ‹ › for the story order */
   dkSub.innerHTML = "";
   dkSub.hidden = si < 0;
   if (si >= 0){
     const s = SECTIONS[si], mz = isMz(s.list[0]), marks = s.marks || null;
-    dkSub.append(mk("span", "dk-label", s.label));
+    const chev = (txt, label, fn, off) => { const c = mk("button", "dk-chev", txt); c.type = "button"; c.setAttribute("aria-label", label); c.disabled = off; c.onclick = fn; return c; };
+    dkSub.append(chev("‹", "Previous page", flowPrev, !(idx > FIRST && idx <= LAST)), mk("span", "dk-label", s.label));
     if (s.list.length > 1) s.list.forEach((p, k) => {
       const d = mk("button", "dk-dot" + (mz || marks ? " num" : "") + (p === pg ? " on" : ""), mz ? (k === 0 ? "✦" : ROMAN[k - 1] || String(k)) : marks ? (marks[k] || "") : "");
       d.type = "button";
@@ -2380,13 +2442,10 @@ function updateDock(){
       d.onclick = () => go(pages.indexOf(p));
       dkSub.append(d);
     });
-    const it = dkStrip.children[si];
-    if (show && it && dkStrip.scrollWidth > dkStrip.clientWidth) dkStrip.scrollLeft = it.offsetLeft - dkStrip.clientWidth / 2 + it.offsetWidth / 2;
+    dkSub.append(chev("›", "Next page", flowNext, !(idx >= FIRST && idx < LAST)));
   }
-  $("#dkPrev").disabled = !(idx > FIRST && idx <= LAST);
-  $("#dkNext").disabled = !(idx >= FIRST && idx < LAST);
+  updateFloats(show);                                 // the first-time pointer above the Comfort tab
 }
-
 /* Runs at the very start of every page change */
 function enterMuseumAudio(){
   const f = CONFIG.museum.enterSong;
@@ -3118,7 +3177,7 @@ function pbRender(){
 
   /* 5: contract */
   const C = U2.contract;
-  setT("#ctTitle", C.title); setT("#ctHeading", C.heading); setT("#ctParties", C.parties); setT("#ctLabel", C.signLabel); setT("#ctClear", C.clear); setT("#ctSeal", C.seal);
+  setT("#ctTitle", C.title); setT("#ctHeading", C.heading); setT("#ctParties", C.parties); setT("#ctSignLabel", C.signLabel); setT("#ctClear", C.clear); setT("#ctSeal", C.seal);
   C.clauses.forEach(t => $("#ctClauses").append(mk("li", "", t)));
 
   /* 6: photo booth */
@@ -3223,34 +3282,39 @@ function closeAnniv(){
     fig.addEventListener("click", () => { anHush(v); safePlay(v); });   // a tap restarts it if the phone held it back (Low Power Mode)
   });
   const ab = $("#anBtn");
+  ab.textContent = AN.homeButton;
   ab.setAttribute("aria-label", AN.iconLabel);
-  ab.title = AN.iconLabel;
   ab.onclick = openAnniv;
+  $("#anCap").textContent = AN.homeCaption;
+  $("#hmSur").hidden = false;
 })();
 
-/* ============ v11: floating side buttons, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.monthly / CONFIG.comfort) ============ */
+/* ============ v11 + v12: Home, tab menus, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.home / tabs / monthly / comfort) ============ */
 const MC = CONFIG.monthly || {}, CF = CONFIG.comfort || {};
-const CF_HINT_KEY = "mimi_comfort_hint_seen_v1";
-let cfScroll = false, cfLevel = 1, brT = 0, brCalmT = 0, brOn = false, brCount = 0;
-/* Called from updateDock(): the 💌 and Comfort Corner buttons appear and hide together with the dock.
-   It only reads CONFIG, so it is safe however early the dock first draws. */
+let cfLevel = 1, brT = 0, brCalmT = 0, brOn = false, brCount = 0;
+/* Called from updateDock(): on Home, the first-time pointer shows above the Comfort tab until she taps that tab (or the pointer) once.
+   It runs before the constants above exist, so it only uses CONFIG and the dock's own variables. */
 function updateFloats(show){
-  const A = CONFIG.surprise || {}, C = CONFIG.comfort || {};
-  const onComfort = !!(pages[idx] && pages[idx].id === "comfort");
+  const C = CONFIG.comfort || {}, hint = $("#cfHint"), ci = TABS.findIndex(t => t.root.id === "comfort");
   let seen = true;
   try { seen = !!localStorage.getItem("mimi_comfort_hint_seen_v1"); } catch (e){}
-  $("#anBtn").hidden = !(show && A.enabled);
-  $("#cfBtn").hidden = !(show && C.enabled && !onComfort);        // no need for it on its own page
-  $("#cfHint").hidden = $("#cfBtn").hidden || seen;               // the pointer shows until her first tap, then never again
+  hint.hidden = !(show && C.enabled && ci >= 0 && !seen && pages[idx].id === "home");   // only on Home, so it never covers anything else
+  if (!hint.hidden){ placeHint(); setTimeout(placeHint, 900); }     // once more after the bar has finished sliding in
 }
-function openComfort(){
-  try { localStorage.setItem(CF_HINT_KEY, "1"); } catch (e){}
+function placeHint(){
+  const hint = $("#cfHint"), tab = dkTabs.children[TABS.findIndex(t => t.root.id === "comfort")];
+  if (hint.hidden || !tab) return;
+  const r = tab.getBoundingClientRect(), bar = tab.closest(".dk-bar").getBoundingClientRect(), w = hint.offsetWidth;
+  const left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2));
+  hint.style.left = left + "px";
+  hint.style.bottom = (window.innerHeight - bar.top + 16) + "px";
+  hint.style.setProperty("--ax", (r.left + r.width / 2 - left) + "px");
+}
+function cfHintDone(){
+  try { localStorage.setItem("mimi_comfort_hint_seen_v1", "1"); } catch (e){}
   $("#cfHint").hidden = true;
-  const sec = $("#comfort"), i = pages.indexOf(sec);
-  if (idx === i){ sec.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-  cfScroll = true;
-  go(i);
 }
+function tabTapped(t){ if (t.root.id === "comfort") cfHintDone(); }
 /* days left until the next 14th (today counts as the day itself) */
 function monthlyTick(){
   const card = $("#mcCard");
@@ -3319,22 +3383,51 @@ function brSet(on){
   $("#cfPhase").textContent = CF.breathIdle;
   $("#cfCalm").classList.remove("out");
 }
+/* the three inner tabs of the Comfort Corner: only one panel is on screen at a time */
+function cfShowTab(i){
+  const panels = [...document.querySelectorAll("#comfort .cf-panel")];
+  [...$("#cfTabs").children].forEach((b, k) => { b.classList.toggle("on", k === i); b.setAttribute("aria-selected", k === i); });
+  panels.forEach((p, k) => { p.hidden = k !== i; });
+  if (panels[i] && !panels[i].contains($("#cfBreath"))) brSet(false);
+}
 function cfOnPage(pg){
   if (!pg) return;
-  if (pg.id === "gift") monthlyTick();
-  if (pg.id !== "comfort"){ brSet(false); return; }
-  if (cfScroll){ cfScroll = false; setTimeout(() => pg.scrollIntoView({ behavior: "smooth", block: "start" }), 80); }
+  if (pg.id === "home") monthlyTick();
+  if (pg.id !== "comfort") brSet(false);
 }
 (function(){
+  const set = (id, t) => { $(id).textContent = t || ""; };
+  /* Home */
+  const H = CONFIG.home || {};
+  set("#hmTitle", H.title); set("#hmSub", H.sub);
   monthlyTick();
   setInterval(monthlyTick, 60000);                                 // so the card is right the moment the date changes
-  const set = (id, t) => { $(id).textContent = t; };
-  set("#cfBtn", CF.button);
+  /* tab menus: an optional extra card, then one card for every part of the site that lives in that tab */
+  (CONFIG.tabs || []).forEach(t => {
+    const root = document.getElementById(t.page), grid = root && root.querySelector(".tv-grid");
+    if (!grid) return;
+    root.querySelector("h2").textContent = t.title || t.label;
+    root.querySelector(".sub").textContent = t.sub || "";
+    const ti = TABS.findIndex(x => x.root === root);
+    const card = (icon, label, fn) => { const b = mk("button", "tv-card"); b.type = "button"; b.append(mk("span", "ic", icon), mk("span", "", label)); b.onclick = fn; grid.append(b); };
+    (t.extra || []).forEach(x => { if (x.action === "1111" && elEnabled()) card(x.icon, x.label, open1111); });
+    SECTIONS.forEach(s => { if (tabOf(s.list[0]) === ti) card(s.icon, s.card || s.label, () => go(pages.indexOf(s.list[0]))); });
+  });
+  /* first-time pointer */
   const hint = $("#cfHint");
   hint.append(CF.hint, mk("i", "", "👇"));
-  $("#cfBtn").onclick = openComfort;
-  hint.onclick = openComfort;
+  hint.onclick = () => { cfHintDone(); go(pages.indexOf($("#comfort"))); };
+  window.addEventListener("resize", placeHint);
+  /* Comfort Corner */
   set("#cfTitle", CF.title); set("#cfSub", CF.sub);
+  (CF.tabs || []).forEach((name, i) => {
+    const b = mk("button", "cf-tab", name);
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.onclick = () => cfShowTab(i);
+    $("#cfTabs").append(b);
+  });
+  cfShowTab(0);
   set("#cfPainTitle", CF.painTitle); set("#cfPainQ", CF.painQuestion);
   $("#cfSlider").addEventListener("input", cfPain);
   cfPain();
