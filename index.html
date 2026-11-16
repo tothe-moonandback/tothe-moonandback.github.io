@@ -659,7 +659,7 @@ body.dock-on .kitty.r{right:72px}
 #hbBtn,#hbPulse.go,#toast.show,.vn.playing .vn-reel,.vn.playing .vn-bars i,.vn.playing .vn-bars b,.ct-seal.stamp,#u2m:not([hidden]),.u2m-card,.tk-out img,.pb-out img{animation:none}
 .lt-in{transition-duration:.01s}
 }
-/* ============ v10: one month anniversary surprise (its text lives in CONFIG.anniversary) ============ */
+/* ============ v10: one month anniversary surprise (its text lives in CONFIG.surprise) ============ */
 #an{position:fixed;inset:0;z-index:240;--dim:2s;color:#fdf2f8;background:radial-gradient(72% 52% at 50% 44%,rgba(255,196,150,.1),transparent 72%),rgba(20,12,16,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);opacity:0;transition:opacity var(--dim) ease-in-out;-webkit-tap-highlight-color:transparent}
 #an[hidden]{display:none}
 #an.dim{opacity:1}
@@ -699,6 +699,85 @@ body.dock-on .kitty.r{right:72px}
 .u2m-card,#ow .sheet{overflow-y:auto;-webkit-overflow-scrolling:touch}
 #ow .sheet{max-height:90vh;max-height:min(86svh,90vh)}
 }
+/* ============ v11: floating side buttons, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.monthly / CONFIG.comfort) ============ */
+/* floating buttons sit in the same band as the heartbeat button, inside the empty space every page keeps above the dock */
+.fl-btn{position:fixed;z-index:92;border:2px solid #fff;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .2s ease}
+.fl-btn[hidden]{display:none}
+.fl-btn:active{transform:scale(.94)}
+#anBtn{right:72px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 104px);width:52px;height:52px;border-radius:50%;padding:0;display:grid;place-items:center;font-size:1.5rem;line-height:1;background:radial-gradient(circle at 32% 28%,#fffaf5,#fde6ec 60%,#f6ccd6);box-shadow:0 10px 24px -8px rgba(229,169,184,.95),0 0 0 1px rgba(236,190,165,.85)}
+#anBtn i{position:absolute;top:-7px;right:-7px;min-width:23px;height:23px;padding:0 5px;border-radius:12px;border:1.5px solid #fff;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:700 .72rem/20px "Playfair Display",Georgia,serif;text-align:center}
+#cfBtn{left:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 108px);height:44px;padding:0 15px;border-radius:22px;background:linear-gradient(135deg,#FFF5F7,#FCE7F3);color:#4A2532;font:600 1.02rem/1 "Cormorant Garamond",Georgia,serif;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(229,169,184,.95),0 0 0 1px #E5A9B8}
+body.museum #anBtn,body.museum #cfBtn{border-color:#F3E5AB}
+#cfHint{position:fixed;z-index:93;left:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 166px);max-width:min(250px,calc(100% - 90px));padding:10px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#FFF5F7;color:#4A2532;font:italic 600 1.04rem/1.4 "Cormorant Garamond",Georgia,serif;text-align:left;box-shadow:0 12px 28px -12px rgba(229,169,184,.95);cursor:pointer;-webkit-tap-highlight-color:transparent;animation:cfHintBob 1.5s ease-in-out infinite}
+#cfHint[hidden]{display:none}
+#cfHint::after{content:"";position:absolute;left:34px;bottom:-8px;width:14px;height:14px;background:#FFF5F7;border-right:1px solid #E5A9B8;border-bottom:1px solid #E5A9B8;transform:rotate(45deg)}
+#cfHint i{display:inline-block;margin-left:4px;font-style:normal}
+@keyframes cfHintBob{50%{transform:translateY(7px)}}
+/* they step aside while a letter or a photo is open on top of the page */
+body:has(#ow:not([hidden])) .fl-btn,body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) .fl-btn,body:has(#lb:not([hidden])) #cfHint{display:none}
+body.dock-on .kitty.r{right:132px}
+/* monthly countdown card */
+.mc{display:flex;align-items:center;gap:12px;width:min(360px,100%);padding:10px 16px 10px 10px;border-radius:20px;border:1px solid #E5A9B8;background:linear-gradient(135deg,#FFF5F7,#FCE7F3);color:#4A2532;text-align:left;box-shadow:0 12px 26px -16px rgba(229,169,184,.95)}
+.mc[hidden]{display:none}
+.mc-cal{flex:none;width:48px;border-radius:12px;overflow:hidden;background:#fff;border:1px solid #E5A9B8;text-align:center}
+.mc-cal small{display:block;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:700 .62rem/1.7 "Playfair Display",Georgia,serif;letter-spacing:.12em}
+.mc-cal b{display:block;font:700 1.3rem/1.5 "Playfair Display",Georgia,serif;color:#4A2532}
+.mc p{margin:0;font:600 1.12rem/1.4 "Cormorant Garamond",Georgia,serif}
+.mc p b{font:700 1.35rem/1 "Playfair Display",Georgia,serif;color:#d9488b}
+.mc.today{border-color:#F472B6;box-shadow:0 0 0 4px rgba(244,114,182,.14),0 12px 26px -14px rgba(244,114,182,.9)}
+/* Mimi's Comfort Corner */
+.cf{padding-left:12px;padding-right:12px}
+.cf-wrap{width:min(600px,100%);display:flex;flex-direction:column;gap:20px;padding:28px 16px 24px;border-radius:30px;background:#FFF5F7;border:1px solid #E5A9B8;color:#4A2532;box-shadow:0 22px 50px -28px rgba(229,169,184,.95)}
+.cf-wrap h2.big{font-size:clamp(2.2rem,9.5vw,3rem);line-height:1.2;color:#4A2532}
+.cf-wrap .sub{margin:0 auto;line-height:1.5;color:#4A2532}
+.cf-card{display:flex;flex-direction:column;gap:14px;padding:20px 16px;border-radius:22px;background:#FCE7F3;border:1px solid #E5A9B8;text-align:center}
+.cf-card h3{margin:0;font:600 1.2rem/1.45 "Playfair Display",Georgia,serif;color:#4A2532}
+.cf-card p{margin:0;font:500 1.15rem/1.5 "Cormorant Garamond",Georgia,serif}
+.cf-level{display:flex;align-items:baseline;justify-content:center;gap:8px;font:700 2.6rem/1.2 "Playfair Display",Georgia,serif;color:#F472B6}
+.cf-level small{font:600 1.05rem/1.2 "Cormorant Garamond",Georgia,serif;color:#4A2532}
+.cf-level span{font-size:2rem;line-height:1.2}
+#cfSlider{-webkit-appearance:none;appearance:none;display:block;width:100%;height:34px;margin:0;padding:0;background:transparent;cursor:pointer;touch-action:pan-y;--p:0%}
+#cfSlider::-webkit-slider-runnable-track{height:12px;border-radius:6px;border:1px solid #E5A9B8;background:linear-gradient(90deg,#F472B6 var(--p),#fff var(--p))}
+#cfSlider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:30px;height:30px;margin-top:-10px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 32% 28%,#ffd3e3,#F472B6);box-shadow:0 4px 12px -2px rgba(244,114,182,.85)}
+#cfSlider::-moz-range-track{height:12px;border-radius:6px;border:1px solid #E5A9B8;background:linear-gradient(90deg,#F472B6 var(--p),#fff var(--p))}
+#cfSlider::-moz-range-thumb{width:28px;height:28px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 32% 28%,#ffd3e3,#F472B6);box-shadow:0 4px 12px -2px rgba(244,114,182,.85)}
+.cf-scale{display:flex;justify-content:space-between;font:600 .95rem/1.2 "Playfair Display",Georgia,serif;opacity:.75}
+.cf-card p.cf-status{min-height:3em;font-style:italic;font-weight:600}
+.cf-btns{display:grid;gap:10px}
+.cf-req,.cf-gift{padding:13px 14px;border-radius:18px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:600 1.12rem/1.4 "Cormorant Garamond",Georgia,serif;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .3s ease,border-color .3s ease}
+.cf-req:active,.cf-gift:active{transform:scale(.97)}
+.cf-req.sent{background:#FFF5F7;border-color:#F472B6}
+#cfCustom{width:100%;padding:12px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:500 1.1rem/1.4 "Cormorant Garamond",Georgia,serif}
+#cfCustom::placeholder{color:#4A2532;opacity:.55}
+.cf-send{align-self:center;padding:12px 24px;border-radius:999px;border:1px solid #fff;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:600 1.05rem/1.3 "Playfair Display",Georgia,serif;box-shadow:0 12px 26px -12px rgba(244,114,182,.9);cursor:pointer;touch-action:manipulation;transition:transform .15s ease}
+.cf-send:active{transform:scale(.96)}
+.cf-card p.cf-ok{padding:12px 14px;border-radius:16px;border:1px dashed #F472B6;background:#FFF5F7;font-weight:600}
+.cf-card p.cf-ok[hidden]{display:none}
+.cf-ok.pop{animation:cfFade .6s ease}
+@keyframes cfFade{from{opacity:0;transform:translateY(6px)}}
+.cf-ticket{position:relative;display:flex;align-items:stretch;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#FCE7F3,#FFF5F7);border:1.5px solid #F472B6;text-align:left}
+.cf-ticket::before,.cf-ticket::after{content:"";position:absolute;left:60px;width:20px;height:20px;border-radius:50%;background:#FFF5F7;border:1.5px solid #F472B6}
+.cf-ticket::before{top:-12px}
+.cf-ticket::after{bottom:-12px}
+.cf-stub{flex:none;width:70px;display:grid;place-items:center;border-right:2px dashed #E5A9B8;font-size:2rem}
+.cf-pass{display:flex;flex-direction:column;gap:8px;padding:20px 16px}
+.cf-pass b{font:700 1.2rem/1.4 "Playfair Display",Georgia,serif}
+.cf-pass span{font:500 1.14rem/1.5 "Cormorant Garamond",Georgia,serif}
+.cf-care{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cf-gift{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:76px}
+.cf-gift span{display:none;font:italic 500 1.06rem/1.5 "Cormorant Garamond",Georgia,serif}
+.cf-gift.open{background:#FFF5F7;border-color:#F472B6}
+.cf-gift.open span{display:block;animation:cfFade .6s ease}
+.cf-breath-box{display:grid;place-items:center;min-height:216px;padding:8px 0}
+.cf-breath{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#FCE7F3 48%,#F472B6 135%);box-shadow:0 0 0 10px rgba(244,114,182,.12),0 0 40px rgba(244,114,182,.45);transition:transform 4s ease-in-out,box-shadow 4s ease-in-out}
+.cf-breath.in{transform:scale(1.7);box-shadow:0 0 0 14px rgba(244,114,182,.14),0 0 60px rgba(244,114,182,.6)}
+.cf-breath.rest{transition-duration:.9s}
+.cf-card p.cf-phase{min-height:1.5em;font:600 1.22rem/1.5 "Playfair Display",Georgia,serif}
+.cf-card p.cf-calm{min-height:3em;font-style:italic;transition:opacity .8s ease}
+.cf-card p.cf-calm.out{opacity:0}
+@media (max-width:520px){.cf-care{grid-template-columns:1fr}}
+@media (max-width:350px){#cfBtn{padding:0 11px;font-size:.95rem}#anBtn{right:68px}}
+@media (prefers-reduced-motion:reduce){#cfHint,.cf-ok.pop,.cf-gift.open span{animation:none}}
 </style>
 </head>
 <body>
@@ -741,6 +820,10 @@ body.dock-on .kitty.r{right:72px}
 </section>
 <!-- 2. Gift 1 (lilies) -->
 <section id="gift" class="stage page" hidden>
+  <div class="mc" id="mcCard" role="status" hidden>
+    <div class="mc-cal" aria-hidden="true"><small id="mcMonth"></small><b id="mcDay"></b></div>
+    <p id="mcText"></p>
+  </div>
   <button class="scene" aria-label="Open the gift">
     <div class="bloom">
       <svg viewBox="0 0 300 330" aria-hidden="true">
@@ -838,6 +921,49 @@ body.dock-on .kitty.r{right:72px}
   <button class="next" type="button">Next</button>
   <button class="back" type="button">‹ Back</button>
   <svg class="kitty r" aria-hidden="true"><use href="#kitty"/></svg>
+</section>
+<!-- v11: Mimi's Comfort Corner (filled in from CONFIG.comfort) -->
+<section id="comfort" class="stage page xpage cf" hidden>
+  <div class="cf-wrap">
+    <h2 class="script big" id="cfTitle"></h2>
+    <p class="sub" id="cfSub"></p>
+    <div class="cf-card">
+      <h3 id="cfPainTitle"></h3>
+      <p id="cfPainQ"></p>
+      <div class="cf-level"><b id="cfNum">1</b><small>/ 10</small><span id="cfFace" aria-hidden="true"></span></div>
+      <input type="range" id="cfSlider" min="1" max="10" step="0.1" value="1" aria-labelledby="cfPainQ">
+      <div class="cf-scale" aria-hidden="true"><span>1</span><span>10</span></div>
+      <p class="cf-status" id="cfPainLabel" role="status" aria-live="polite"></p>
+    </div>
+    <div class="cf-card">
+      <h3 id="cfCraveTitle"></h3>
+      <div class="cf-btns" id="cfReqs"></div>
+      <input type="text" id="cfCustom" maxlength="200" autocomplete="off" enterkeyhint="send">
+      <button class="cf-send" id="cfCustomSend" type="button"></button>
+      <p class="cf-ok" id="cfSent" role="status" aria-live="polite" hidden></p>
+    </div>
+    <div class="cf-card">
+      <h3 id="cfPassHead"></h3>
+      <div class="cf-ticket">
+        <div class="cf-stub" aria-hidden="true">🎟️</div>
+        <div class="cf-pass"><b id="cfPassTitle"></b><span id="cfPassText"></span></div>
+      </div>
+    </div>
+    <div class="cf-card">
+      <h3 id="cfCareTitle"></h3>
+      <p id="cfCareHint"></p>
+      <div class="cf-care" id="cfCare"></div>
+    </div>
+    <div class="cf-card">
+      <h3 id="cfBreathTitle"></h3>
+      <div class="cf-breath-box"><div class="cf-breath" id="cfBreath" aria-hidden="true"></div></div>
+      <p class="cf-phase" id="cfPhase" role="status" aria-live="polite"></p>
+      <p class="cf-calm" id="cfCalm"></p>
+      <button class="cf-send" id="cfBreathBtn" type="button" aria-pressed="false"></button>
+    </div>
+  </div>
+  <button class="next" type="button">Next</button>
+  <button class="back" type="button">‹ Back</button>
 </section>
 <!-- v9: Major Update 2.0 — the hub and six feature pages (filled in from CONFIG.update2) -->
 <section id="hub" class="stage page xpage u2" hidden>
@@ -995,6 +1121,9 @@ body.dock-on .kitty.r{right:72px}
 <!-- v9: Update 2.0 - screen pulse, floating heartbeat button, toast, comfort popup -->
 <div id="hbPulse" aria-hidden="true"></div>
 <button id="hbBtn" type="button" hidden><span aria-hidden="true">💓</span></button>
+<button id="anBtn" class="fl-btn" type="button" hidden><span aria-hidden="true">💌</span><i aria-hidden="true">14</i></button>
+<button id="cfBtn" class="fl-btn" type="button" hidden></button>
+<button id="cfHint" type="button" hidden></button>
 <div id="toast" role="status" aria-live="polite" hidden></div>
 <div id="u2m" hidden role="dialog" aria-modal="true" aria-labelledby="u2mTitle">
   <div class="u2m-card" id="u2mCard" tabindex="-1">
@@ -1244,14 +1373,84 @@ const CONFIG = {
     { icon: "💞", label: "Our Little World", pages: ["us"] },
     { icon: "🎟️", label: "Coupons & Open When", pages: ["treats", "openwhen"] },
     { icon: "💭", label: "Quizzes", pages: ["quiz", "mood"] },
+    { icon: "🧸", label: "Comfort Corner", pages: ["comfort"] },
     // marks = the little jump icons shown above the bottom bar for this section's pages (hub first, then features 1 to 6)
     { icon: "✨", label: "Update 2.0 Hub", pages: ["hub", "u2little", "u2sos", "u2voice", "u2ticket", "u2contract", "u2booth"], marks: ["✨", "🎀", "🚨", "🎙️", "🎟️", "💍", "📸"] },
     { icon: "🌠", label: "Our Future", pages: ["future", "send", "final"] }
   ],
-  // ---- v10: one month anniversary surprise (the site opens normally, then softly dims into this little story) ----
-  anniversary: {
-    enabled: true,       // false = no surprise, the site just opens like before
-    delaySeconds: 2.5,   // how long she sees the normal site before it starts to dim
+  // ---- v11: monthly countdown to the 14th (the small card at the top of the gift page) ----
+  monthly: {
+    enabled: true,
+    day: 14,             // the day of the month you celebrate
+    many: "{n} days until we celebrate another month of us 💗",
+    one: "{n} day until we celebrate another month of us 💗",
+    today: "Happy Monthly Anniversary, my Mimi! 💗✨"
+  },
+  // ---- v11: Mimi's Comfort Corner (its own page, the 🧸 in the bottom bar, and the floating button on the left) ----
+  comfort: {
+    enabled: true,       // false = hide the floating button and its first-time hint (the page stays in the bottom bar)
+    button: "Comfort Corner 🧸",
+    hint: "Tap here whenever you need extra care 🧸✨",   // shown once, until she taps the button
+    title: "Mimi's Comfort Corner 🧸",
+    sub: "A soft little place for the days you need extra care. Take whatever you need, I've got you.",
+    painTitle: "Pain-O-Meter 🌡️",
+    painQuestion: "How much does it hurt right now?",
+    painFaces: ["🙂", "🙂", "😕", "😣", "😖", "🥺", "😫", "😩", "😭", "🆘"],
+    painLabels: [                                        // one for each level, 1 to 10
+      "Barely there, but you still get a cuddle 🌸",
+      "A tiny ache. I'm keeping an eye on you 🤍",
+      "Uncomfortable... time for something warm ☕",
+      "It's nagging you. Come rest your head 🧸",
+      "Halfway to too much. Blanket mode: ON 🛋️",
+      "That really hurts, my poor baby 🥺",
+      "Heating pad, chocolate, and me on call 🔥🍫",
+      "Full princess treatment, starting right now 👑",
+      "My brave girl... I wish I could take it from you 💗",
+      "Emergency! Dodo is dropping everything 🚨💗"
+    ],
+    craveTitle: "What is Mimi craving or needing right now? 🎀",
+    requests: [
+      "Need Chocolate / Something Sweet 🍫",
+      "Craving Comfort Food 🍔",
+      "Need a Warm Drink ☕",
+      "Be extra gentle with me today 🧸",
+      "Stay on call with me 🥺"
+    ],
+    customPlaceholder: "Anything specific you're craving? ✨",
+    customButton: "Send Custom Request 💌",
+    customEmpty: "Write what you're craving first ✨",
+    sent: "Sent to Dodo 💌 Consider it done, rest up my love 🤍",
+    failed: "That one didn't reach Dodo. Tap it again in a moment 🤍",
+    subject: "🧸 Comfort Corner: {request}",             // subject of the email you get
+    passHeading: "Official Mood Free Pass 🎟️",
+    passTitle: "Mimi's Official Mood Pass",
+    passText: "Valid all day. Cry, be grumpy, or overthink with zero judgment. Dodo is here to love and comfort you unconditionally.",
+    careTitle: "Your Virtual Care Package 🍫🫖",
+    careHint: "Tap each one to open it.",
+    care: [
+      { name: "Warm Heating Pad 🔥", message: "Wish I was right next to you to take all the pain away, keep warm my love." },
+      { name: "Sweet Chocolate 🍫", message: "Say the word and your favorite chocolate is on its way to you." },
+      { name: "Cozy Blanket 🧸", message: "Wrapping you in the biggest virtual hug until I can hold you for real." },
+      { name: "Warm Tea & Rest 🫖", message: "Drink something warm and let yourself rest today, you deserve all the pampering." }
+    ],
+    breathTitle: "Breathing & Warmth Mode 🌸",
+    breatheIn: "Breathe in warmth...",
+    breatheOut: "Let the pain go...",
+    breathIdle: "Tap start and breathe with me.",
+    breathStart: "Start 🌸",
+    breathPause: "Pause 🤍",
+    calm: [                                              // one fades in with every breath
+      "You're doing so well, my love.",
+      "This will pass, and I'm right here.",
+      "Your body is working hard. Be gentle with it.",
+      "Nothing to do right now except rest.",
+      "I'm so proud of you, always."
+    ]
+  },
+  // ---- v10: one month anniversary surprise (opens only when she taps the floating 💌 button, and replays from the start every time) ----
+  surprise: {            // (not "anniversary": that name already holds the date for the "together for" counter)
+    enabled: true,       // false = hide the 💌 button
+    iconLabel: "Open your anniversary surprise",
     dimSeconds: 2,       // how slowly the screen dims (and brightens again at the very end)
     intro: "Wait a second, Mariouma... there is a little surprise for you tonight 🤍",
     introButton: "See Surprise ✨",
@@ -1809,7 +2008,6 @@ function enterSite(){
 function unlock(){
   enterSite();
   showGift();
-  scheduleAnniv();                     // one month anniversary surprise: the site shows first, then it softly dims
 }
 function showGift(){
   go(1);
@@ -2007,6 +2205,7 @@ CONFIG.coupons.forEach(c => {
 function onPage(pg){
   if (pg && pg.id === "treats") setTimeout(() => document.querySelectorAll(".coupon canvas").forEach(initScratch), 60);
   if (typeof u2OnPage === "function") u2OnPage(pg);
+  if (typeof cfOnPage === "function") cfOnPage(pg);
 }
 /* ============ v4: quiz, mood, bucket, capsule, send, final ============ */
 const ANS = {
@@ -2163,6 +2362,7 @@ function updateDock(){
   dock.hidden = !show;
   document.body.classList.toggle("dock-on", show);
   $("#hbBtn").hidden = !show;                         // the floating heartbeat button appears and hides with the dock
+  updateFloats(show);                                 // so do the 💌 and Comfort Corner buttons
   const pg = pages[idx], si = SECTIONS.findIndex(s => s.list.includes(pg));
   [...dkStrip.children].forEach((b, k) => {
     b.classList.toggle("on", k === si);
@@ -2941,8 +3141,8 @@ function u2OnPage(pg){
 lb.onclick = () => lb.hidden = true;
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 
-/* ============ v10: one month anniversary surprise (all its text lives in CONFIG.anniversary) ============ */
-const AN = CONFIG.anniversary || {};
+/* ============ v10: one month anniversary surprise (all its text lives in CONFIG.surprise) ============ */
+const AN = CONFIG.surprise || {};
 let anT = 0, anStep = null, anBusy = false;
 const anSteps = () => [...document.querySelectorAll("#an .an-step")];
 const anDimMs = () => reduceMotion ? 0 : (AN.dimSeconds || 2) * 1000;
@@ -2973,15 +3173,11 @@ function anShow(next){
     anBusy = false;
   }, prev && !reduceMotion ? 900 : 0);
 }
-/* Called from unlock(): she sees the normal site first, then it slowly dims */
-function scheduleAnniv(){
-  if (!AN.enabled) return;
-  clearTimeout(anT);
-  anT = setTimeout(openAnniv, (AN.delaySeconds || 0) * 1000);
-}
+/* Opens only from the floating 💌 button, and always starts again from the first step */
 function openAnniv(){
   const an = $("#an");
-  if (!an.hidden) return;
+  if (!AN.enabled || !an.hidden) return;
+  clearTimeout(anT);
   anSteps().forEach(s => { s.hidden = true; s.classList.remove("on"); });
   anStep = null; anBusy = false;
   an.hidden = false;
@@ -3026,6 +3222,154 @@ function closeAnniv(){
     v.addEventListener("error", () => fig.classList.add("missing"));
     fig.addEventListener("click", () => { anHush(v); safePlay(v); });   // a tap restarts it if the phone held it back (Low Power Mode)
   });
+  const ab = $("#anBtn");
+  ab.setAttribute("aria-label", AN.iconLabel);
+  ab.title = AN.iconLabel;
+  ab.onclick = openAnniv;
+})();
+
+/* ============ v11: floating side buttons, monthly 14th countdown, Mimi's Comfort Corner (text in CONFIG.monthly / CONFIG.comfort) ============ */
+const MC = CONFIG.monthly || {}, CF = CONFIG.comfort || {};
+const CF_HINT_KEY = "mimi_comfort_hint_seen_v1";
+let cfScroll = false, cfLevel = 1, brT = 0, brCalmT = 0, brOn = false, brCount = 0;
+/* Called from updateDock(): the 💌 and Comfort Corner buttons appear and hide together with the dock.
+   It only reads CONFIG, so it is safe however early the dock first draws. */
+function updateFloats(show){
+  const A = CONFIG.surprise || {}, C = CONFIG.comfort || {};
+  const onComfort = !!(pages[idx] && pages[idx].id === "comfort");
+  let seen = true;
+  try { seen = !!localStorage.getItem("mimi_comfort_hint_seen_v1"); } catch (e){}
+  $("#anBtn").hidden = !(show && A.enabled);
+  $("#cfBtn").hidden = !(show && C.enabled && !onComfort);        // no need for it on its own page
+  $("#cfHint").hidden = $("#cfBtn").hidden || seen;               // the pointer shows until her first tap, then never again
+}
+function openComfort(){
+  try { localStorage.setItem(CF_HINT_KEY, "1"); } catch (e){}
+  $("#cfHint").hidden = true;
+  const sec = $("#comfort"), i = pages.indexOf(sec);
+  if (idx === i){ sec.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+  cfScroll = true;
+  go(i);
+}
+/* days left until the next 14th (today counts as the day itself) */
+function monthlyTick(){
+  const card = $("#mcCard");
+  card.hidden = !MC.enabled;
+  if (!MC.enabled) return;
+  const now = new Date(), y = now.getFullYear(), m = now.getMonth(), d = now.getDate(), day = MC.day || 14;
+  const target = d <= day ? new Date(y, m, day) : new Date(y, m + 1, day);
+  const n = Math.round((Date.UTC(target.getFullYear(), target.getMonth(), day) - Date.UTC(y, m, d)) / 86400000);
+  $("#mcMonth").textContent = target.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  $("#mcDay").textContent = day;
+  card.classList.toggle("today", n === 0);
+  const p = $("#mcText");
+  p.textContent = "";
+  if (n === 0){ p.textContent = MC.today; return; }
+  const parts = String(n === 1 ? MC.one : MC.many).split("{n}");
+  p.append(parts[0], mk("b", "", String(n)), parts.slice(1).join(""));
+}
+function cfPain(){
+  const s = $("#cfSlider"), v = Math.min(10, Math.max(1, Math.round(+s.value)));
+  cfLevel = v;
+  s.style.setProperty("--p", ((+s.value - 1) / 9 * 100).toFixed(1) + "%");
+  s.setAttribute("aria-valuetext", v + " out of 10");
+  $("#cfNum").textContent = v;
+  $("#cfFace").textContent = (CF.painFaces || [])[v - 1] || "";
+  $("#cfPainLabel").textContent = (CF.painLabels || [])[v - 1] || "";
+}
+/* one silent email per request, with the Pain-O-Meter level attached */
+function cfSend(request, btn){
+  const sent = $("#cfSent");
+  sent.textContent = CF.sent;
+  sent.hidden = false;
+  sent.classList.remove("pop"); void sent.offsetWidth; sent.classList.add("pop");
+  if (btn){
+    const [x, y] = centerOf(btn); burst(x, y, 12, "up");
+    btn.disabled = true; btn.classList.add("sent");                // a short rest so one tap never sends twice
+    setTimeout(() => { btn.disabled = false; btn.classList.remove("sent"); }, 6000);
+  }
+  notifyAdham(String(CF.subject).replace("{request}", request), {
+    Request: request,
+    "Pain-O-Meter": cfLevel + "/10 (" + ((CF.painLabels || [])[cfLevel - 1] || "") + ")",
+    Page: "Comfort Corner"
+  }).then(ok => { if (ok === false) sent.textContent = CF.failed; });
+}
+function brStep(){
+  const c = $("#cfBreath"), inhale = !c.classList.contains("in");
+  c.classList.remove("rest");
+  c.classList.toggle("in", inhale);
+  $("#cfPhase").textContent = inhale ? CF.breatheIn : CF.breatheOut;
+  if (inhale){
+    const calm = $("#cfCalm"), list = CF.calm || [];
+    calm.classList.add("out");
+    clearTimeout(brCalmT);
+    brCalmT = setTimeout(() => { calm.textContent = list.length ? list[brCount++ % list.length] : ""; calm.classList.remove("out"); }, 800);
+  }
+  brT = setTimeout(brStep, 4000);                                  // 4 seconds in, 4 seconds out
+}
+function brSet(on){
+  if (on === brOn) return;
+  brOn = on;
+  clearTimeout(brT); clearTimeout(brCalmT);
+  const b = $("#cfBreathBtn"), c = $("#cfBreath");
+  b.textContent = on ? CF.breathPause : CF.breathStart;
+  b.setAttribute("aria-pressed", on);
+  if (on){ brStep(); return; }
+  c.classList.add("rest"); c.classList.remove("in");
+  $("#cfPhase").textContent = CF.breathIdle;
+  $("#cfCalm").classList.remove("out");
+}
+function cfOnPage(pg){
+  if (!pg) return;
+  if (pg.id === "gift") monthlyTick();
+  if (pg.id !== "comfort"){ brSet(false); return; }
+  if (cfScroll){ cfScroll = false; setTimeout(() => pg.scrollIntoView({ behavior: "smooth", block: "start" }), 80); }
+}
+(function(){
+  monthlyTick();
+  setInterval(monthlyTick, 60000);                                 // so the card is right the moment the date changes
+  const set = (id, t) => { $(id).textContent = t; };
+  set("#cfBtn", CF.button);
+  const hint = $("#cfHint");
+  hint.append(CF.hint, mk("i", "", "👇"));
+  $("#cfBtn").onclick = openComfort;
+  hint.onclick = openComfort;
+  set("#cfTitle", CF.title); set("#cfSub", CF.sub);
+  set("#cfPainTitle", CF.painTitle); set("#cfPainQ", CF.painQuestion);
+  $("#cfSlider").addEventListener("input", cfPain);
+  cfPain();
+  set("#cfCraveTitle", CF.craveTitle);
+  (CF.requests || []).forEach(r => {
+    const b = mk("button", "cf-req", r);
+    b.type = "button";
+    b.onclick = () => cfSend(r, b);
+    $("#cfReqs").append(b);
+  });
+  const inp = $("#cfCustom"), sendB = $("#cfCustomSend");
+  inp.placeholder = CF.customPlaceholder;
+  inp.setAttribute("aria-label", CF.customPlaceholder);
+  sendB.textContent = CF.customButton;
+  const sendCustom = () => {
+    const t = inp.value.trim();
+    if (!t){ toast(CF.customEmpty); inp.focus(); return; }
+    cfSend(t, sendB);
+    inp.value = "";
+    inp.blur();
+  };
+  sendB.onclick = sendCustom;
+  inp.addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); sendCustom(); } });
+  set("#cfPassHead", CF.passHeading); set("#cfPassTitle", CF.passTitle); set("#cfPassText", CF.passText);
+  set("#cfCareTitle", CF.careTitle); set("#cfCareHint", CF.careHint);
+  (CF.care || []).forEach(c => {
+    const b = mk("button", "cf-gift", c.name);
+    b.type = "button";
+    b.setAttribute("aria-expanded", "false");
+    b.append(mk("span", "", c.message));
+    b.onclick = () => { const o = b.classList.toggle("open"); b.setAttribute("aria-expanded", o); if (o){ const [x, y] = centerOf(b); burst(x, y, 6, "up"); } };
+    $("#cfCare").append(b);
+  });
+  set("#cfBreathTitle", CF.breathTitle); set("#cfPhase", CF.breathIdle); set("#cfBreathBtn", CF.breathStart);
+  $("#cfBreathBtn").onclick = () => brSet(!brOn);
 })();
 </script>
 </body>
