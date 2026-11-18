@@ -780,6 +780,48 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 .cf-card p.cf-ok[hidden]{display:none}
 .cf-ok.pop{animation:cfFade .6s ease}
 @keyframes cfFade{from{opacity:0;transform:translateY(6px)}}
+/* ============ v13: A Reminder For My Mariouma + Rate Dodo As A Boyfriend (text in CONFIG.reminder / CONFIG.rate) ============ */
+.lv,.rq{position:fixed;inset:0;z-index:240;display:grid;place-items:center;padding:calc(env(safe-area-inset-top) + 16px) 14px calc(env(safe-area-inset-bottom) + 16px)}
+.lv[hidden],.rq[hidden]{display:none}
+.lv{background:radial-gradient(70% 50% at 50% 42%,rgba(255,196,150,.26),transparent 72%),rgba(46,22,30,.74);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);animation:lvIn .8s ease}
+.rq{background:rgba(74,37,50,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:lvIn .4s ease}
+@keyframes lvIn{from{opacity:0}}
+.lv-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.lv-fx i{position:absolute;bottom:-40px;font-style:normal;opacity:0;animation:lvRise var(--d) linear var(--w) infinite}
+@keyframes lvRise{10%,85%{opacity:var(--o)}to{transform:translate(var(--x),-112vh) rotate(var(--r));opacity:0}}
+.lv-card,.rq-card{position:relative;width:min(560px,100%);max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;color:#4A2532;outline:0}
+.lv-card{padding:52px 24px 32px;border-radius:28px;background:linear-gradient(165deg,#fffaf5,#FFF5F7 55%,#FCE7F3);border:1.5px solid #E5A9B8;box-shadow:0 0 0 6px rgba(251,207,232,.2),0 0 80px rgba(255,190,150,.4),0 30px 70px -30px rgba(0,0,0,.75);text-align:left;animation:lvCard 1s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes lvCard{from{opacity:0;transform:translateY(26px) scale(.96)}}
+.lv-x,.rq-x{position:absolute;top:12px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:600 1.05rem/1 "Playfair Display",Georgia,serif;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.lv-badge{display:block;width:max-content;max-width:100%;margin:0 auto 16px;padding:7px 16px;border-radius:999px;background:linear-gradient(135deg,#F472B6,#E5A9B8);color:#fff;font:600 .95rem/1.35 "Playfair Display",Georgia,serif;text-align:center;box-shadow:0 8px 20px -10px rgba(244,114,182,.9)}
+.lv-title{margin:0 0 22px;text-align:center;font:400 clamp(2rem,8.6vw,2.6rem)/1.2 "Allura",cursive;color:#c4577d;text-shadow:0 0 22px rgba(251,207,232,.9)}
+.lv-body p{margin:0 0 16px;font:italic 500 clamp(1.14rem,4.6vw,1.3rem)/1.6 "Cormorant Garamond",Georgia,serif;white-space:pre-line;opacity:0;transform:translateY(8px);transition:opacity 1.3s ease,transform 1.3s ease}
+.lv-body p.lv-hi{font-style:normal;font-weight:600}
+.lv-body p.lv-sign{margin:24px 0 0;text-align:right;font:400 clamp(1.8rem,7vw,2.2rem)/1.25 "Allura",cursive;color:#c4577d}
+.lv.go .lv-body p{opacity:1;transform:none}
+.rq-card{width:min(480px,100%);padding:20px 20px 26px;border-radius:28px;background:#FFF5F7;border:1.5px solid #E5A9B8;box-shadow:0 0 0 6px rgba(251,207,232,.18),0 30px 70px -30px rgba(74,37,50,.8);text-align:center}
+.rq-top{display:flex;align-items:center;gap:12px;min-height:38px;margin:0 0 22px;padding-right:50px}
+.rq-bar{flex:1;height:8px;border-radius:4px;background:#FCE7F3;border:1px solid #E5A9B8;overflow:hidden}
+.rq-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#F472B6,#E5A9B8);transition:width .5s ease}
+.rq-n{font:600 .92rem/1 "Playfair Display",Georgia,serif;white-space:nowrap;opacity:.8}
+.rq-body{display:flex;flex-direction:column;gap:14px}
+.rq-body.in{animation:cfFade .45s ease}
+.rq-intro{margin:14px 0 8px;font:italic 600 clamp(1.5rem,6.2vw,1.85rem)/1.45 "Cormorant Garamond",Georgia,serif}
+.rq-q{margin:0 0 4px;font:600 clamp(1.2rem,5vw,1.4rem)/1.45 "Playfair Display",Georgia,serif}
+.rq-opt{display:flex;align-items:flex-start;gap:12px;width:100%;padding:13px 14px;border-radius:18px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:600 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .15s ease,background .3s ease,border-color .3s ease}
+.rq-opt:active{transform:scale(.98)}
+.rq-opt b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#FCE7F3;border:1px solid #E5A9B8;font:700 .9rem/1 "Playfair Display",Georgia,serif;color:#d9488b}
+.rq-opt.picked{background:#FCE7F3;border-color:#F472B6}
+.rq-opt.picked b{background:#F472B6;border-color:#F472B6;color:#fff}
+.rq-prev{align-self:center;padding:6px 10px;border:0;background:none;color:#4A2532;font:italic 1.02rem/1.3 "Cormorant Garamond",Georgia,serif;text-decoration:underline;cursor:pointer}
+.rq-score{margin:6px 0 0;font:700 clamp(1.7rem,7vw,2.1rem)/1.3 "Playfair Display",Georgia,serif;color:#d9488b}
+.rq-verdict{display:flex;flex-direction:column;gap:8px;padding:20px 18px;border-radius:22px;background:#FCE7F3;border:1.5px dashed #F472B6}
+.rq-verdict b{font:700 1.22rem/1.4 "Playfair Display",Georgia,serif}
+.rq-verdict span{font:italic 500 1.15rem/1.5 "Cormorant Garamond",Georgia,serif}
+.rq-label{margin:6px 0 0;font:600 1.1rem/1.4 "Cormorant Garamond",Georgia,serif}
+#rqNote{width:100%;min-height:96px;padding:12px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:500 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;resize:vertical}
+.rq-body .cf-send:disabled{opacity:.6;cursor:default}
+@media (prefers-reduced-motion:reduce){.lv,.rq,.lv-card,.rq-body.in{animation:none}.lv-fx{display:none}.lv-body p{transition-duration:.01s!important;transition-delay:0s!important}}
 .cf-ticket{position:relative;display:flex;align-items:stretch;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#fff,#FFF5F7);border:1.5px solid #F472B6;text-align:left}
 .cf-ticket::before,.cf-ticket::after{content:"";position:absolute;left:54px;width:20px;height:20px;border-radius:50%;background:#FCE7F3;border:1.5px solid #F472B6}
 .cf-ticket::before{top:-12px}
@@ -1202,6 +1244,24 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
     <button class="an-btn" type="button"></button>
   </div></div>
 </div>
+<!-- v13: A Reminder For My Mariouma (filled in from CONFIG.reminder) -->
+<div class="lv" id="lv" hidden role="dialog" aria-modal="true" aria-labelledby="lvTitle">
+  <div class="lv-fx" id="lvFx" aria-hidden="true"></div>
+  <div class="lv-card" id="lvCard" tabindex="-1">
+    <button class="lv-x" id="lvClose" type="button" aria-label="Close the letter">✕</button>
+    <span class="lv-badge" id="lvBadge"></span>
+    <h2 class="lv-title" id="lvTitle"></h2>
+    <div class="lv-body" id="lvBody"></div>
+  </div>
+</div>
+<!-- v13: Rate Dodo As A Boyfriend (filled in from CONFIG.rate) -->
+<div class="rq" id="rq" hidden role="dialog" aria-modal="true" aria-label="Rate Dodo as a boyfriend">
+  <div class="rq-card" id="rqCard" tabindex="-1">
+    <button class="rq-x" id="rqClose" type="button" aria-label="Close">✕</button>
+    <div class="rq-top"><div class="rq-bar" aria-hidden="true"><i id="rqBar"></i></div><span class="rq-n" id="rqN"></span></div>
+    <div class="rq-body" id="rqBody" aria-live="polite"></div>
+  </div>
+</div>
 <div id="cc" hidden>
   <div class="cc-bar">
     <button class="cc-btn" id="ccToggle" type="button" aria-expanded="false" aria-label="Show or hide the song list">♪</button>
@@ -1429,8 +1489,53 @@ const CONFIG = {
     { icon: "🖼️", label: "Memories", page: "memories", pages: ["memories", "museum", "us"], title: "Our Memories 🖼️", sub: "Every photo of us has a room here." },
     { icon: "🧸", label: "Comfort", page: "comfort" },
     { icon: "💌", label: "Love Notes", page: "notes", rest: true, title: "Love Notes 💌", sub: "Everything I wrote for you, all in one place.",
-      extra: [{ icon: "✨", label: "11:11 Letter", action: "1111" }] }   // an extra first card that opens the 11:11 letter
+      extra: [                                                         // extra cards at the top of the menu
+        { icon: "💌", label: "A Reminder For My Mariouma 🎀", action: "reminder" },
+        { icon: "💯", label: "Rate Dodo As A Boyfriend 👀✨", action: "rate" },
+        { icon: "✨", label: "11:11 Letter", action: "1111" }
+      ] }
   ],
+  // ---- v13: the letter behind the "A Reminder For My Mariouma 🎀" card in Love Notes ----
+  reminder: {
+    badge: "Sealed with love from Dodo 💌",
+    title: "A Reminder For My Mariouma 🎀",
+    greeting: "My dearest Mariouma,",
+    paragraphs: [
+      "I wanted to write this for you just so you can read it whenever you need a reminder of how much you really mean to me. In a world where everything changes and people come and go you are the only constant thing my heart ever wants and the only one I truly see.",
+      "You are not just someone I love Mimi you are honestly my whole world. Before you entered my life days were just passing by without meaning anything special but since the day you became mine every single detail feels warmer and every moment with you feels like home. I look at you and I still get amazed by how pure your soul is and how much kindness you carry inside your heart.",
+      "Nobody else could ever come close to what you are to me not even for a second. You have a place inside me that belongs to you alone and no one could ever touch it. Whether we are laughing together talking for hours about the smallest things or just existing quietly next to each other being with you is the only place I ever want to be.",
+      "You are my peace when my mind gets loud you are my comfort when the days get heavy and you are the best blessing God ever sent into my life. I love the way your eyes shine when you are happy and I love that soft smile on your cheeks that makes everything else disappear.",
+      "No matter how busy life gets or whatever happens around us I promise you will always be my first choice my priority and my everything. I never want a day without you and I am endlessly grateful that out of everyone in this whole world I get to call you mine."
+    ],
+    signoff: "Forever and only yours,\nDodo",
+    particles: ["💗", "✨", "🤍", "💕", "🎀"]       // what floats up behind the letter
+  },
+  // ---- v13: "Rate Dodo As A Boyfriend" quiz (A = 10 points, B = 7, C = 4, D = 0, out of 50) ----
+  rate: {
+    intro: "Rate me as a boyfriend. Don’t sugarcoat it 👀",
+    start: "Start Rating 💗",
+    previous: "‹ Previous question",
+    points: [10, 7, 4, 0],
+    questions: [
+      { q: "How good am I at making you feel like a priority?", a: ["10/10 — I never have to question it", "7/10 — unless you're with the boys", "4/10 — only when it's convenient for you", "0/10 — your phone comes first"] },
+      { q: "How quickly do I notice when something's wrong?", a: ["10/10 — before I even say a word", "7/10 — after one \"I'm fine\"", "4/10 — only when I spell it out", "0/10 — not even when I tell you"] },
+      { q: "How good am I at showing affection without being asked?", a: ["10/10 — I never have to ask", "7/10 — mostly when we're alone", "4/10 — I always make the first move", "0/10 — only when you want something"] },
+      { q: "How good am I at apologizing when I'm wrong?", a: ["10/10 — you own it without excuses", "7/10 — after you've cooled off", "4/10 — \"Sorry you feel that way\"", "0/10 — I somehow end up apologizing"] },
+      { q: "How much effort do I put in now compared to when we first started dating?", a: ["10/10 — more than ever", "7/10 — you still plan dates, just less often", "4/10 — only on birthdays and anniversaries", "0/10 — you stopped trying once we made it official"] }
+    ],
+    score: "Dodo's Score: {score}/50 🎀",
+    verdicts: [                                        // the first one whose min the score reaches is shown
+      { min: 40, title: "Certified 10/10 Dream Boyfriend 👑💗", text: "Dodo passed with flying colors! Mimi is officially spoiled and loved endlessly." },
+      { min: 25, title: "Sweetheart in Progress 🧸✨", text: "Dodo is doing pretty good, just owes Mimi a little extra attention and chocolate today." },
+      { min: 0, title: "Dodo is Officially on Probation 🥺🍫", text: "Emergency hugs, snacks, and extra pampering required immediately!" }
+    ],
+    notePlaceholder: "Anything else you wanna tell Dodo, Mimi? 💌",
+    send: "Send My Rating to Dodo 💌",
+    sentButton: "Sent 💗",
+    sent: "Sent to Dodo! Thank you for being honest my love 💗",
+    failed: "That didn't reach Dodo, tap send again in a moment 🤍",
+    subject: "👀 Mimi rated you as a boyfriend: {score}/50"
+  },
   // ---- v12: Home, the first screen after the PIN (the countdown card and the surprise button sit under these two lines) ----
   home: {
     title: "Our Safe Space 🎀",
@@ -2471,7 +2576,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -2483,7 +2588,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -3410,7 +3515,11 @@ function cfOnPage(pg){
     root.querySelector(".sub").textContent = t.sub || "";
     const ti = TABS.findIndex(x => x.root === root);
     const card = (icon, label, fn) => { const b = mk("button", "tv-card"); b.type = "button"; b.append(mk("span", "ic", icon), mk("span", "", label)); b.onclick = fn; grid.append(b); };
-    (t.extra || []).forEach(x => { if (x.action === "1111" && elEnabled()) card(x.icon, x.label, open1111); });
+    (t.extra || []).forEach(x => {
+      if (x.action === "1111" && elEnabled()) card(x.icon, x.label, open1111);
+      if (x.action === "reminder") card(x.icon, x.label, openReminder);
+      if (x.action === "rate") card(x.icon, x.label, openRate);
+    });
     SECTIONS.forEach(s => { if (tabOf(s.list[0]) === ti) card(s.icon, s.card || s.label, () => go(pages.indexOf(s.list[0]))); });
   });
   /* first-time pointer */
@@ -3463,6 +3572,105 @@ function cfOnPage(pg){
   });
   set("#cfBreathTitle", CF.breathTitle); set("#cfPhase", CF.breathIdle); set("#cfBreathBtn", CF.breathStart);
   $("#cfBreathBtn").onclick = () => brSet(!brOn);
+})();
+
+/* ============ v13: A Reminder For My Mariouma + Rate Dodo As A Boyfriend (text in CONFIG.reminder / CONFIG.rate) ============ */
+const LV = CONFIG.reminder || {}, RQ = CONFIG.rate || {};
+let lvT = 0, rqStep = 0, rqPick = [], rqT = 0;
+/* the letter: soft glow, floating hearts, then each paragraph fades in after the one before */
+function openReminder(){
+  const lv = $("#lv");
+  clearTimeout(lvT);
+  lv.classList.remove("go");
+  lv.hidden = false;
+  $("#lvCard").scrollTop = 0;
+  void lv.offsetWidth;
+  lvT = setTimeout(() => lv.classList.add("go"), reduceMotion ? 0 : 500);
+  setTimeout(() => { try { $("#lvCard").focus({ preventScroll: true }); } catch (e){} }, 60);
+}
+function closeReminder(){ $("#lv").hidden = true; $("#lv").classList.remove("go"); }
+/* the quiz: step 0 = intro, 1..5 = questions, 6 = score and verdict */
+function rqScore(){ return rqPick.reduce((s, k) => s + ((RQ.points || [])[k] || 0), 0); }
+function rqVerdict(n){ return (RQ.verdicts || []).find(v => n >= v.min) || {}; }
+function rqRender(){
+  const body = $("#rqBody"), qs = RQ.questions || [], last = qs.length + 1;
+  body.textContent = "";
+  body.classList.remove("in"); void body.offsetWidth; body.classList.add("in");
+  $("#rqBar").style.width = (rqStep / last * 100) + "%";
+  $("#rqN").textContent = rqStep >= 1 && rqStep <= qs.length ? rqStep + " / " + qs.length : "";
+  const btn = (cls, txt, fn) => { const b = mk("button", cls, txt); b.type = "button"; b.onclick = fn; body.append(b); return b; };
+  if (rqStep === 0){
+    body.append(mk("p", "rq-intro", RQ.intro));
+    btn("cf-send", RQ.start, () => { rqStep = 1; rqRender(); });
+  } else if (rqStep <= qs.length){
+    const it = qs[rqStep - 1];
+    body.append(mk("p", "rq-q", it.q));
+    it.a.forEach((t, k) => {
+      const b = btn("rq-opt" + (rqPick[rqStep - 1] === k ? " picked" : ""), "", () => {
+        if (rqT) return;                                         // one tap per question
+        rqPick[rqStep - 1] = k;
+        b.classList.add("picked");
+        rqT = setTimeout(() => { rqT = 0; rqStep++; rqRender(); }, reduceMotion ? 0 : 380);
+      });
+      b.append(mk("b", "", "ABCD"[k]), mk("span", "", t));
+    });
+    if (rqStep > 1) btn("rq-prev", RQ.previous, () => { rqStep--; rqRender(); });
+  } else {
+    const n = rqScore(), v = rqVerdict(n);
+    body.append(mk("p", "rq-score", String(RQ.score).replace("{score}", n)));
+    const card = mk("div", "rq-verdict");
+    card.append(mk("b", "", v.title || ""), mk("span", "", v.text || ""));
+    body.append(card);
+    const note = document.createElement("textarea");
+    note.id = "rqNote"; note.maxLength = 600;
+    note.placeholder = RQ.notePlaceholder;
+    note.setAttribute("aria-label", RQ.notePlaceholder);
+    body.append(note);
+    const send = btn("cf-send", RQ.send, () => {
+      send.disabled = true;
+      const fields = { "Score": n + "/50", "Verdict": v.title || "" };
+      qs.forEach((it, i) => { fields["Q" + (i + 1) + ": " + it.q] = "ABCD"[rqPick[i]] + ". " + it.a[rqPick[i]] + " (" + RQ.points[rqPick[i]] + " pts)"; });
+      fields["Note from Mimi"] = note.value.trim() || "(no note)";
+      fields["Page"] = "Love Notes";
+      const [x, y] = centerOf(send); burst(x, y, 16, "up");
+      toast(RQ.sent, 3600);
+      send.textContent = RQ.sentButton;
+      notifyAdham(String(RQ.subject).replace("{score}", n), fields).then(ok => {
+        if (ok === false){ toast(RQ.failed, 3600); send.disabled = false; send.textContent = RQ.send; }
+      });
+    });
+    const [x, y] = centerOf(card); burst(x, y, n >= 40 ? 26 : 14, n >= 40 ? "big" : "up");
+  }
+}
+function openRate(){
+  clearTimeout(rqT); rqT = 0;
+  rqStep = 0; rqPick = [];
+  $("#rq").hidden = false;
+  rqRender();
+  setTimeout(() => { try { $("#rqCard").focus({ preventScroll: true }); } catch (e){} }, 60);
+}
+function closeRate(){ clearTimeout(rqT); rqT = 0; $("#rq").hidden = true; }
+(function(){
+  $("#lvBadge").textContent = LV.badge || "";
+  $("#lvTitle").textContent = LV.title || "";
+  const body = $("#lvBody"), parts = [mk("p", "lv-hi", LV.greeting)].concat((LV.paragraphs || []).map(t => mk("p", "", t)), [mk("p", "lv-sign", LV.signoff)]);
+  parts.forEach((p, i) => { p.style.transitionDelay = (reduceMotion ? 0 : i * .7).toFixed(1) + "s"; body.append(p); });
+  const R = (a, b) => a + Math.random() * (b - a), fx = $("#lvFx"), em = LV.particles && LV.particles.length ? LV.particles : ["💗"];
+  for (let i = 0; i < 16; i++){
+    const s = document.createElement("i");
+    s.textContent = em[i % em.length];
+    s.style.cssText = `left:${R(2, 94).toFixed(1)}%;font-size:${R(.9, 1.6).toFixed(2)}rem;--o:${R(.35, .75).toFixed(2)};--x:${Math.round(R(-60, 60))}px;--r:${Math.round(R(-30, 30))}deg;--d:${R(11, 20).toFixed(1)}s;--w:${(-R(0, 18)).toFixed(1)}s`;
+    fx.append(s);
+  }
+  $("#lvClose").onclick = closeReminder;
+  $("#lv").addEventListener("click", e => { if (e.target.id === "lv" || e.target.id === "lvFx") closeReminder(); });
+  $("#rqClose").onclick = closeRate;
+  $("#rq").addEventListener("click", e => { if (e.target.id === "rq") closeRate(); });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (!$("#lv").hidden) closeReminder();
+    if (!$("#rq").hidden) closeRate();
+  });
 })();
 </script>
 </body>
