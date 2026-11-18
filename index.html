@@ -2,6 +2,56 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+/* Hidden error reporter: if something breaks on a phone, Adham gets an email with the exact error and device.
+   Plain old JavaScript on purpose, so it still runs on phones where the main script fails. At most 3 emails per visit. */
+(function(){
+  var KEY = "c25986ce-ce5e-4687-8b1d-31a6a431b46a", sent = {}, count = 0, start = Date.now();
+  function report(kind, msg, where){
+    var id = kind + "|" + msg + "|" + where;
+    if (sent[id] || count >= 3) return;
+    sent[id] = 1; count++;
+    var page = "";
+    try { page = pages[idx].id || "letter"; } catch (e) {}      // pages and idx are the main script's own variables, once it has run
+    var data = {
+      access_key: KEY,
+      subject: "⚠️ Website problem on a phone: " + kind,
+      from_name: "Mimi's website (error reporter)",
+      Problem: kind,
+      Error: String(msg).slice(0, 800),
+      Where: where || "",
+      "Page open": page || "(not started)",
+      "Seconds after opening": Math.round((Date.now() - start) / 1000),
+      "Loading state": document.readyState,
+      "Opened from Home Screen icon": navigator.standalone === true ? "yes" : "no",
+      Online: navigator.onLine === false ? "no" : "yes",
+      Screen: (window.screen ? screen.width + "x" + screen.height : "") + " @" + (window.devicePixelRatio || 1) + "x",
+      Device: navigator.userAgent,
+      Time: (function(){ try { return new Date().toLocaleString("en-EG", { timeZone: "Africa/Cairo" }); } catch (e) { return String(new Date()); } })()
+    };
+    var body = JSON.stringify(data);
+    try {
+      if (window.fetch) { fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: body, keepalive: true })["catch"](function(){}); return; }
+    } catch (e) {}
+    try { var x = new XMLHttpRequest(); x.open("POST", "https://api.web3forms.com/submit", true); x.setRequestHeader("Content-Type", "application/json"); x.send(body); } catch (e) {}
+  }
+  window.addEventListener("error", function(e){
+    if (e && e.target && e.target !== window && e.target.tagName){
+      if (e.target.tagName === "SCRIPT") report("a script file failed to load", e.target.src, "");
+      return;                                                    // a missing photo or song is not worth an email
+    }
+    report("script error", (e && (e.message || (e.error && e.error.message))) || "unknown error", ((e && e.filename) || "").split("/").pop() + ":" + (e && e.lineno) + ":" + (e && e.colno));
+  }, true);
+  window.addEventListener("unhandledrejection", function(e){
+    var r = e && e.reason;
+    report("script error (promise)", (r && (r.message || r)) || "unknown", "");
+  });
+  /* white-screen watchdog: the main script sets window.__siteStarted when it has finished; if that never happens, say so */
+  setTimeout(function(){
+    if (!window.__siteStarted) report("the site did not start (white screen)", "main script never finished after 25 s", "readyState=" + document.readyState);
+  }, 25000);
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>For you</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3672,6 +3722,7 @@ function closeRate(){ clearTimeout(rqT); rqT = 0; $("#rq").hidden = true; }
     if (!$("#rq").hidden) closeRate();
   });
 })();
+window.__siteStarted = true;                                     // tells the error reporter at the top that everything ran
 </script>
 </body>
 <script>
