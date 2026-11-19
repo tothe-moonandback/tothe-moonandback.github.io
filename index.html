@@ -1598,6 +1598,7 @@ const CONFIG = {
   // ---- v14: Dodo's 5-page letter. Plays once by itself after the PIN (remembered under storageKey), then lives in Love Notes ----
   pagesLetter: {
     storageKey: "mimi_5page_letter_v4",
+    everyVisit: true,                                // true = plays by itself after the PIN on every visit; false = only the first time
     intro: "Hey my Mimi... pause everything for a second and read every page of this from my heart 🤍",
     introMs: 2500,                                   // how long the intro line stays before it fades out
     label: "Page {n} of {total}",
@@ -2291,7 +2292,7 @@ function enterSite(){
 function unlock(){
   enterSite();
   go(pages.indexOf($("#home")));       // she lands on Home; the gift and the letter are one swipe (or the Love Notes tab) away
-  if (!plSeen()) setTimeout(() => openPagesLetter(), 700);   // v14: the 5-page letter plays by itself the first time
+  if (CONFIG.pagesLetter && (CONFIG.pagesLetter.everyVisit || !plSeen())) setTimeout(() => openPagesLetter(), 700);   // v14: the 5-page letter plays by itself after the PIN
 }
 
 /* ============ v3 extras ============ */
