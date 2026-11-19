@@ -56,7 +56,7 @@
 <title>For you</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Amiri&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Amiri&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -868,6 +868,39 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 .rq-verdict{display:flex;flex-direction:column;gap:8px;padding:20px 18px;border-radius:22px;background:#FCE7F3;border:1.5px dashed #F472B6}
 .rq-verdict b{font:700 1.22rem/1.4 "Playfair Display",Georgia,serif}
 .rq-verdict span{font:italic 500 1.15rem/1.5 "Cormorant Garamond",Georgia,serif}
+/* v14: Dodo's 5-page letter (plays once after the PIN, replay from Love Notes) - calm candlelit ivory stationery */
+.pl{position:fixed;inset:0;z-index:245;display:grid;place-items:center;padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 16px);color:#3A1D24;background:radial-gradient(48% 38% at 50% 46%,rgba(214,160,96,.16),rgba(214,160,96,.05) 55%,transparent 75%),rgba(28,12,18,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity 2.2s ease;-webkit-tap-highlight-color:transparent}
+.pl[hidden]{display:none!important;pointer-events:none!important}
+.pl.on{opacity:1}
+.pl-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.pl-fx i{position:absolute;bottom:-10px;width:var(--s);height:var(--s);border-radius:50%;background:rgba(232,200,140,.9);box-shadow:0 0 6px 1px rgba(232,190,120,.45);opacity:0;animation:plDust var(--d) linear var(--w) infinite}
+@keyframes plDust{12%,82%{opacity:var(--o)}to{transform:translate(var(--x),-108vh);opacity:0}}
+.pl-intro{position:relative;grid-area:1/1;max-width:min(500px,100%);margin:0;padding:0 14px;text-align:center;color:#F3E6D8;font:italic 500 clamp(1.4rem,5.8vw,1.8rem)/1.7 "Cormorant Garamond",Georgia,serif;letter-spacing:.01em;text-shadow:0 0 28px rgba(214,160,96,.25);opacity:0;transition:opacity 1.6s ease;pointer-events:none}
+.pl-intro.on{opacity:1}
+.pl-card{position:relative;grid-area:1/1;display:flex;flex-direction:column;width:min(520px,100%);max-height:82vh;padding:26px 26px 18px;border-radius:6px;background:radial-gradient(120% 80% at 50% 0%,#FCF8F2,#FAF5EE 60%,#F4ECE0);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 0 60px rgba(214,160,96,.12),0 30px 60px -28px rgba(0,0,0,.7);outline:0;animation:plCardIn 1.4s ease}
+.pl-card::before{content:"";position:absolute;inset:9px;border:1px solid rgba(197,160,101,.35);border-radius:3px;pointer-events:none}
+@keyframes plCardIn{from{opacity:0;transform:translateY(14px)}}
+.pl-card[hidden]{display:none}
+.pl-top{display:none}
+.pl-label{margin:2px 40px 4px;text-align:center;font:italic 500 .98rem/1.3 "Cormorant Garamond",Georgia,serif;letter-spacing:.06em;color:#A8875A}
+.pl-rule{display:block;width:44px;height:1px;margin:8px auto 18px;background:rgba(197,160,101,.55)}
+.pl-card .lv-x{top:14px;right:14px;width:40px;height:40px;border:0;background:none;color:#A8875A;font:300 1.5rem/1 Georgia,serif;opacity:.8}
+.pl-page{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 6px 6px}
+.pl-page p{margin:0 0 16px;font:400 clamp(1.02rem,4.1vw,1.1rem)/1.8 "Lora",Georgia,serif;color:#3A1D24;white-space:pre-line;overflow-wrap:break-word}
+.pl-page p:last-child{margin-bottom:0}
+.pl-page p.pl-hi{font:italic 500 clamp(1.3rem,5.4vw,1.45rem)/1.5 "Cormorant Garamond",Georgia,serif;margin-bottom:14px}
+.pl-page p.pl-sign{margin-top:22px;text-align:right;font:italic 500 clamp(1.2rem,5vw,1.35rem)/1.6 "Cormorant Garamond",Georgia,serif;color:#5A2A34}
+.pl-page.in-next{animation:plInR .7s ease}
+.pl-page.in-prev{animation:plInL .7s ease}
+@keyframes plInR{from{opacity:0;transform:translateX(18px)}}
+@keyframes plInL{from{opacity:0;transform:translateX(-18px)}}
+.pl-nav{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 4px 0;border-top:1px solid rgba(197,160,101,.25)}
+.pl-prev,.pl-next{min-height:44px;padding:8px 4px;border:0;background:none;color:#7A5A3A;font:italic 500 1.08rem/1.2 "Cormorant Garamond",Georgia,serif;letter-spacing:.02em;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:opacity .2s ease}
+.pl-prev{flex:none;opacity:.75}
+.pl-next{margin-left:auto;color:#5A2A34}
+.pl-prev:active,.pl-next:active{opacity:.5}
+.pl-next.last{padding:11px 26px;border:1px solid rgba(197,160,101,.6);border-radius:3px;background:#5A2A34;color:#F3E6D8;font:500 1.08rem/1.2 "Cormorant Garamond",Georgia,serif;letter-spacing:.08em}
+@media (prefers-reduced-motion:reduce){.pl,.pl-intro{transition:none}.pl-page.in-next,.pl-page.in-prev,.pl-card{animation:none}.pl-fx{display:none}}
 .rq-label{margin:6px 0 0;font:600 1.1rem/1.4 "Cormorant Garamond",Georgia,serif}
 #rqNote{width:100%;min-height:96px;padding:12px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:500 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;resize:vertical}
 .rq-body .cf-send:disabled{opacity:.6;cursor:default}
@@ -1304,6 +1337,22 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
     <div class="lv-body" id="lvBody"></div>
   </div>
 </div>
+<!-- v14: Dodo's 5-page letter (filled in from CONFIG.pagesLetter) -->
+<div class="pl" id="pl" hidden role="dialog" aria-modal="true" aria-labelledby="plLabel">
+  <div class="pl-fx" id="plFx" aria-hidden="true"></div>
+  <p class="pl-intro" id="plIntro"></p>
+  <div class="pl-card" id="plCard" tabindex="-1" hidden>
+    <button class="lv-x" id="plClose" type="button" aria-label="Close the letter">×</button>
+    <div class="pl-top"><div class="pl-dots" id="plDots" aria-hidden="true"></div><span class="pl-n" id="plN"></span></div>
+    <h2 class="pl-label" id="plLabel"></h2>
+    <span class="pl-rule" aria-hidden="true"></span>
+    <div class="pl-page" id="plPage" aria-live="polite"></div>
+    <div class="pl-nav">
+      <button class="pl-prev" id="plPrev" type="button"></button>
+      <button class="pl-next" id="plNext" type="button"></button>
+    </div>
+  </div>
+</div>
 <!-- v13: Rate Dodo As A Boyfriend (filled in from CONFIG.rate) -->
 <div class="rq" id="rq" hidden role="dialog" aria-modal="true" aria-label="Rate Dodo as a boyfriend">
   <div class="rq-card" id="rqCard" tabindex="-1">
@@ -1540,11 +1589,30 @@ const CONFIG = {
     { icon: "🧸", label: "Comfort", page: "comfort" },
     { icon: "💌", label: "Love Notes", page: "notes", rest: true, title: "Love Notes 💌", sub: "Everything I wrote for you, all in one place.",
       extra: [                                                         // extra cards at the top of the menu
+        { icon: "📖", label: "Read Dodo's 5-Page Letter 💌✨", action: "pages" },
         { icon: "💌", label: "A Reminder For My Mariouma 🎀", action: "reminder" },
         { icon: "💯", label: "Rate Dodo As A Boyfriend 👀✨", action: "rate" },
         { icon: "✨", label: "11:11 Letter", action: "1111" }
       ] }
   ],
+  // ---- v14: Dodo's 5-page letter. Plays once by itself after the PIN (remembered under storageKey), then lives in Love Notes ----
+  pagesLetter: {
+    storageKey: "mimi_5page_letter_v3",
+    intro: "Hey my Mimi... pause everything for a second and read every page of this from my heart 🤍",
+    introMs: 2500,                                   // how long the intro line stays before it fades out
+    label: "Page {n} of {total}",
+    next: "Turn the page →",
+    previous: "← Previous",
+    finish: "Enter our world",
+    pages: [                                         // a blank line starts a new paragraph
+      "To the love of my life,\n\nI wrote this for you right here before anything else because I need you to hear my heart clearly and never let any doubt stay inside your head. Lately I felt like maybe some quiet thoughts made you wonder if my love for you has faded or changed, and honestly it breaks my heart to even imagine you feeling that way for a second. So I wanted to sit down and write all of this for you so you can read it slowly and feel how deeply you live inside me.",
+      "You are not just someone I love Mimi, you are literally the most precious person in my life and the center of my whole world. Before you came into my life I did not really know what it felt like to care about someone this deeply or to look forward to every single day just because they exist in it. Loving you has become a part of who I am, and no matter what happens around us my heart only knows how to beat for you.",
+      "Sometimes life gets loud, days get busy, or things get overwhelming, and maybe I do not always show my feelings the exact way you need me to in every moment. I never ever want my silence or my busy days to make you feel for even a second that you matter less to me or that you are not my first thought. You are my top priority, my greatest blessing, and the only girl my eyes ever look at. Nothing in this whole world is more valuable to me than seeing you happy and feeling safe with me.",
+      "I am never going to stop loving you Mariouma. Not today, not tomorrow, and not in a hundred years. What I feel for you is not a passing phase or a temporary mood that disappears when things get hard. Even on our hardest days, even when we overthink, get tired, or misunderstand each other, my love for you only grows deeper and stronger. You are stuck with me forever because there is no version of my life where you are not the one I love most.",
+      "I love your pure soul, the warmth in your eyes, and the softness of your smile that makes everything bad disappear the second I see it. Please never doubt your place in my heart again, my Mimi. You are my peace, my safe space, and my everything, always and endlessly.\n\nForever and only yours,\nDodo"
+    ],
+    signoff: "Forever and only yours,"                  // the paragraph that starts with this is drawn as the signature
+  },
   // ---- v13: the letter behind the "A Reminder For My Mariouma 🎀" card in Love Notes ----
   reminder: {
     badge: "Sealed with love from Dodo 💌",
@@ -2223,6 +2291,7 @@ function enterSite(){
 function unlock(){
   enterSite();
   go(pages.indexOf($("#home")));       // she lands on Home; the gift and the letter are one swipe (or the Love Notes tab) away
+  if (!plSeen()) setTimeout(() => openPagesLetter(), 700);   // v14: the 5-page letter plays by itself the first time
 }
 
 /* ============ v3 extras ============ */
@@ -2626,7 +2695,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -2638,7 +2707,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -3567,6 +3636,7 @@ function cfOnPage(pg){
     const card = (icon, label, fn) => { const b = mk("button", "tv-card"); b.type = "button"; b.append(mk("span", "ic", icon), mk("span", "", label)); b.onclick = fn; grid.append(b); };
     (t.extra || []).forEach(x => {
       if (x.action === "1111" && elEnabled()) card(x.icon, x.label, open1111);
+      if (x.action === "pages") card(x.icon, x.label, () => openPagesLetter());
       if (x.action === "reminder") card(x.icon, x.label, openReminder);
       if (x.action === "rate") card(x.icon, x.label, openRate);
     });
@@ -3720,6 +3790,98 @@ function closeRate(){ clearTimeout(rqT); rqT = 0; $("#rq").hidden = true; }
     if (e.key !== "Escape") return;
     if (!$("#lv").hidden) closeReminder();
     if (!$("#rq").hidden) closeRate();
+  });
+})();
+/* ============ v14: Dodo's 5-page letter (text in CONFIG.pagesLetter) ============ */
+const PL = CONFIG.pagesLetter || { pages: [] };
+let plIdx = 0, plTimers = [];
+function plSeen(){ try { return !!localStorage.getItem(PL.storageKey); } catch (e){ return false; } }
+function plMark(){ try { localStorage.setItem(PL.storageKey, "1"); } catch (e){} }
+function plClear(){ plTimers.forEach(clearTimeout); plTimers = []; }
+function plLater(fn, ms){ plTimers.push(setTimeout(fn, reduceMotion ? Math.min(ms, 50) : ms)); }
+function plShowCard(){
+  plClear();
+  $("#plIntro").classList.remove("on");
+  $("#plCard").hidden = false;
+  plRender(0);
+  setTimeout(() => { try { $("#plCard").focus({ preventScroll: true }); } catch (e){} }, 60);
+}
+function openPagesLetter(){
+  const pl = $("#pl");
+  plClear();
+  plIdx = 0;
+  $("#plCard").hidden = true;
+  $("#plIntro").classList.remove("on");
+  pl.classList.remove("on");
+  pl.hidden = false;
+  pl.style.display = "";
+  void pl.offsetWidth;
+  pl.classList.add("on");                                         // step 1: the warm candlelit dim
+  plLater(() => $("#plIntro").classList.add("on"), 1800);         // step 2: the intro line
+  plLater(() => $("#plIntro").classList.remove("on"), 1800 + 1600 + (PL.introMs || 2500));
+  plLater(plShowCard, 1800 + 1600 + (PL.introMs || 2500) + 1600); // step 3: the letter itself
+}
+function closePagesLetter(){
+  plClear();
+  plMark();
+  const pl = $("#pl");
+  pl.classList.remove("on");
+  pl.hidden = true;
+  pl.style.display = "none";                                      // never left on top of the app
+}
+function plRender(i, dir){
+  const n = PL.pages.length, page = $("#plPage");
+  plIdx = Math.max(0, Math.min(n - 1, i));
+  if (plIdx === n - 1) plMark();
+  $("#plLabel").textContent = String(PL.label).replace("{n}", plIdx + 1).replace("{total}", n);
+  $("#plN").textContent = (plIdx + 1) + " / " + n;
+  [...$("#plDots").children].forEach((d, k) => d.classList.toggle("on", k <= plIdx));
+  page.textContent = "";
+  String(PL.pages[plIdx]).split("\n\n").forEach((t, k) => {
+    const cls = PL.signoff && t.indexOf(PL.signoff) === 0 ? "pl-sign" : (plIdx === 0 && k === 0 ? "pl-hi" : "");
+    page.append(mk("p", cls, t));
+  });
+  page.scrollTop = 0;
+  page.classList.remove("in-next", "in-prev");
+  if (dir){ void page.offsetWidth; page.classList.add(dir > 0 ? "in-next" : "in-prev"); }
+  const prev = $("#plPrev"), next = $("#plNext"), last = plIdx === n - 1;
+  prev.style.visibility = plIdx > 0 ? "visible" : "hidden";
+  next.textContent = last ? PL.finish : PL.next;
+  next.classList.toggle("last", last);
+}
+(function(){
+  if (!PL.pages || !PL.pages.length) return;
+  $("#plIntro").textContent = PL.intro || "";
+  $("#plPrev").textContent = PL.previous || "←";
+  const dots = $("#plDots");
+  PL.pages.forEach(() => dots.append(document.createElement("i")));
+  const R = (a, b) => a + Math.random() * (b - a), fx = $("#plFx");
+  for (let i = 0; i < 22; i++){                                  // tiny, slow golden dust motes
+    const s = document.createElement("i");
+    s.style.cssText = `left:${R(2, 97).toFixed(1)}%;--s:${R(1.5, 3.2).toFixed(1)}px;--o:${R(.15, .45).toFixed(2)};--x:${Math.round(R(-40, 40))}px;--d:${R(26, 46).toFixed(1)}s;--w:${(-R(0, 46)).toFixed(1)}s`;
+    fx.append(s);
+  }
+  $("#plPrev").onclick = () => { if (plIdx > 0) plRender(plIdx - 1, -1); };
+  $("#plNext").onclick = () => {
+    if (plIdx < PL.pages.length - 1) return plRender(plIdx + 1, 1);
+    closePagesLetter();
+  };
+  $("#plClose").onclick = closePagesLetter;
+  $("#pl").addEventListener("click", e => { if ($("#plCard").hidden) plShowCard(); });   // a tap during the intro skips to the letter
+  let sx = 0, sy = 0;                                                                     // swipe left/right on the page to turn it
+  $("#plPage").addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  $("#plPage").addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0 && plIdx < PL.pages.length - 1) plRender(plIdx + 1, 1);
+    if (dx > 0 && plIdx > 0) plRender(plIdx - 1, -1);
+  }, { passive: true });
+  document.addEventListener("keydown", e => {
+    if ($("#pl").hidden) return;
+    if (e.key === "Escape") closePagesLetter();
+    if ($("#plCard").hidden) return;
+    if (e.key === "ArrowRight" && plIdx < PL.pages.length - 1) plRender(plIdx + 1, 1);
+    if (e.key === "ArrowLeft" && plIdx > 0) plRender(plIdx - 1, -1);
   });
 })();
 window.__siteStarted = true;                                     // tells the error reporter at the top that everything ran
