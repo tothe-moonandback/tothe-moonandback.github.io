@@ -901,6 +901,34 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 .pl-prev:active,.pl-next:active{opacity:.5}
 .pl-next.last{padding:11px 26px;border:1px solid rgba(197,160,101,.6);border-radius:3px;background:#5A2A34;color:#F3E6D8;font:500 1.08rem/1.2 "Cormorant Garamond",Georgia,serif;letter-spacing:.08em}
 @media (prefers-reduced-motion:reduce){.pl,.pl-intro{transition:none}.pl-page.in-next,.pl-page.in-prev,.pl-card{animation:none}.pl-fx{display:none}}
+/* v15: Our Sky, a deep-space constellation of our 7 milestones (text in CONFIG.sky) */
+.hm-acts{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px}
+.sky-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 24px 10px 18px;border-radius:999px;border:1px solid rgba(160,190,255,.35);background:radial-gradient(120% 160% at 25% 0%,#22336e,#0b1531 55%,#02040A);color:#F8FAFF;font:italic 600 1.18rem/1.2 "Cormorant Garamond",Georgia,serif;letter-spacing:.08em;box-shadow:0 0 0 4px rgba(17,27,61,.08),0 12px 26px -12px rgba(8,16,38,.85);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .15s ease}
+.sky-btn:active{transform:scale(.97)}
+.sky-btn svg{width:24px;height:24px;flex:none;color:#cfe0ff}
+@media (max-width:360px){.hm-acts{gap:10px;padding-right:48px}.sky-btn{gap:7px;padding:10px 16px 10px 12px;font-size:1.08rem}}   /* keeps clear of the floating heart button */
+.sky{position:fixed;inset:0;z-index:246;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;color:#F8FAFF;background:radial-gradient(130% 85% at 50% 28%,#111B3D 0%,#081026 46%,#02040A 100%);opacity:0;transition:opacity .9s ease;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;pointer-events:auto}
+.sky.on{opacity:1}
+.sky[hidden]{display:none!important;pointer-events:none!important}
+#skyCv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sky-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:calc(env(safe-area-inset-top) + 8px) 10px 0;pointer-events:none}
+.sky-top>button{pointer-events:auto}
+.sky-snd{min-height:44px;padding:8px 14px;border:1px solid rgba(160,190,255,.2);border-radius:999px;background:rgba(8,16,38,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:rgba(248,250,255,.78);font:500 .72rem/1 "Lora",Georgia,serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;touch-action:manipulation}
+.sky-snd[aria-pressed="true"]{color:#F8FAFF;border-color:rgba(180,210,255,.5)}
+.sky-title{font:italic 500 1.2rem/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.16em;color:rgba(248,250,255,.82);text-shadow:0 0 18px rgba(140,170,255,.5)}
+.sky-x{width:44px;height:44px;border:0;border-radius:50%;background:none;color:rgba(248,250,255,.78);font:300 1.9rem/1 Georgia,serif;cursor:pointer;touch-action:manipulation}
+.sky-bottom{position:relative;z-index:1;padding:0 14px calc(env(safe-area-inset-bottom) + 10px);pointer-events:none}
+.sky-card{pointer-events:auto;width:min(520px,100%);margin:0 auto;padding:16px 20px 6px;border-radius:20px;background:rgba(8,16,38,.52);border:1px solid rgba(120,150,230,.24);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 22px 50px -20px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}
+.sky-meta{display:flex;justify-content:space-between;gap:12px;font:500 .7rem/1.2 "Lora",Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:rgba(180,210,255,.75)}
+.sky-card h3{margin:9px 0 6px;font:italic 500 clamp(1.4rem,6vw,1.7rem)/1.2 "Cormorant Garamond",Georgia,serif;color:#F8FAFF}
+.sky-card p{margin:0;min-height:calc(1.65em * 3);font:400 clamp(.92rem,3.8vw,1rem)/1.65 "Lora",Georgia,serif;color:rgba(248,250,255,.82)}
+.sky-txt.swap{animation:skySwap .6s ease}
+@keyframes skySwap{from{opacity:0;transform:translateY(6px)}}
+.sky-nav{display:flex;justify-content:space-between;margin-top:8px;padding-top:2px;border-top:1px solid rgba(160,190,255,.12)}
+.sky-nav button{min-height:48px;padding:8px 6px;border:0;background:none;color:rgba(205,222,255,.92);font:italic 500 1.08rem/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.05em;cursor:pointer;touch-action:manipulation;transition:opacity .3s ease}
+.sky-nav button:disabled{opacity:.28;cursor:default}
+.sky-foot{margin:9px 0 0;text-align:center;font:400 .66rem/1.4 "Lora",Georgia,serif;letter-spacing:.16em;color:rgba(180,200,240,.5)}
+@media (prefers-reduced-motion:reduce){.sky{transition:none}.sky-txt.swap{animation:none}}
 .rq-label{margin:6px 0 0;font:600 1.1rem/1.4 "Cormorant Garamond",Georgia,serif}
 #rqNote{width:100%;min-height:96px;padding:12px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:500 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;resize:vertical}
 .rq-body .cf-send:disabled{opacity:.6;cursor:default}
@@ -978,7 +1006,7 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
     <p id="mcText"></p>
   </div>
   <div class="hm-sur" id="hmSur" hidden>
-    <button id="anBtn" type="button"></button>
+    <div class="hm-acts"><button id="anBtn" type="button"></button><button class="sky-btn" id="skyBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><path d="M3.5 16.5L8 9.5l5 3.5 7.5-8" opacity=".55"/><circle cx="3.5" cy="16.5" r="1.1" fill="currentColor"/><circle cx="8" cy="9.5" r="1.1" fill="currentColor"/><circle cx="20.5" cy="5" r="1.1" fill="currentColor"/><path d="M13 9.2l.8 2.9 2.9.9-2.9.9-.8 2.9-.8-2.9-2.9-.9 2.9-.9z" fill="currentColor" stroke="none"/></svg><span>Our Sky</span></button></div>
     <small id="anCap"></small>
   </div>
 </section>
@@ -1353,6 +1381,29 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
     </div>
   </div>
 </div>
+<!-- v15: Our Sky (filled in from CONFIG.sky) -->
+<div class="sky" id="sky" hidden role="dialog" aria-modal="true" aria-label="Our Sky">
+  <canvas id="skyCv" aria-hidden="true"></canvas>
+  <div class="sky-top">
+    <button class="sky-snd" id="skySnd" type="button" aria-pressed="false">Sound: Off</button>
+    <span class="sky-title" id="skyTitle"></span>
+    <button class="sky-x" id="skyClose" type="button" aria-label="Close Our Sky">×</button>
+  </div>
+  <div class="sky-bottom">
+    <div class="sky-card" id="skyCard">
+      <div class="sky-txt" id="skyTxt" aria-live="polite">
+        <div class="sky-meta"><span id="skyStep"></span><span id="skyDate"></span></div>
+        <h3 id="skyName"></h3>
+        <p id="skyStory"></p>
+      </div>
+      <div class="sky-nav">
+        <button id="skyPrev" type="button"></button>
+        <button id="skyNext" type="button"></button>
+      </div>
+    </div>
+    <p class="sky-foot" id="skyFoot"></p>
+  </div>
+</div>
 <!-- v13: Rate Dodo As A Boyfriend (filled in from CONFIG.rate) -->
 <div class="rq" id="rq" hidden role="dialog" aria-modal="true" aria-label="Rate Dodo as a boyfriend">
   <div class="rq-card" id="rqCard" tabindex="-1">
@@ -1595,6 +1646,27 @@ const CONFIG = {
         { icon: "✨", label: "11:11 Letter", action: "1111" }
       ] }
   ],
+  // ---- v15: "Our Sky", the 7 milestone stars (button on Home) ----
+  sky: {
+    button: "Our Sky",
+    title: "Our Sky",
+    previous: "← Prev",
+    next: "Next →",
+    footer: "30.0444° N, 31.2357° E  •  Cairo, Egypt",
+    aspect: 0.66,                                    // height / width of the constellation
+    // The 7 stars trace one line, in date order, that writes our initials joined together: M (stars 1-5) then A (stars 5-7).
+    // x / y place each star inside the constellation (0 to 1).
+    stars: [
+      { x: .00, y: 1.00, date: "March 7, 2024", title: "Where It All Began", text: "The very first day we ever talked. Neither of us knew it then, but that single conversation changed my entire life forever." },
+      { x: .08, y: .00, date: "May 20, 2024", title: "The Confession", text: "The day I finally told you I loved you—the easiest and most honest truth my heart has ever spoken." },
+      { x: .27, y: .60, date: "May 22, 2024", title: "My Promise to Wait", text: "The exact moment I became certain that I had to wait for you, and that I would never stop loving you, no matter how long it took." },
+      { x: .46, y: .00, date: "December 5, 2024", title: "Your First Flowers", text: "The first time I brought you flowers, just hoping to see that soft smile of yours light up." },
+      { x: .54, y: 1.00, date: "July 27, 2026", title: "Our First Date", text: "After waiting for so long, our first real date together—every second felt like a dream I never wanted to end." },
+      { x: .76, y: .00, date: "September 26, 2026", title: "The Words I Waited For", text: "The first time I heard a real 'I love you' from you—a moment replayable in my heart for the rest of my life." },
+      { x: 1.00, y: 1.00, date: "October 14, 2026", title: "Officially Ours", text: "The day we finally became official, and the night the sky over Cairo watched my greatest wish come true." }
+    ],
+    bar: [{ x: .619, y: .64 }, { x: .914, y: .64 }]   // the A's crossbar, drawn last by two small extra stars
+  },
   // ---- v14: Dodo's 5-page letter. Plays once by itself after the PIN (remembered under storageKey), then lives in Love Notes ----
   pagesLetter: {
     storageKey: "mimi_5page_letter_v4",
@@ -2696,7 +2768,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden || !$("#sky").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -2708,7 +2780,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, #sky, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -3884,6 +3956,328 @@ function plRender(i, dir){
     if (e.key === "ArrowRight" && plIdx < PL.pages.length - 1) plRender(plIdx + 1, 1);
     if (e.key === "ArrowLeft" && plIdx > 0) plRender(plIdx - 1, -1);
   });
+})();
+/* ============ v15: Our Sky (text in CONFIG.sky) ============ */
+const SKY = CONFIG.sky || { stars: [] };
+const SK = {
+  open: false, raf: 0, W: 0, H: 0, dpr: 1, t0: 0, last: 0, cv: null, cx: null,
+  bg: [], neb1: null, neb2: null, shoot: [], nextShoot: 0,
+  active: 0, lineStart: 0, A: { x: 0, y: 0 }, pts: [],
+  cam: { x: 0, y: 0, z: 1 }, par: { x: 0, y: 0 }, tilt: { x: 0, y: 0 }, dragOff: { x: 0, y: 0 }, drag: null,
+  gyroAsked: false, gyroOn: false, flash: [0, 0, 0, 0, 0, 0, 0], zoom: 1.14, lim: null, glow: null,
+  ac: null, master: null, drone: null, sound: false, musicWas: false
+};
+const skyClamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const skyRand = (a, b) => a + Math.random() * (b - a);
+
+/* soft nebula clouds, painted once per size into offscreen canvases */
+function skyNebula(S, band){
+  const c = document.createElement("canvas"); c.width = c.height = S;
+  const g = c.getContext("2d");
+  const blob = (x, y, r, col) => { const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); };
+  g.translate(S / 2, S / 2);
+  if (band){
+    g.rotate(-0.52); g.scale(1, 0.3);
+    blob(0, 0, S * 0.5, "rgba(120,130,230,0.20)");
+    blob(0, 0, S * 0.22, "rgba(225,220,255,0.24)");
+    blob(0, 0, S * 0.08, "rgba(248,250,255,0.30)");
+    for (let i = 0; i < 18; i++){
+      const x = skyRand(-S * 0.45, S * 0.45), y = skyRand(-S * 0.12, S * 0.12), r = skyRand(S * 0.06, S * 0.18);
+      blob(x, y, r, i % 3 === 0 ? "rgba(90,200,235,0.10)" : i % 3 === 1 ? "rgba(150,95,225,0.12)" : "rgba(60,80,190,0.14)");
+    }
+    for (let i = 0; i < 10; i++) blob(skyRand(-S * 0.4, S * 0.4), skyRand(-S * 0.05, S * 0.05), skyRand(S * 0.03, S * 0.07), "rgba(2,4,10,0.35)");   // dark dust lanes
+  } else {
+    for (let i = 0; i < 9; i++){
+      const a = skyRand(0, Math.PI * 2), d = skyRand(S * 0.12, S * 0.42);
+      blob(Math.cos(a) * d, Math.sin(a) * d, skyRand(S * 0.1, S * 0.22), i % 2 ? "rgba(110,80,210,0.08)" : "rgba(70,170,220,0.07)");
+    }
+  }
+  return c;
+}
+function skyResize(){
+  const cv = SK.cv;
+  SK.W = innerWidth; SK.H = innerHeight;
+  SK.dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(SK.W * SK.dpr); cv.height = Math.round(SK.H * SK.dpr);
+  SK.cx.setTransform(SK.dpr, 0, 0, SK.dpr, 0, 0);
+  const S = Math.ceil(Math.hypot(SK.W, SK.H) * 1.15);
+  SK.neb1 = skyNebula(S, true); SK.neb2 = skyNebula(S, false);
+  SK.bg = [];
+  const layer = (n, d, r0, r1, a0, a1, tw) => { for (let i = 0; i < n; i++) SK.bg.push({ x: Math.random() * SK.W, y: Math.random() * SK.H, d, r: skyRand(r0, r1), a: skyRand(a0, a1), tw: tw ? skyRand(.6, 2.2) : 0, ph: skyRand(0, 6.3), blue: Math.random() < .35 }); };
+  layer(150, .18, .35, .8, .25, .6, false);     // far dust stars
+  layer(75, .5, .6, 1.2, .45, .85, true);       // mid twinkling stars
+  layer(25, 1, 1.1, 1.9, .7, 1, true);          // near bright stars
+  skyLayout();
+}
+/* place the 7 stars in the open sky above the card */
+function skyLayout(){
+  const card = $("#skyCard").getBoundingClientRect(), top = $(".sky-top").getBoundingClientRect().bottom + 24;
+  const bottom = card.top - 30, avail = Math.max(120, bottom - top), Z = SK.zoom;
+  const ar = SKY.aspect || 0.78;                                      // height / width of the constellation
+  let bw = Math.min((SK.W - 100) / Z, 400), bh = bw * ar;             // leaves room for the zoom-in and the glow
+  if (bh * Z > avail){ bh = avail / Z; bw = bh / ar; }
+  const x0 = (SK.W - bw) / 2, y0 = top + (avail - bh) / 2;
+  SK.A = { x: SK.W / 2, y: y0 + bh / 2 };
+  SK.lim = { l: 44, r: SK.W - 44, t: top, b: bottom };
+  SK.pts = (SKY.stars || []).map(s => ({ x: x0 + s.x * bw, y: y0 + s.y * bh }));
+  SK.bar = (SKY.bar || []).map(s => ({ x: x0 + s.x * bw, y: y0 + s.y * bh }));   // the two small stars of the A's crossbar
+}
+/* where the camera should sit to lean toward star i, without pushing any star off the open sky */
+function skyAim(i){
+  const A = SK.A, p = SK.pts[i] || A, z = SK.zoom, L = SK.lim, xs = SK.pts.map(q => q.x), ys = SK.pts.map(q => q.y);
+  const fit = (want, mn, mx, a, lo, hi) => { const top = mn + (a - lo) / z, bot = mx - (hi - a) / z; return bot > top ? a : skyClamp(want, bot, top); };
+  return { x: fit(A.x + (p.x - A.x) * 0.45, Math.min(...xs), Math.max(...xs), A.x, L.l, L.r),
+           y: fit(A.y + (p.y - A.y) * 0.45, Math.min(...ys), Math.max(...ys), A.y, L.t, L.b) };
+}
+/* one soft glow sprite, reused for every bright star (cheaper than a gradient per star per frame) */
+function skyGlowSprite(){
+  const c = document.createElement("canvas"); c.width = c.height = 64;
+  const g = c.getContext("2d"), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, "rgba(248,250,255,1)"); gr.addColorStop(.12, "rgba(200,222,255,.75)"); gr.addColorStop(.4, "rgba(130,160,255,.22)"); gr.addColorStop(1, "rgba(120,150,255,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
+}
+/* world -> screen through the camera (pan + zoom around the constellation centre) */
+function skyToScreen(p){ const c = SK.cam, A = SK.A; return { x: (p.x - c.x) * c.z + A.x + SK.par.x * 10, y: (p.y - c.y) * c.z + A.y + SK.par.y * 10 }; }
+function skyFrame(now){
+  if (!SK.open) return;
+  SK.raf = requestAnimationFrame(skyFrame);
+  const dt = Math.min(0.05, (now - (SK.last || now)) / 1000); SK.last = now;
+  const t = (now - SK.t0) / 1000, g = SK.cx, W = SK.W, H = SK.H, A = SK.A;
+  /* camera eases toward the chosen star */
+  const aim = skyAim(SK.active), k = 1 - Math.pow(0.04, dt);
+  const tx = aim.x, ty = aim.y, tz = SK.zoom;
+  SK.cam.x += (tx - SK.cam.x) * k * 0.6; SK.cam.y += (ty - SK.cam.y) * k * 0.6; SK.cam.z += (tz - SK.cam.z) * k * 0.6;
+  /* parallax from tilt + finger drag (the drag drifts back when let go) */
+  if (!SK.drag){ SK.dragOff.x *= 1 - k * 0.25; SK.dragOff.y *= 1 - k * 0.25; }
+  const px = skyClamp(SK.tilt.x + SK.dragOff.x, -1.4, 1.4), py = skyClamp(SK.tilt.y + SK.dragOff.y, -1.4, 1.4);
+  SK.par.x += (px - SK.par.x) * k; SK.par.y += (py - SK.par.y) * k;
+  g.clearRect(0, 0, W, H);
+  /* layer 1: nebula + galaxy core, slowly turning */
+  const camDX = SK.cam.x - A.x, camDY = SK.cam.y - A.y;
+  const neb = (img, rot, par, alpha, sc) => {
+    g.save(); g.globalAlpha = alpha;
+    g.translate(W / 2 - SK.par.x * par - camDX * 0.15, H * 0.42 - SK.par.y * par - camDY * 0.15);
+    g.rotate(rot); g.scale(sc, sc);
+    g.drawImage(img, -img.width / 2, -img.height / 2); g.restore();
+  };
+  neb(SK.neb2, -t * 0.006, 8, 1, 1 + (SK.cam.z - 1) * 0.2);
+  neb(SK.neb1, t * 0.004, 16, 1, 1 + (SK.cam.z - 1) * 0.35);
+  /* layer 2: parallax stars */
+  for (const s of SK.bg){
+    const z = 1 + (SK.cam.z - 1) * s.d;
+    let x = (s.x - W / 2) * z + W / 2 - SK.par.x * 38 * s.d - camDX * s.d * 0.5;
+    let y = (s.y - H / 2) * z + H / 2 - SK.par.y * 38 * s.d - camDY * s.d * 0.5;
+    x = ((x % W) + W) % W; y = ((y % H) + H) % H;
+    const a = s.tw ? s.a * (0.55 + 0.45 * Math.sin(t * s.tw + s.ph)) : s.a;
+    g.globalAlpha = a;
+    g.fillStyle = s.blue ? "#cfe0ff" : "#F8FAFF";
+    if (s.d === 1){ const R = s.r * 5; g.globalAlpha = a * 0.6; g.drawImage(SK.glow, x - R, y - R, R * 2, R * 2); g.globalAlpha = a; }
+    g.fillRect(x - s.r, y - s.r, s.r * 2, s.r * 2);
+  }
+  g.globalAlpha = 1;
+  /* layer 3: shooting stars every 4-7 s */
+  if (!reduceMotion && now > SK.nextShoot){
+    const dir = Math.random() < .5 ? 1 : -1, sp = skyRand(700, 1000), ang = skyRand(0.35, 0.6);
+    SK.shoot.push({ x: dir > 0 ? skyRand(-40, W * .5) : skyRand(W * .5, W + 40), y: skyRand(-20, H * .3), vx: Math.cos(ang) * sp * dir, vy: Math.sin(ang) * sp, life: 0, max: skyRand(.7, 1.1) });
+    SK.nextShoot = now + skyRand(4000, 7000);
+  }
+  SK.shoot = SK.shoot.filter(m => {
+    m.life += dt; m.x += m.vx * dt; m.y += m.vy * dt;
+    const f = 1 - m.life / m.max; if (f <= 0) return false;
+    const tx2 = m.x - m.vx * 0.16, ty2 = m.y - m.vy * 0.16, gr = g.createLinearGradient(m.x, m.y, tx2, ty2);
+    gr.addColorStop(0, `rgba(248,250,255,${0.9 * f})`); gr.addColorStop(1, "rgba(180,210,255,0)");
+    g.strokeStyle = gr; g.lineWidth = 1.4; g.lineCap = "round";
+    g.beginPath(); g.moveTo(m.x, m.y); g.lineTo(tx2, ty2); g.stroke();
+    return true;
+  });
+  /* the constellation: one line draws itself from star 1 to star 7 (the M, then the A), then the A's crossbar */
+  const S = SK.pts.map(skyToScreen), n = S.length, seg = reduceMotion ? 0.05 : 0.6;
+  const prog = (now - SK.lineStart) / 1000 / seg;
+  const segs = [];
+  for (let i = 0; i < n - 1; i++) segs.push([S[i], S[i + 1]]);
+  const B = (SK.bar || []).map(skyToScreen);
+  if (B.length === 2) segs.push([B[0], B[1]]);
+  g.lineCap = "round";
+  segs.forEach(([a, b], i) => {
+    const f = skyClamp(prog - i, 0, 1); if (!f) return;
+    const ex = a.x + (b.x - a.x) * f, ey = a.y + (b.y - a.y) * f;
+    g.strokeStyle = "rgba(180,210,255,.12)"; g.lineWidth = 5;
+    g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(ex, ey); g.stroke();
+    g.strokeStyle = "rgba(180,210,255,.45)"; g.lineWidth = 1.1;
+    g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(ex, ey); g.stroke();
+  });
+  B.forEach((s, k) => {                                                // crossbar stars: small and quiet, not tappable
+    const b = prog - (n - 1);                                          // 0 -> 1 while the crossbar draws
+    const ap = k === 0 ? skyClamp(b * 4, 0, 1) : skyClamp((b - 0.7) / 0.3, 0, 1);
+    if (!ap) return;
+    g.globalAlpha = ap * 0.5; g.drawImage(SK.glow, s.x - 9, s.y - 9, 18, 18);
+    g.globalAlpha = ap * 0.8; g.fillStyle = "#F8FAFF"; g.beginPath(); g.arc(s.x, s.y, 1.6, 0, 6.2832); g.fill();
+  });
+  g.globalAlpha = 1;
+  /* the 7 milestone stars */
+  for (let i = 0; i < n; i++){
+    const s = S[i], on = i === SK.active, appear = skyClamp(prog - i + 1, 0, 1);
+    if (!appear) continue;
+    SK.flash[i] = Math.max(0, SK.flash[i] - dt * 0.8);
+    const pulse = 0.5 + 0.5 * Math.sin(t * 2.2 + i), dim = on ? 1 : 0.55;
+    const R = (on ? 30 + pulse * 6 : 14 + pulse * 3) + SK.flash[i] * 26;
+    g.globalAlpha = appear * dim;
+    g.drawImage(SK.glow, s.x - R, s.y - R, R * 2, R * 2);
+    if (on){
+      g.globalAlpha = appear * (0.35 + 0.2 * pulse);
+      g.strokeStyle = "rgba(190,215,255,.7)"; g.lineWidth = 0.8;
+      g.beginPath(); g.arc(s.x, s.y, 22 + pulse * 3, 0, 6.2832); g.stroke();
+      g.globalAlpha = appear * 0.16;
+      g.beginPath(); g.arc(s.x, s.y, 40 + pulse * 5, 0, 6.2832); g.stroke();
+      g.globalAlpha = appear * 0.7;                                     // lens-flare spikes
+      for (const [dx, dy, L] of [[1, 0, 46], [0, 1, 34]]){
+        const sg = g.createLinearGradient(s.x - dx * L, s.y - dy * L, s.x + dx * L, s.y + dy * L);
+        sg.addColorStop(0, "rgba(200,220,255,0)"); sg.addColorStop(.5, "rgba(248,250,255,.8)"); sg.addColorStop(1, "rgba(200,220,255,0)");
+        g.strokeStyle = sg; g.lineWidth = 1;
+        g.beginPath(); g.moveTo(s.x - dx * L, s.y - dy * L); g.lineTo(s.x + dx * L, s.y + dy * L); g.stroke();
+      }
+    }
+    g.globalAlpha = appear * (on ? 1 : 0.75);
+    g.fillStyle = "#F8FAFF";
+    g.beginPath(); g.arc(s.x, s.y, on ? 3.4 : 2.4, 0, 6.2832); g.fill();
+  }
+  g.globalAlpha = 1;
+}
+/* sound: a soft space drone and a crystal chime, all made in the browser, only when Sound is On */
+function skyAudioInit(){
+  if (SK.ac) return true;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return false;
+  try {
+    const ac = new AC(), master = ac.createGain(); master.gain.value = 0; master.connect(ac.destination);
+    const lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 520; lp.Q.value = 0.4;
+    const dg = ac.createGain(); dg.gain.value = 0.05; lp.connect(dg); dg.connect(master);
+    [[98, "sine", 0.6], [146.8, "sine", 0.45], [196.4, "triangle", 0.18], [293, "sine", 0.08]].forEach(([f, type, v]) => {
+      const o = ac.createOscillator(), og = ac.createGain(); o.type = type; o.frequency.value = f; o.detune.value = skyRand(-6, 6); og.gain.value = v;
+      o.connect(og); og.connect(lp); o.start();
+    });
+    const lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 0.07; lg.gain.value = 0.022; lfo.connect(lg); lg.connect(dg.gain); lfo.start();
+    SK.ac = ac; SK.master = master; return true;
+  } catch (e){ return false; }
+}
+function skyChime(i){
+  if (!SK.sound || !SK.ac) return;
+  const ac = SK.ac, now = ac.currentTime, base = [523.3, 587.3, 659.3, 784, 880, 1046.5, 1174.7][i % 7];
+  [[1, .05], [2.01, .022], [3.02, .012], [4.18, .006]].forEach(([m, v]) => {
+    const o = ac.createOscillator(), og = ac.createGain(); o.type = "sine"; o.frequency.value = base * m;
+    og.gain.setValueAtTime(0.0001, now); og.gain.exponentialRampToValueAtTime(v, now + 0.01); og.gain.exponentialRampToValueAtTime(0.0001, now + 2.4 / m + 0.4);
+    o.connect(og); og.connect(SK.master); o.start(now); o.stop(now + 3);
+  });
+}
+function skySoundOn(on){
+  SK.sound = on;
+  const b = $("#skySnd"); b.textContent = on ? "Sound: On" : "Sound: Off"; b.setAttribute("aria-pressed", on ? "true" : "false");
+  if (on){
+    if (!skyAudioInit()){ SK.sound = false; b.textContent = "Sound: Off"; b.setAttribute("aria-pressed", "false"); return; }
+    if (audio && !audio.paused){ SK.musicWas = true; pauseAll(); }    // our song pauses so the sky can be heard
+    SK.ac.resume && SK.ac.resume();
+    const t = SK.ac.currentTime; SK.master.gain.cancelScheduledValues(t); SK.master.gain.setValueAtTime(SK.master.gain.value, t); SK.master.gain.linearRampToValueAtTime(1, t + 1.5);
+  } else skyHush(true);
+}
+function skyHush(resumeMusic){
+  if (SK.ac){
+    const t = SK.ac.currentTime; SK.master.gain.cancelScheduledValues(t); SK.master.gain.setValueAtTime(SK.master.gain.value, t); SK.master.gain.linearRampToValueAtTime(0, t + 0.4);
+    const ac = SK.ac; setTimeout(() => { if (!SK.open || !SK.sound) try { ac.suspend(); } catch (e){} }, 500);
+  }
+  if (resumeMusic && SK.musicWas){ SK.musicWas = false; try { safePlay(audio); } catch (e){} }
+}
+/* the story card */
+function skyShow(i, chime){
+  const st = SKY.stars || [], n = st.length;
+  SK.active = skyClamp(i, 0, n - 1);
+  const s = st[SK.active], pad = v => (v < 10 ? "0" : "") + v;
+  $("#skyStep").textContent = pad(SK.active + 1) + " / " + pad(n);
+  $("#skyDate").textContent = s.date;
+  $("#skyName").textContent = s.title;
+  $("#skyStory").textContent = s.text;
+  const tx = $("#skyTxt"); tx.classList.remove("swap"); void tx.offsetWidth; tx.classList.add("swap");
+  $("#skyPrev").disabled = SK.active === 0;
+  $("#skyNext").disabled = SK.active === n - 1;
+  if (chime){ SK.flash[SK.active] = 1; skyChime(SK.active); }
+}
+function skyTilt(e){
+  if (e.gamma == null && e.beta == null) return;
+  SK.tilt.x = skyClamp((e.gamma || 0) / 25, -1, 1);
+  SK.tilt.y = skyClamp(((e.beta || 0) - 45) / 25, -1, 1);
+}
+function skyGyro(){
+  if (SK.gyroAsked) return; SK.gyroAsked = true;
+  const add = () => { window.addEventListener("deviceorientation", skyTilt); SK.gyroOn = true; };
+  try {
+    const D = window.DeviceOrientationEvent;
+    if (D && typeof D.requestPermission === "function") D.requestPermission().then(s => { if (s === "granted") add(); }).catch(() => {});
+    else if (D) add();
+  } catch (e){}
+}
+function openSky(){
+  const el = $("#sky");
+  if (SK.open || !(SKY.stars || []).length) return;
+  el.hidden = false; el.style.display = "flex"; el.style.pointerEvents = "auto";
+  SK.open = true;
+  const story = $("#skyStory"); story.style.minHeight = "";       // card keeps the height of the longest story, so the stars never jump
+  let tall = 0; SKY.stars.forEach(s => { story.textContent = s.text; tall = Math.max(tall, story.offsetHeight); });
+  story.style.minHeight = tall + "px";
+  skyShow(0, false);
+  skyResize();
+  SK.cam = { x: SK.A.x, y: SK.A.y, z: 1 };
+  SK.par = { x: 0, y: 0 }; SK.dragOff = { x: 0, y: 0 }; SK.shoot = [];
+  SK.t0 = SK.last = performance.now(); SK.lineStart = SK.t0 + 700; SK.nextShoot = SK.t0 + 2500;
+  void el.offsetWidth; el.classList.add("on");
+  skyGyro();
+  if (SK.sound) skySoundOn(true);
+  cancelAnimationFrame(SK.raf); SK.raf = requestAnimationFrame(skyFrame);
+  setTimeout(() => { try { $("#skyNext").focus({ preventScroll: true }); } catch (e){} }, 80);
+}
+function closeSky(){
+  if (!SK.open) return;
+  SK.open = false;
+  cancelAnimationFrame(SK.raf); SK.raf = 0;
+  skyHush(true);
+  const el = $("#sky");
+  el.classList.remove("on");
+  el.hidden = true; el.style.display = "none"; el.style.pointerEvents = "none";
+}
+(function(){
+  if (!(SKY.stars || []).length) return;
+  SK.cv = $("#skyCv"); SK.cx = SK.cv.getContext("2d"); SK.glow = skyGlowSprite();
+  $("#skyTitle").textContent = SKY.title || "";
+  $("#skyPrev").textContent = SKY.previous; $("#skyNext").textContent = SKY.next;
+  $("#skyFoot").textContent = SKY.footer || "";
+  const sb = $("#skyBtn");
+  sb.querySelector("span").textContent = SKY.button || "Our Sky";
+  sb.onclick = openSky;
+  $("#skyClose").onclick = closeSky;
+  $("#skySnd").onclick = () => skySoundOn(!SK.sound);
+  $("#skyPrev").onclick = () => { if (SK.active > 0) skyShow(SK.active - 1, true); };
+  $("#skyNext").onclick = () => { if (SK.active < SKY.stars.length - 1) skyShow(SK.active + 1, true); };
+  /* touch: drag to look around, tap a star (48 px target) to fly to it */
+  const cv = SK.cv;
+  cv.addEventListener("pointerdown", e => { SK.drag = { id: e.pointerId, x: e.clientX, y: e.clientY, ox: SK.dragOff.x, oy: SK.dragOff.y, moved: 0 }; try { cv.setPointerCapture(e.pointerId); } catch (er){} });
+  cv.addEventListener("pointermove", e => {
+    const d = SK.drag; if (!d || d.id !== e.pointerId) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y; d.moved = Math.max(d.moved, Math.hypot(dx, dy));
+    SK.dragOff.x = skyClamp(d.ox - dx / (SK.W / 3), -1.4, 1.4); SK.dragOff.y = skyClamp(d.oy - dy / (SK.H / 3), -1.4, 1.4);
+  });
+  const up = e => {
+    const d = SK.drag; if (!d || d.id !== e.pointerId) return; SK.drag = null;
+    if (d.moved > 10 || e.type === "pointercancel") return;
+    let best = -1, bd = 30;                                  // 30 px radius = a generous 48 px+ target around each star
+    SK.pts.forEach((p, i) => { const s = skyToScreen(p), dd = Math.hypot(s.x - e.clientX, s.y - e.clientY); if (dd < bd){ bd = dd; best = i; } });
+    if (best >= 0) skyShow(best, true);
+  };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  window.addEventListener("resize", () => { if (SK.open){ $("#skyStory").style.minHeight = ""; let tall = 0; const st = $("#skyStory"), keep = st.textContent; SKY.stars.forEach(s => { st.textContent = s.text; tall = Math.max(tall, st.offsetHeight); }); st.textContent = keep; st.style.minHeight = tall + "px"; skyResize(); } });
+  document.addEventListener("keydown", e => {
+    if (!SK.open) return;
+    if (e.key === "Escape") closeSky();
+    if (e.key === "ArrowRight") $("#skyNext").click();
+    if (e.key === "ArrowLeft") $("#skyPrev").click();
+  });
+  document.addEventListener("visibilitychange", () => { if (document.hidden && SK.open && SK.ac) try { SK.ac.suspend(); } catch (e){} else if (!document.hidden && SK.open && SK.sound && SK.ac) try { SK.ac.resume(); } catch (e){} });
 })();
 window.__siteStarted = true;                                     // tells the error reporter at the top that everything ran
 </script>
