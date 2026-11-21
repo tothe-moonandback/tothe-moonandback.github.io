@@ -929,6 +929,71 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 .sky-nav button:disabled{opacity:.28;cursor:default}
 .sky-foot{margin:9px 0 0;text-align:center;font:400 .66rem/1.4 "Lora",Georgia,serif;letter-spacing:.16em;color:rgba(180,200,240,.5)}
 @media (prefers-reduced-motion:reduce){.sky{transition:none}.sky-txt.swap{animation:none}}
+/* v16: Apology & Reconciliation theme - revealed after the PIN (velvet darkness, gold light bloom, video, voice note, letter, lilies, promises) */
+.rc{position:fixed;inset:0;z-index:250;display:block;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:transparent;color:#FAF6F0;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.rc[hidden]{display:none!important;pointer-events:none!important}
+.rc-veil{position:fixed;inset:0;z-index:3;display:grid;place-items:center;overflow:hidden;background:#0D060A;opacity:0;transition:opacity 2.4s cubic-bezier(.4,0,.2,1)}
+.rc-veil::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,rgba(13,6,10,0) 38%,rgba(0,0,0,.78) 100%);opacity:0;transition:opacity 3.2s ease;pointer-events:none}
+.rc-veil[hidden]{display:none}
+.rc.on .rc-veil,.rc.on .rc-veil::after{opacity:1}
+.rc-bloom{position:absolute;left:50%;top:46%;width:120vmax;height:120vmax;margin:-60vmax 0 0 -60vmax;border-radius:50%;background:radial-gradient(circle,rgba(236,212,170,.5) 0%,rgba(212,175,118,.2) 16%,rgba(212,175,118,.06) 38%,rgba(212,175,118,0) 60%);opacity:0;transform:scale(.12);transition:opacity 2.8s ease,transform 5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.rc.rc-glow .rc-bloom{opacity:.9;transform:scale(1)}
+.rc-lines{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 28px;text-align:center}
+.rc-lines p{margin:0;font:italic 500 clamp(1.5rem,6.4vw,2rem)/1.4 "Cormorant Garamond",Georgia,serif;letter-spacing:.02em;color:#F3E6D2;text-shadow:0 0 26px rgba(212,175,118,.35);opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity 1.6s ease,transform 1.6s ease,filter 1.6s ease}
+.rc-lines p.on{opacity:1;transform:none;filter:blur(0)}
+.rc-lines p.out{opacity:0;filter:blur(4px);transition-duration:1s}
+.rc.shown .rc-veil{opacity:0;pointer-events:none;transition:opacity 1.8s ease}
+.rc-page{position:relative;z-index:1;min-height:100%;padding:calc(env(safe-area-inset-top) + 22px) 14px calc(env(safe-area-inset-bottom) + 44px);background:radial-gradient(90% 40% at 50% 0%,rgba(212,175,118,.14),rgba(212,175,118,0) 70%),radial-gradient(90% 40% at 50% 100%,rgba(244,182,194,.08),rgba(244,182,194,0) 70%),#14090E;opacity:0;transform:translateY(18px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s}
+.rc.shown .rc-page{opacity:1;transform:none}
+.rc-kicker{margin:4px 0 16px;text-align:center;font:500 .72rem/1.3 "Lora",Georgia,serif;letter-spacing:.3em;text-transform:uppercase;color:#D4AF76}
+.rc-frame{position:relative;width:min(560px,100%);margin:0 auto;border-radius:18px;overflow:hidden;background:#000;border:1px solid rgba(212,175,118,.42);box-shadow:0 0 0 6px rgba(212,175,118,.05),0 0 60px rgba(212,175,118,.08),0 30px 60px -30px rgba(0,0,0,.9)}
+.rc-frame video{display:block;width:100%;height:auto;max-height:64vh;aspect-ratio:944/528;object-fit:contain;background:#000}
+.rc-snd{position:absolute;left:10px;top:10px;z-index:2;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(20,9,14,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:500 .8rem/1 "Lora",Georgia,serif;letter-spacing:.06em;cursor:pointer;touch-action:manipulation}
+.rc-snd[aria-pressed="true"]{background:rgba(250,246,240,.2)}
+.rc-play{position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);min-height:52px;padding:12px 26px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(20,9,14,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:italic 500 1.15rem/1 "Cormorant Garamond",Georgia,serif;cursor:pointer;touch-action:manipulation}
+.rc-play[hidden]{display:none}
+.rc-down{display:block;margin:18px auto 24px;min-height:48px;padding:10px 24px;border-radius:999px;border:1px solid rgba(212,175,118,.55);background:rgba(212,175,118,.07);color:#F3E6D2;font:italic 500 1.14rem/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.04em;cursor:pointer;touch-action:manipulation;animation:rcNudge 2.8s ease-in-out infinite}
+@keyframes rcNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.rc-paper{position:relative;width:min(560px,100%);margin:0 auto;padding:26px 22px 24px;border-radius:6px;background:#FAF6F0;color:#3A1220;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 0 50px rgba(212,175,118,.08),0 30px 60px -30px rgba(0,0,0,.85);outline:0}
+.rc-paper::before{content:"";position:absolute;inset:8px;border:1px solid rgba(197,160,101,.32);border-radius:3px;pointer-events:none}
+.rc-vn{position:relative;display:flex;align-items:center;gap:14px;margin:4px 0 26px;padding:14px 16px;border-radius:14px;border:1px solid rgba(197,160,101,.45);background:rgba(216,190,150,.14)}
+.rc-vn-btn{flex:none;width:52px;height:52px;border-radius:50%;border:0;display:grid;place-items:center;background:linear-gradient(145deg,#EBD9B8,#D4AF76 55%,#B8925A);color:#3A1220;box-shadow:0 8px 18px -10px rgba(58,18,32,.6);cursor:pointer;touch-action:manipulation}
+.rc-vn-btn svg{width:22px;height:22px}
+.rc-vn-btn .i-pause,.rc-vn-btn.playing .i-play{display:none}
+.rc-vn-btn.playing .i-pause{display:block}
+.rc-vn-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.rc-vn-label{font:italic 500 1.12rem/1.2 "Cormorant Garamond",Georgia,serif;color:#3A1220}
+#rcVnSeek{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:0;background:transparent;cursor:pointer;touch-action:manipulation;--p:0%}
+#rcVnSeek::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(90deg,#B8925A var(--p),rgba(58,18,32,.16) var(--p))}
+#rcVnSeek::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-6.5px;border-radius:50%;border:2px solid #FAF6F0;background:#3A1220;box-shadow:0 2px 6px rgba(58,18,32,.35)}
+#rcVnSeek::-moz-range-track{height:3px;border-radius:2px;background:rgba(58,18,32,.16)}
+#rcVnSeek::-moz-range-progress{height:3px;border-radius:2px;background:#B8925A}
+#rcVnSeek::-moz-range-thumb{width:14px;height:14px;border-radius:50%;border:2px solid #FAF6F0;background:#3A1220}
+.rc-vn-time{font:500 .76rem/1 "Lora",Georgia,serif;letter-spacing:.06em;color:rgba(58,18,32,.62);font-variant-numeric:tabular-nums}
+.rc-letter{padding:0 4px}
+.rc-letter p{margin:0 0 16px;font:400 clamp(1.01rem,4.1vw,1.08rem)/1.8 "Lora",Georgia,serif;color:#3A1220}
+.rc-letter p.rc-hi{font:italic 500 clamp(1.35rem,5.6vw,1.5rem)/1.4 "Cormorant Garamond",Georgia,serif}
+.rc-letter p.rc-sign{margin:22px 0 4px;text-align:right;white-space:pre-line;font:italic 500 clamp(1.25rem,5.2vw,1.4rem)/1.5 "Cormorant Garamond",Georgia,serif}
+.rc-lilies{display:flex;justify-content:center;margin:4px 0 8px}
+.rc-lilies svg{width:min(250px,78%);height:auto;overflow:visible;opacity:0;transform-origin:50% 92%}
+.rc.shown .rc-lilies svg{animation:rcBloomIn 1.8s ease 1.2s forwards,rcSway 8s ease-in-out 3s infinite}
+@keyframes rcBloomIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes rcSway{0%,100%{transform:rotate(0)}25%{transform:rotate(-1.3deg)}75%{transform:rotate(1.3deg)}}
+.rc-prom{margin:6px 4px 4px;padding-top:22px;border-top:1px solid rgba(197,160,101,.32)}
+.rc-prom h3{margin:0 0 16px;text-align:center;font:italic 500 clamp(1.4rem,5.8vw,1.6rem)/1.3 "Cormorant Garamond",Georgia,serif;color:#3A1220}
+.rc-prom ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.rc-prom li{display:flex;gap:14px;align-items:baseline;font:italic 400 clamp(.98rem,4vw,1.05rem)/1.7 "Lora",Georgia,serif;color:#3A1220}
+.rc-prom li b{flex:none;min-width:1.1em;font:600 1.35rem/1 "Cormorant Garamond",Georgia,serif;font-style:normal;color:#B8925A}
+.rc-actions{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(197,160,101,.32)}
+.rc-note-l{align-self:flex-start;font:italic 500 1.05rem/1.3 "Cormorant Garamond",Georgia,serif;color:rgba(58,18,32,.75)}
+.rc-note{width:100%;min-height:86px;padding:12px 14px;border-radius:6px;border:1px solid rgba(197,160,101,.5);background:#FFFDF9;color:#3A1220;font:400 16px/1.5 "Lora",Georgia,serif;resize:vertical;-webkit-appearance:none;appearance:none}
+.rc-note:focus{outline:0;border-color:#B8925A;box-shadow:0 0 0 3px rgba(212,175,118,.2)}
+.rc-heard{margin-top:6px;min-height:50px;padding:12px 36px;border-radius:3px;border:1px solid rgba(212,175,118,.8);background:#3A1220;color:#FAF6F0;font:500 1.14rem/1.2 "Cormorant Garamond",Georgia,serif;letter-spacing:.1em;cursor:pointer;touch-action:manipulation;transition:opacity .3s ease}
+.rc-heard:disabled{opacity:.55;cursor:default}
+.rc-thanks{margin:4px 0 0;min-height:1.6em;text-align:center;font:italic 500 1.12rem/1.6 "Cormorant Garamond",Georgia,serif;color:#3A1220;opacity:0;transition:opacity .8s ease}
+.rc-thanks.on{opacity:1}
+.rc-enter{min-height:44px;padding:8px 10px;border:0;background:none;color:rgba(58,18,32,.55);font:italic 500 1rem/1 "Cormorant Garamond",Georgia,serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer;touch-action:manipulation}
+@media (prefers-reduced-motion:reduce){.rc-veil,.rc-veil::after,.rc-bloom,.rc-lines p,.rc-page,.rc-thanks{transition:none}.rc-down{animation:none}.rc.shown .rc-lilies svg{animation:none;opacity:1}}
 .rq-label{margin:6px 0 0;font:600 1.1rem/1.4 "Cormorant Garamond",Georgia,serif}
 #rqNote{width:100%;min-height:96px;padding:12px 14px;border-radius:16px;border:1px solid #E5A9B8;background:#fff;color:#4A2532;font:500 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;resize:vertical}
 .rq-body .cf-send:disabled{opacity:.6;cursor:default}
@@ -1381,6 +1446,119 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
     </div>
   </div>
 </div>
+<!-- v16: Apology & Reconciliation theme, revealed after the PIN with a slow cinematic transition (filled in from CONFIG.reconcile) -->
+<div class="rc" id="rc" hidden role="dialog" aria-modal="true" aria-label="A message from Adham">
+  <div class="rc-veil" id="rcVeil" aria-hidden="true"><div class="rc-bloom"></div><div class="rc-lines" id="rcLines"></div></div>
+  <div class="rc-page" id="rcPage">
+    <p class="rc-kicker" id="rcKicker"></p>
+    <div class="rc-frame">
+      <video id="rcVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture></video>
+      <button class="rc-snd" id="rcSnd" type="button" aria-pressed="false"></button>
+      <button class="rc-play" id="rcPlay" type="button" hidden></button>
+    </div>
+    <button class="rc-down" id="rcDown" type="button"></button>
+    <div class="rc-paper" id="rcPaper" tabindex="-1">
+      <div class="rc-vn">
+        <button class="rc-vn-btn" id="rcVnBtn" type="button" aria-label="Play the voice note">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z" fill="currentColor"/></svg>
+        </button>
+        <div class="rc-vn-main">
+          <span class="rc-vn-label" id="rcVnLabel"></span>
+          <input type="range" id="rcVnSeek" min="0" max="1000" step="1" value="0" aria-label="Voice note position">
+          <span class="rc-vn-time" id="rcVnTime">0:00 / 0:00</span>
+        </div>
+        <audio id="rcVoice" preload="metadata" playsinline></audio>
+      </div>
+      <div class="rc-letter" id="rcLetter"></div>
+      <div class="rc-lilies" aria-hidden="true">
+        <svg viewBox="0 0 260 300" role="img">
+          <defs>
+            <linearGradient id="lyPk" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E892A6"/><stop offset=".55" stop-color="#F4B6C2"/><stop offset="1" stop-color="#FBE4E9"/></linearGradient>
+            <linearGradient id="lyPkB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#DB7F96"/><stop offset="1" stop-color="#EFA8B8"/></linearGradient>
+            <linearGradient id="lyWh" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F7EDE8"/><stop offset=".6" stop-color="#FFFDF9"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+            <linearGradient id="lyWhB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E9DAD2"/><stop offset="1" stop-color="#F7EDE8"/></linearGradient>
+            <linearGradient id="lyLeaf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6E856B"/><stop offset="1" stop-color="#8AA187"/></linearGradient>
+            <radialGradient id="lyThroat"><stop offset="0" stop-color="#DCE3A8" stop-opacity=".95"/><stop offset="1" stop-color="#DCE3A8" stop-opacity="0"/></radialGradient>
+            <path id="lyPetal" d="M0,0 C7,-10 11,-30 6,-48 C4,-55 1,-60 0,-63 C-1,-60 -4,-55 -6,-48 C-11,-30 -7,-10 0,0Z"/>
+            <path id="lyBud" d="M0,0 C6,-10 7,-28 0,-46 C-7,-28 -6,-10 0,0Z"/>
+            <path id="lyLeafP" d="M0,0 C8,-14 10,-38 0,-62 C-10,-38 -8,-14 0,0Z"/>
+            <g id="lyStam" fill="none" stroke="#CBD3A2" stroke-width=".8" stroke-linecap="round">
+              <path d="M0,0 Q5,-16 3,-31" transform="rotate(-48)"/><path d="M0,0 Q5,-16 3,-31" transform="rotate(-22)"/><path d="M0,0 Q5,-16 3,-31" transform="rotate(8)"/>
+              <path d="M0,0 Q5,-16 3,-31" transform="rotate(34)"/><path d="M0,0 Q5,-16 3,-31" transform="rotate(58)"/><path d="M0,0 Q-3,-18 0,-35" stroke="#B9C58E" stroke-width="1.1"/>
+              <g fill="#B4644C" stroke="none">
+                <ellipse cx="3" cy="-31" rx="1.4" ry="3.6" transform="rotate(-48)"/><ellipse cx="3" cy="-31" rx="1.4" ry="3.6" transform="rotate(-22)"/><ellipse cx="3" cy="-31" rx="1.4" ry="3.6" transform="rotate(8)"/>
+                <ellipse cx="3" cy="-31" rx="1.4" ry="3.6" transform="rotate(34)"/><ellipse cx="3" cy="-31" rx="1.4" ry="3.6" transform="rotate(58)"/>
+              </g>
+              <circle cx="0" cy="-36" r="2" fill="#A9B87C" stroke="none"/>
+            </g>
+            <g id="lyP">
+              <use href="#lyPetal" fill="url(#lyPkB)" transform="rotate(-30)"/><use href="#lyPetal" fill="url(#lyPkB)" transform="rotate(90)"/><use href="#lyPetal" fill="url(#lyPkB)" transform="rotate(210)"/>
+              <use href="#lyPetal" fill="url(#lyPk)" transform="rotate(30)"/><use href="#lyPetal" fill="url(#lyPk)" transform="rotate(150)"/><use href="#lyPetal" fill="url(#lyPk)" transform="rotate(270)"/>
+              <g stroke="#D9768F" stroke-width=".7" stroke-linecap="round" opacity=".55">
+                <path d="M0,-6 L0,-50" transform="rotate(30)"/><path d="M0,-6 L0,-50" transform="rotate(150)"/><path d="M0,-6 L0,-50" transform="rotate(270)"/>
+              </g>
+              <g fill="#C95F7C" opacity=".55"><circle cx="2" cy="-16" r=".9" transform="rotate(30)"/><circle cx="-2" cy="-22" r=".8" transform="rotate(30)"/><circle cx="2" cy="-16" r=".9" transform="rotate(150)"/><circle cx="-2" cy="-21" r=".8" transform="rotate(270)"/><circle cx="2" cy="-14" r=".8" transform="rotate(270)"/></g>
+              <circle r="15" fill="url(#lyThroat)"/>
+              <use href="#lyStam"/>
+            </g>
+            <g id="lyW">
+              <use href="#lyPetal" fill="url(#lyWhB)" transform="rotate(-30)"/><use href="#lyPetal" fill="url(#lyWhB)" transform="rotate(90)"/><use href="#lyPetal" fill="url(#lyWhB)" transform="rotate(210)"/>
+              <use href="#lyPetal" fill="url(#lyWh)" stroke="#EADDD5" stroke-width=".5" transform="rotate(30)"/><use href="#lyPetal" fill="url(#lyWh)" stroke="#EADDD5" stroke-width=".5" transform="rotate(150)"/><use href="#lyPetal" fill="url(#lyWh)" stroke="#EADDD5" stroke-width=".5" transform="rotate(270)"/>
+              <g stroke="#E2CFC6" stroke-width=".7" stroke-linecap="round" opacity=".8">
+                <path d="M0,-6 L0,-50" transform="rotate(30)"/><path d="M0,-6 L0,-50" transform="rotate(150)"/><path d="M0,-6 L0,-50" transform="rotate(270)"/>
+              </g>
+              <circle r="15" fill="url(#lyThroat)"/>
+              <use href="#lyStam"/>
+            </g>
+          </defs>
+          <g fill="none" stroke="url(#lyLeaf)" stroke-width="2.2" stroke-linecap="round">
+            <path d="M130,236 Q128,160 132,80"/><path d="M130,236 Q104,180 86,112"/><path d="M130,236 Q160,180 182,112"/>
+            <path d="M130,236 Q129,200 130,150"/><path d="M130,236 Q96,214 78,176"/><path d="M130,236 Q168,214 190,172"/>
+            <path d="M130,236 Q86,170 58,98"/><path d="M130,236 Q176,160 208,82"/>
+            <path d="M130,240 L121,292"/><path d="M130,240 L127,296"/><path d="M130,240 L133,296"/><path d="M130,240 L139,292"/>
+          </g>
+          <g fill="url(#lyLeaf)">
+            <use href="#lyLeafP" transform="translate(124 228) rotate(-42) scale(.9)"/><use href="#lyLeafP" transform="translate(136 228) rotate(40) scale(.9)"/>
+            <use href="#lyLeafP" transform="translate(126 236) rotate(-74) scale(.7)"/><use href="#lyLeafP" transform="translate(134 236) rotate(74) scale(.7)"/>
+            <use href="#lyLeafP" transform="translate(104 186) rotate(-58) scale(.55)"/><use href="#lyLeafP" transform="translate(160 190) rotate(52) scale(.55)"/>
+          </g>
+          <g>
+            <use href="#lyBud" fill="url(#lyPk)" transform="translate(58 98) rotate(-28) scale(.8)"/>
+            <use href="#lyBud" fill="url(#lyWh)" stroke="#EADDD5" stroke-width=".5" transform="translate(208 82) rotate(24) scale(.8)"/>
+            <path d="M58,98 l-3,6 l6,0z M208,82 l-3,6 l6,0z" fill="#8AA187"/>
+          </g>
+          <use href="#lyP" transform="translate(132 80) rotate(6) scale(.72)"/>
+          <use href="#lyW" transform="translate(86 112) rotate(-20) scale(.76)"/>
+          <use href="#lyP" transform="translate(182 112) rotate(22) scale(.76)"/>
+          <use href="#lyP" transform="translate(78 176) rotate(-38) scale(.58)"/>
+          <use href="#lyW" transform="translate(190 172) rotate(36) scale(.6)"/>
+          <use href="#lyW" transform="translate(130 150) scale(.92)"/>
+          <g fill="#D8BE96" stroke="#C5A57A" stroke-width=".6">
+            <path d="M121,227 L139,227 L141,240 L119,240Z"/>
+            <path d="M130,233 C116,219 101,227 108,237 C112,243 124,239 130,233Z"/>
+            <path d="M130,233 C144,219 159,227 152,237 C148,243 136,239 130,233Z"/>
+            <circle cx="130" cy="233" r="3.6" fill="#C9AD82"/>
+          </g>
+          <g fill="none" stroke="#D8BE96" stroke-width="2" stroke-linecap="round">
+            <path d="M128,237 C124,252 116,262 109,273"/><path d="M132,237 C138,252 146,262 153,271"/>
+          </g>
+        </svg>
+      </div>
+      <section class="rc-prom" aria-labelledby="rcPromTitle">
+        <h3 id="rcPromTitle"></h3>
+        <ol id="rcProm"></ol>
+      </section>
+      <div class="rc-actions">
+        <label class="rc-note-l" for="rcNote" id="rcNoteLabel"></label>
+        <textarea class="rc-note" id="rcNote" rows="3" maxlength="800"></textarea>
+        <button class="rc-heard" id="rcHeard" type="button"></button>
+        <p class="rc-thanks" id="rcThanks" aria-live="polite"></p>
+        <button class="rc-enter" id="rcEnter" type="button"></button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- v15: Our Sky (filled in from CONFIG.sky) -->
 <div class="sky" id="sky" hidden role="dialog" aria-modal="true" aria-label="Our Sky">
   <canvas id="skyCv" aria-hidden="true"></canvas>
@@ -1646,6 +1824,39 @@ const CONFIG = {
         { icon: "✨", label: "11:11 Letter", action: "1111" }
       ] }
   ],
+  // ---- v16: Apology & Reconciliation theme. Revealed after the PIN with a slow cinematic transition (enabled: false = the normal site) ----
+  reconcile: {
+    enabled: true,
+    lines: ["Mariouma,", "before anything else,", "please let me show you my heart."],   // the slow poetic reveal in the dark
+    kicker: "For Mariouma",
+    video: "videos/apology-video.mp4",
+    voice: "songs/voice-note.m4a",
+    voiceFallback: "songs/voice-note.mp3",
+    soundOff: "Tap for Sound",
+    soundOn: "Sound On",
+    tapToPlay: "Tap to play",
+    down: "Scroll to Read & Listen ↓",
+    voiceLabel: "A Voice Note From Adham",
+    greeting: "My dearest Mimi,",
+    paragraphs: [
+      "I am writing this alongside my voice because I need you to know how deeply I love you, how much I want you, and how much it hurts me to see you upset. I know exactly what I did wrong, and I am not here to make a single excuse for it.",
+      "You have every right to shut down, to go quiet, and to take all the space you need right now. I completely understand why you are hurt—and I promise you I am going to fix this, and I am going to stop anything that ever brings you pain or makes you doubt your place in my life.",
+      "Even if you are silent right now, I am not going anywhere. I will stay right behind you, patiently and gently, until your heart feels safe, calm, and okay again—because I love you, Mariouma, and I never want anyone in this world except you."
+    ],
+    signoff: "Forever yours,\nAdham",
+    promisesTitle: "My Promises to You",
+    promises: [
+      "Complete honesty—nothing hidden from you ever again, no matter how small.",
+      "Full transparency and open answers to anything on your mind.",
+      "Protecting your peace, trust, and feeling of safety above everything else."
+    ],
+    noteLabel: "Anything you want to tell me (optional)",
+    heard: "I Heard You",
+    enter: "Enter Our Site",
+    thanks: "Thank you for listening, Mimi. Take all the time you need.",
+    failed: "That didn't send. Please try once more.",
+    subject: "Mariam read the apology letter & listened to your voice note"
+  },
   // ---- v15: "Our Sky", the 7 milestone stars (button on Home) ----
   sky: {
     button: "Our Sky",
@@ -1670,7 +1881,7 @@ const CONFIG = {
   // ---- v14: Dodo's 5-page letter. Plays once by itself after the PIN (remembered under storageKey), then lives in Love Notes ----
   pagesLetter: {
     storageKey: "mimi_5page_letter_v4",
-    everyVisit: true,                                // true = plays by itself after the PIN on every visit; false = only the first time
+    autoOpen: false,                                 // v16: the 5-page letter no longer opens by itself (it lives in Love Notes)                                // true = plays by itself after the PIN on every visit; false = only the first time
     intro: "Hey my Mimi... pause everything for a second and read every page of this from my heart 🤍",
     introMs: 2500,                                   // how long the intro line stays before it fades out
     label: "Page {n} of {total}",
@@ -2237,7 +2448,7 @@ function press(k){
   $("#pad").append(b);
 });
 document.addEventListener("keydown", e => {
-  if ($("#lock").hidden) return;
+  if ($("#lock").hidden || !$("#rc").hidden) return;   // no PIN typing behind the apology overlay
   if (/^\d$/.test(e.key)) press(e.key);
   else if (e.key === "Backspace") press("del");
 });
@@ -2358,13 +2569,13 @@ function enterSite(){
   fx();
   $("#cc").hidden = false;
   document.body.classList.add("cc-on");
-  if (cur < 0) playTrack(0, true);
+  if (cur < 0 && !(CONFIG.reconcile && CONFIG.reconcile.enabled)) playTrack(0, true);   // v16: with the apology theme on, our song waits until she enters the site
   activate1111();                      // 11/11 special edition: theme shift, shimmer wave, announcement card
 }
 function unlock(){
   enterSite();
-  go(pages.indexOf($("#home")));       // she lands on Home; the gift and the letter are one swipe (or the Love Notes tab) away
-  if (CONFIG.pagesLetter && (CONFIG.pagesLetter.everyVisit || !plSeen())) setTimeout(() => openPagesLetter(), 700);   // v14: the 5-page letter plays by itself after the PIN
+  if (CONFIG.reconcile && CONFIG.reconcile.enabled){ openReconcile(); setTimeout(() => go(pages.indexOf($("#home"))), reduceMotion ? 0 : 2600); return; }   // v16: the apology theme comes first, Home waits behind it the gift and the letter are one swipe (or the Love Notes tab) away
+  if (CONFIG.pagesLetter && CONFIG.pagesLetter.autoOpen && (CONFIG.pagesLetter.everyVisit || !plSeen())) setTimeout(() => openPagesLetter(), 700);   // v14: the 5-page letter plays by itself after the PIN
 }
 
 /* ============ v3 extras ============ */
@@ -2768,7 +2979,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden || !$("#sky").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden || !$("#sky").hidden || !$("#rc").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -2780,7 +2991,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, #sky, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, #sky, #rc, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -4278,6 +4489,129 @@ function closeSky(){
     if (e.key === "ArrowLeft") $("#skyPrev").click();
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden && SK.open && SK.ac) try { SK.ac.suspend(); } catch (e){} else if (!document.hidden && SK.open && SK.sound && SK.ac) try { SK.ac.resume(); } catch (e){} });
+})();
+/* ============ v16: Apology & Reconciliation theme (text in CONFIG.reconcile) ============ */
+const RC = CONFIG.reconcile || {};
+const rcFmt = s => { s = Math.max(0, Math.floor(isFinite(s) ? s : 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+let rcOpen = false, rcRevealed = false, rcT = [], rcVoiceMax = 0, rcSoundUsed = false;
+function rcLater(fn, ms){ rcT.push(setTimeout(fn, reduceMotion ? Math.min(ms, 60) : ms)); }
+function rcTryPlay(){
+  const v = $("#rcVideo");
+  try {
+    const p = v.play();
+    if (p && p.then) p.then(() => { $("#rcPlay").hidden = true; }).catch(() => { $("#rcPlay").hidden = false; });   // e.g. Low Power Mode blocks autoplay
+  } catch (e){ $("#rcPlay").hidden = false; }
+}
+function rcSoundLabel(){
+  const v = $("#rcVideo"), b = $("#rcSnd");
+  b.textContent = v.muted ? RC.soundOff : RC.soundOn;
+  b.setAttribute("aria-pressed", v.muted ? "false" : "true");
+}
+/* the end of the dark transition: the velvet lifts and the page (video first) rises in */
+function rcReveal(){
+  if (!rcOpen || rcRevealed) return;
+  rcRevealed = true;
+  rcT.forEach(clearTimeout); rcT = [];
+  const rc = $("#rc"), v = $("#rcVideo");
+  rc.scrollTop = 0;
+  rc.classList.add("shown");
+  if (!v.getAttribute("src")) v.src = RC.video;
+  v.muted = true; v.defaultMuted = true; rcSoundLabel();
+  rcTryPlay();
+  setTimeout(() => { if (rcRevealed) $("#rcVeil").hidden = true; }, reduceMotion ? 0 : 2000);
+}
+/* called right after the correct PIN: velvet darkness, a slow champagne light bloom, then the poetic lines one by one */
+function openReconcile(){
+  const rc = $("#rc"), lines = [...$("#rcLines").children];
+  rcOpen = true; rcRevealed = false;
+  rcT.forEach(clearTimeout); rcT = [];
+  rc.classList.remove("on", "rc-glow", "shown");
+  lines.forEach(p => p.classList.remove("on", "out"));
+  $("#rcVeil").hidden = false;
+  rc.hidden = false; rc.style.display = "block"; rc.style.pointerEvents = "auto";
+  void rc.offsetWidth;
+  rc.classList.add("on");                                             // the lock screen dissolves into #0D060A
+  rcLater(() => rc.classList.add("rc-glow"), 900);                       // gold light bloom + vignette
+  lines.forEach((p, i) => rcLater(() => p.classList.add("on"), 2000 + i * 1100));
+  const end = 2000 + lines.length * 1100 + 1500;
+  rcLater(() => lines.forEach(p => p.classList.add("out")), end - 1000);
+  rcLater(rcReveal, end);
+}
+function closeReconcile(){
+  if (!rcOpen) return;
+  rcOpen = false; rcRevealed = false;
+  rcT.forEach(clearTimeout); rcT = [];
+  try { $("#rcVideo").pause(); } catch (e){}
+  try { $("#rcVoice").pause(); } catch (e){}
+  const rc = $("#rc");
+  rc.classList.remove("on", "rc-glow", "shown");
+  rc.hidden = true; rc.style.display = "none"; rc.style.pointerEvents = "none";
+  try { if (cur < 0) playTrack(0, true); } catch (e){}                 // our song starts once she steps into the site
+}
+(function(){
+  if (!RC.enabled || !RC.video) return;
+  const v = $("#rcVideo"), a = $("#rcVoice"), btn = $("#rcVnBtn"), seek = $("#rcVnSeek"), time = $("#rcVnTime");
+  (RC.lines || []).forEach(t => $("#rcLines").append(mk("p", "", t)));
+  $("#rcKicker").textContent = RC.kicker || "";
+  $("#rcPlay").textContent = RC.tapToPlay; $("#rcDown").textContent = RC.down;
+  $("#rcVnLabel").textContent = RC.voiceLabel;
+  const letter = $("#rcLetter");
+  letter.append(mk("p", "rc-hi", RC.greeting));
+  (RC.paragraphs || []).forEach(t => letter.append(mk("p", "", t)));
+  letter.append(mk("p", "rc-sign", RC.signoff));
+  $("#rcPromTitle").textContent = RC.promisesTitle;
+  (RC.promises || []).forEach((t, i) => { const li = document.createElement("li"); li.append(mk("b", "", String(i + 1)), mk("span", "", t)); $("#rcProm").append(li); });
+  $("#rcNoteLabel").textContent = RC.noteLabel;
+  $("#rcHeard").textContent = RC.heard; $("#rcEnter").textContent = RC.enter;
+  /* the voice note: m4a first, mp3 as a fallback */
+  [[RC.voice, "audio/mp4"], [RC.voiceFallback, "audio/mpeg"]].forEach(([src, type]) => { if (!src) return; const s = document.createElement("source"); s.src = src; s.type = type; a.append(s); });
+  try { a.load(); } catch (e){}
+  const paint = () => {
+    const d = a.duration, t = a.currentTime || 0, ok = isFinite(d) && d > 0, pct = ok ? t / d * 100 : 0;
+    if (!seek._drag) seek.value = Math.round(pct * 10);
+    seek.style.setProperty("--p", pct.toFixed(2) + "%");
+    time.textContent = rcFmt(t) + " / " + rcFmt(ok ? d : 0);
+    if (t > rcVoiceMax) rcVoiceMax = t;
+  };
+  ["timeupdate", "loadedmetadata", "durationchange", "seeked"].forEach(ev => a.addEventListener(ev, paint));
+  a.addEventListener("play", () => { btn.classList.add("playing"); btn.setAttribute("aria-label", "Pause the voice note"); try { pauseAll(); } catch (e){} try { v.pause(); } catch (e){} });
+  a.addEventListener("pause", () => { btn.classList.remove("playing"); btn.setAttribute("aria-label", "Play the voice note"); });
+  a.addEventListener("ended", () => { btn.classList.remove("playing"); paint(); });
+  btn.onclick = () => {
+    if (a.paused){ try { pauseAll(); } catch (e){} const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+    else a.pause();
+  };
+  seek.addEventListener("input", () => {
+    seek._drag = true;
+    const d = a.duration;
+    seek.style.setProperty("--p", (seek.value / 10).toFixed(2) + "%");
+    if (isFinite(d) && d > 0){ a.currentTime = seek.value / 1000 * d; time.textContent = rcFmt(a.currentTime) + " / " + rcFmt(d); }
+  });
+  seek.addEventListener("change", () => { seek._drag = false; paint(); });
+  /* the video */
+  $("#rcSnd").onclick = () => {
+    v.muted = !v.muted;
+    if (!v.muted){ rcSoundUsed = true; v.volume = 1; try { pauseAll(); } catch (e){} try { a.pause(); } catch (e){} }
+    rcTryPlay(); rcSoundLabel();
+  };
+  $("#rcPlay").onclick = rcTryPlay;
+  v.addEventListener("click", () => { if (v.paused) rcTryPlay(); });
+  v.addEventListener("playing", () => { $("#rcPlay").hidden = true; });
+  $("#rcDown").onclick = () => { try { $("#rcPaper").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); } catch (e){ $("#rcPaper").scrollIntoView(); } };
+  $("#rcVeil").addEventListener("click", rcReveal);                     // a tap in the dark skips straight to the page
+  /* the zero-pressure ending */
+  $("#rcHeard").onclick = () => {
+    const hb = $("#rcHeard"); if (hb.disabled) return;
+    hb.disabled = true;
+    const d = a.duration, heard = rcVoiceMax > 0.5 ? rcFmt(rcVoiceMax) + " of " + rcFmt(isFinite(d) ? d : 0) : "Did not play it";
+    const note = $("#rcNote").value.trim();
+    const th = $("#rcThanks"); th.textContent = RC.thanks; th.classList.add("on");
+    notifyAdham(RC.subject, { "Note from Mimi": note || "(no note)", "Voice note (furthest point she reached)": heard, "Video sound turned on": rcSoundUsed ? "Yes" : "No", "Page": "Apology page (after the PIN)" }).then(ok => {
+      if (ok === false){ th.textContent = RC.failed; hb.disabled = false; }
+    });
+  };
+  $("#rcEnter").onclick = closeReconcile;
+  document.addEventListener("keydown", e => { if (rcOpen && e.key === "Escape") closeReconcile(); });
 })();
 window.__siteStarted = true;                                     // tells the error reporter at the top that everything ran
 </script>
