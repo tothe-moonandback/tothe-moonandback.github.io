@@ -4906,6 +4906,174 @@ function closeApologyPopup(){
 })();
 window.__siteStarted = true;                                     // tells the error reporter at the top that everything ran
 </script>
+<script>
+/* ============ v20: silent session activity report. Collects what happens on the page (never anything she types) and emails ONE
+   cumulative report through the Web3Forms key in CONFIG when the page is left / backgrounded, with check-ins at 45 s and 3 min.
+   Add ?preview=1 to the address to test the site without any report (or the "someone opened your website" email). ============ */
+(function(){
+  try {
+    const T0 = Date.now();
+    if (/[?&]preview=1(&|$)/.test(location.search)){ try { sessionStorage.setItem("visit_notified", "true"); } catch (e){} return; }
+    const CFG = (typeof CONFIG !== "undefined" && CONFIG) || {};
+    const EP = CFG.responsesEndpoint || "https://api.web3forms.com/submit", KEY = CFG.accessKey || "";
+    if (!KEY) return;
+    const $1 = s => document.querySelector(s);
+    const sessionLog = [];
+    window.__sessionLog = sessionLog;
+    let fresh = 0, sentFresh = 0, lastSig = "", reports = 0, maxScroll = 0;
+    const sec = () => Math.round((Date.now() - T0) / 1000);
+    const stamp = s => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+    const mmss = x => { x = Math.max(0, Math.floor(isFinite(x) ? x : 0)); return Math.floor(x / 60) + ":" + String(x % 60).padStart(2, "0"); };
+    const short = (s, n) => { s = String(s || "").replace(/\s+/g, " ").trim(); return s.length > n ? s.slice(0, n - 1) + "…" : s; };
+    const cairo = d => { try { return d.toLocaleString("en-GB", { timeZone: "Africa/Cairo" }) + " (Cairo time)"; } catch (e){ return d.toString(); } };
+    /* counts = false: noted in the report but not "new activity" on its own (so leaving and coming back never sends an email by itself) */
+    function log(text, counts){ sessionLog.push({ t: sec(), text: text }); if (counts !== false) fresh++; }
+
+    /* ---- session start & device ---- */
+    const standalone = navigator.standalone === true || !!(window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+    const referrer = document.referrer || "(none: typed, a link in an app, or the home-screen app)";
+    const startScreen = window.innerWidth + "x" + window.innerHeight;
+    log("Session started" + (standalone ? " (opened from the home-screen app)" : "") + " | screen " + startScreen);
+
+    /* ---- PIN ---- */
+    try {
+      const realUnlock = window.unlock;
+      if (typeof realUnlock === "function") window.unlock = function(){ log("Correct PIN entered"); return realUnlock.apply(this, arguments); };
+    } catch (e){}
+    const pinMsg = $1("#msg"), lock = $1("#lock");
+    if (pinMsg) new MutationObserver(() => { if (lock && !lock.hidden && pinMsg.textContent.trim()) log("Wrong PIN attempt"); }).observe(pinMsg, { childList: true, characterData: true, subtree: true });
+
+    /* ---- the new apology pop-up: opened, how long, how it was closed ---- */
+    const np = $1("#np");
+    let npAt = 0, npHow = "";
+    if (np) new MutationObserver(() => {
+      if (!np.hidden && !npAt){ npAt = Date.now(); npHow = ""; log("New apology pop-up opened"); }
+      else if (np.hidden && npAt){ log("New apology pop-up closed after " + Math.round((Date.now() - npAt) / 1000) + "s, via " + (npHow || "another way")); npAt = 0; }
+    }).observe(np, { attributes: true, attributeFilter: ["hidden"] });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && np && !np.hidden) npHow = "the Escape key"; }, true);
+
+    /* ---- pages (tabs) and full-screen overlays ---- */
+    const nameOf = el => { const h = el.querySelector("h1, h2, h3"); const t = h ? short(h.textContent, 40) : ""; return el.id + (t ? " (" + t + ")" : ""); };
+    document.querySelectorAll(".page").forEach(pg => new MutationObserver(() => {
+      if (!pg.hidden && pg.id !== "lock" && pg._shownAt === undefined){ pg._shownAt = 1; log("Opened page: " + nameOf(pg)); }
+      if (pg.hidden) pg._shownAt = undefined;
+    }).observe(pg, { attributes: true, attributeFilter: ["hidden"] }));
+    document.querySelectorAll('[role="dialog"], #lb, #ow, #el, #u2m, #an, #lv, #rq, #pl, #sky').forEach(ov => {
+      if (ov === np) return;
+      let at = 0;
+      new MutationObserver(() => {
+        if (!ov.hidden && !at){ at = Date.now(); log("Opened: " + nameOf(ov)); }
+        else if (ov.hidden && at){ log("Closed: " + (ov.id || "overlay") + " after " + Math.round((Date.now() - at) / 1000) + "s"); at = 0; }
+      }).observe(ov, { attributes: true, attributeFilter: ["hidden"] });
+    });
+
+    /* ---- every tap on a button, link, tab or interactive card (never the PIN digits, never typed text) ---- */
+    document.addEventListener("click", e => {
+      const t = e.target;
+      if (!t || !t.closest || t.closest("#pad")) return;
+      let el = t.closest('button, a, [role="button"], summary, label, video, select, input[type="checkbox"], input[type="radio"]');
+      if (!el){
+        for (let n = t, i = 0; n && n !== document.body && i < 5; n = n.parentElement, i++){
+          try { if (getComputedStyle(n).cursor === "pointer"){ el = n; break; } } catch (err){}
+        }
+      }
+      if (!el) return;
+      if (el.closest && el.closest("#np")){
+        if (el.classList.contains("np-btn")) npHow = 'the signal "' + short(el.textContent, 60) + '"';
+        else if (el.id === "npClose") npHow = 'the "' + short(el.textContent, 40) + '" link';
+      }
+      const label = el.tagName === "VIDEO" ? "the video" : (short(el.getAttribute("aria-label"), 50) || short(el.innerText || el.textContent, 50) || short(el.getAttribute("title"), 50) || el.className || el.tagName.toLowerCase());
+      log('Tapped "' + label + '"' + (el.id ? " (#" + el.id + ")" : ""));
+    }, true);
+
+    /* ---- media ---- */
+    const vid = $1("#rcVideo");
+    let vidSecs = 0, vidSound = 0, vidLast = -1, vidUnmuted = false;
+    if (vid){
+      vid.addEventListener("timeupdate", () => {
+        const now = vid.currentTime;
+        if (vidLast >= 0){ const d = now - vidLast; if (d > 0 && d < 1.5){ vidSecs += d; if (!vid.muted) vidSound += d; } }
+        vidLast = now;
+      });
+      ["pause", "seeking", "emptied"].forEach(ev => vid.addEventListener(ev, () => { vidLast = -1; }));
+      vid.addEventListener("volumechange", () => {
+        if (!vid.muted && !vidUnmuted){ vidUnmuted = true; log("apology-video.mp4: sound turned ON (Tap for Sound) at " + mmss(vid.currentTime)); }
+        else if (vid.muted && vidUnmuted){ vidUnmuted = false; log("apology-video.mp4: sound turned off at " + mmss(vid.currentTime)); }
+      });
+    }
+    const watchAudio = (a, name, endNote) => {
+      if (!a) return;
+      a.addEventListener("play", () => log(name + ": play from " + mmss(a.currentTime)));
+      a.addEventListener("pause", () => { if (!a.ended) log(name + ": paused at " + mmss(a.currentTime) + " of " + mmss(a.duration)); });
+      a.addEventListener("ended", () => log(name + ": ended, listened to the end (" + mmss(a.duration) + ")" + (endNote ? " — " + endNote : "")));
+    };
+    watchAudio($1("#rcVoice"), "voice-note.m4a (apology voice note)");
+    watchAudio($1("#cvAudio"), "cute-voicenote.m4a (cute memory)", "Post-audio surprise message revealed!");
+
+    /* ---- scroll depth milestones (25/50/75/100%), once each per page, plus the pop-up letter ---- */
+    const hit = {};
+    const mark = (key, pct, label) => {
+      [25, 50, 75, 100].forEach(m => { if (pct >= (m === 100 ? 98 : m) && !hit[key + m]){ hit[key + m] = 1; log("Scrolled " + m + "% of " + label); } });
+    };
+    let sT = 0;
+    const onScroll = () => {
+      sT = 0;
+      if (np && !np.hidden){
+        if (np.scrollHeight > np.clientHeight + 40) mark("np", Math.round(np.scrollTop / (np.scrollHeight - np.clientHeight) * 100), "the apology pop-up letter");
+        return;
+      }
+      const pg = [...document.querySelectorAll(".page")].find(p => !p.hidden);
+      if (!pg || pg.id === "lock") return;                     // the PIN screen does not count
+      const H = document.documentElement.scrollHeight, vh = window.innerHeight;
+      if (H <= vh + 40) return;
+      const pct = Math.min(100, Math.round(window.scrollY / (H - vh) * 100));   // 0% at the top, 100% at the very bottom
+      if (pct > maxScroll) maxScroll = pct;
+      mark(pg.id, pct, pg.id);
+    };
+    const queue = () => { if (!sT) sT = setTimeout(onScroll, 250); };
+    window.addEventListener("scroll", queue, { passive: true });
+    if (np) np.addEventListener("scroll", queue, { passive: true });
+
+    /* ---- one cumulative report; never the same one twice ---- */
+    function report(){
+      let lines = sessionLog.map(e => "[" + stamp(e.t) + "] " + e.text);
+      if (lines.length > 360) lines = lines.slice(0, 60).concat(["… (" + (lines.length - 340) + " lines skipped) …"], lines.slice(-280));
+      return lines.join("\n");
+    }
+    function send(reason){
+      if (fresh <= sentFresh) return false;                    // nothing new since the last report
+      const text = report(), sig = fresh + "|" + text.length;
+      if (sig === lastSig) return false;
+      lastSig = sig; sentFresh = fresh; reports++;
+      const dur = sec();
+      const fd = new FormData();
+      fd.append("access_key", KEY);
+      fd.append("subject", "Site Activity Report — Max Scroll: " + maxScroll + "% | Duration: " + dur + "s");
+      fd.append("from_name", "Mimi's website (activity report)");
+      fd.append("Activity", text);
+      fd.append("Sent because", reason + (reports > 1 ? " (update " + reports + ": the whole visit so far)" : ""));
+      fd.append("Visit started", cairo(new Date(T0)));
+      fd.append("Duration", dur + "s");
+      fd.append("Max scroll", maxScroll + "%");
+      fd.append("Apology video watched", Math.round(vidSecs) + "s (" + Math.round(vidSound) + "s with sound)");
+      fd.append("Device", navigator.userAgent);
+      fd.append("Screen", startScreen + " at the start, " + window.innerWidth + "x" + window.innerHeight + " now");
+      fd.append("Referrer", referrer);
+      try { fetch(EP, { method: "POST", body: fd, keepalive: true, headers: { "Accept": "application/json" } }).catch(() => {}); }
+      catch (e){ try { if (navigator.sendBeacon) navigator.sendBeacon(EP, fd); } catch (e2){} }
+      return true;
+    }
+    window.__sendActivityReport = send;
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden"){ log("Left or backgrounded the page", false); send("she left or backgrounded the page"); }
+      else log("Came back to the page", false);
+    });
+    window.addEventListener("pagehide", () => send("the page was closed"));
+    setTimeout(() => send("45-second check-in (page still open)"), 45000);
+    setTimeout(() => send("3-minute check-in (new activity since the last report)"), 180000);
+  } catch (e){}
+})();
+</script>
 </body>
 <script>
   window.addEventListener("load", function () {
