@@ -3,6 +3,92 @@
 <head>
 <meta charset="utf-8">
 <script>
+/* v21: owner devices (Adham's laptop and iPhone) never send any Web3Forms email.
+   ?adham=1 marks this browser / app as an owner device, ?reset_owner=1 clears it.
+   In the Home Screen app: tap "For Mimi" on the PIN screen 5 times within 2 seconds to toggle it.
+   ?test=1 lets everything send anyway, with "[ADHAM TEST]" at the start of the subject.
+   Plain old JavaScript and loaded first, so it also covers the error reporter and the visit email. */
+(function(){
+  var W3 = /api\.web3forms\.com/i, q = location.search || "";
+  function has(k){ return new RegExp("[?&]" + k + "=1(&|$)").test(q); }
+  var TEST = has("test"), pending = "";
+  function getOwner(){ try { return localStorage.getItem("owner_adham") === "true"; } catch (e){ return false; } }
+  function setOwner(on){ try { if (on) localStorage.setItem("owner_adham", "true"); else localStorage.removeItem("owner_adham"); } catch (e){} }
+  if (has("adham")){ setOwner(true); pending = "Owner device saved — tracking disabled"; }
+  else if (has("reset_owner")){ setOwner(false); pending = "Owner device cleared"; }
+  function blocked(){ return getOwner() && !TEST; }
+  function tag(s){ s = String(s); return s.indexOf("[ADHAM TEST]") === 0 ? s : "[ADHAM TEST] " + s; }
+  function retag(body){
+    if (!TEST || !body) return body;
+    try {
+      if (typeof body === "string"){ var d = JSON.parse(body); if (d && d.subject){ d.subject = tag(d.subject); return JSON.stringify(d); } }
+      else if (typeof FormData !== "undefined" && body instanceof FormData && body.get && body.get("subject")) body.set("subject", tag(body.get("subject")));
+    } catch (e){}
+    return body;
+  }
+  /* fetch: on an owner device the request never leaves the phone; the page still gets a normal "sent" answer */
+  if (window.fetch){
+    var fetch0 = window.fetch;
+    window.fetch = function(u, o){
+      try {
+        if (W3.test(String((u && u.url) || u))){
+          if (blocked()) return Promise.resolve(new Response('{"success":true,"message":"owner device: not sent"}', { status: 200, headers: { "Content-Type": "application/json" } }));
+          if (o && o.body) o.body = retag(o.body);
+        }
+      } catch (e){}
+      return fetch0.apply(this, arguments);
+    };
+  }
+  /* XMLHttpRequest (the error reporter's second route) */
+  if (window.XMLHttpRequest){
+    var XP = XMLHttpRequest.prototype, open0 = XP.open, send0 = XP.send;
+    XP.open = function(m, u){ this.__w3 = W3.test(String(u)); return open0.apply(this, arguments); };
+    XP.send = function(b){
+      if (this.__w3){ if (blocked()) return; return send0.call(this, retag(b)); }
+      return send0.apply(this, arguments);
+    };
+  }
+  /* sendBeacon (the activity report's fallback route) */
+  if (navigator.sendBeacon){
+    try {
+      var beacon0 = navigator.sendBeacon.bind(navigator);
+      navigator.sendBeacon = function(u, d){ if (W3.test(String(u))){ if (blocked()) return true; d = retag(d); } return beacon0(u, d); };
+    } catch (e){}
+  }
+  /* a tiny toast at the bottom, only ever seen on the owner's own device */
+  function say(msg){
+    try {
+      var t = document.createElement("div");
+      t.id = "ownerToast"; t.textContent = msg;
+      t.setAttribute("style", "position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);transform:translateX(-50%);z-index:2147483647;width:max-content;max-width:calc(100% - 32px);box-sizing:border-box;text-align:center;padding:7px 14px;border-radius:14px;background:rgba(28,14,20,.82);color:#FAF6F0;font:12px/1.3 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.01em;pointer-events:none;opacity:0;transition:opacity .3s ease");
+      document.body.appendChild(t);
+      setTimeout(function(){ t.style.opacity = "1"; }, 20);
+      setTimeout(function(){ t.style.opacity = "0"; }, 2200);
+      setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 2500);
+    } catch (e){}
+  }
+  document.addEventListener("DOMContentLoaded", function(){
+    if (pending){
+      say(pending);
+      try { history.replaceState(null, "", location.pathname + location.search.replace(/([?&])(adham|reset_owner)=1(&|$)/, function(m, a, k, c){ return c ? a : ""; }).replace(/[?&]$/, "") + location.hash); } catch (e){}
+    }
+    /* secret toggle for the Home Screen app: 5 taps on "For Mimi" within 2 seconds */
+    var title = document.getElementById("lockTitle"), taps = [];
+    if (title) title.addEventListener("click", function(){
+      var now = Date.now();
+      taps.push(now);
+      while (taps.length && now - taps[0] > 2000) taps.shift();
+      if (taps.length >= 5){
+        taps = [];
+        var on = !getOwner();
+        setOwner(on);
+        say(on ? "Owner device saved — tracking disabled" : "Owner device cleared");
+      }
+    });
+  });
+})();
+</script>
+<script>
 /* Hidden error reporter: if something breaks on a phone, Adham gets an email with the exact error and device.
    Plain old JavaScript on purpose, so it still runs on phones where the main script fails. At most 3 emails per visit. */
 (function(){
