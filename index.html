@@ -1185,6 +1185,31 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 .kh-toast[hidden]{display:none}
 .kh-toast.on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.kh,.kh-count.bump{animation:none}.kh-fx{display:none}.kh-toast{transition:none}}
+/* v26: five love notes hidden across the site (CONFIG.hiddenNotes): a tiny gold seal on a page opens a small ivory pop-over */
+.egg{display:inline-flex;align-items:center;gap:9px;align-self:flex-end;max-width:100%;margin:0 2px -6px;padding:6px 12px 6px 6px;border:0;border-radius:999px;background:rgba(250,246,240,.55);color:#7A5A2E;font:italic 500 .98rem/1.2 "Cormorant Garamond",Georgia,serif;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background .3s}
+.egg:active{background:rgba(250,246,240,.9)}
+.egg[hidden]{display:none}
+.egg.home{align-self:center;margin:18px auto 130px}
+.egg-seal{position:relative;display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFDF9,#F3E6D2 70%);border:1px solid #D4AF76;color:#D4AF76}
+.egg-seal svg{width:14px;height:14px}
+.egg-seal::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1px solid rgba(212,175,118,.9);animation:eggPulse 2.6s ease-out infinite;pointer-events:none}
+@keyframes eggPulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.egg.found .egg-seal{background:radial-gradient(circle at 35% 30%,#F6E7CC,#D4AF76 75%);color:#FFFDF9}
+.egg.found .egg-seal::after{animation:none;opacity:0}
+.egg-pop{position:fixed;inset:0;z-index:280;display:grid;place-items:center;padding:20px 16px;background:rgba(58,18,32,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .35s ease}
+.egg-pop[hidden]{display:none}
+.egg-pop.on{opacity:1}
+.egg-card{position:relative;width:min(400px,100%);max-height:calc(100vh - 60px);overflow-y:auto;padding:26px 22px 16px;border-radius:18px;border:1px solid rgba(212,175,118,.8);background:#FAF6F0;box-shadow:0 0 0 5px rgba(244,182,194,.18),0 30px 60px -30px rgba(58,18,32,.6);color:#3A1220;text-align:center;transform:translateY(10px) scale(.96);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.egg-pop.on .egg-card{transform:none}
+.egg-card::before{content:"";position:absolute;inset:7px;border:1px solid rgba(212,175,118,.28);border-radius:12px;pointer-events:none}
+.egg-orn{display:block;width:96px;height:16px;margin:0 auto}
+.egg-title{position:relative;margin:8px 0 12px;font:italic 500 clamp(1.4rem,6vw,1.6rem)/1.25 "Cormorant Garamond",Georgia,serif;color:#3A1220}
+.egg-text{position:relative;margin:0;font:400 clamp(1rem,4.1vw,1.05rem)/1.8 "Lora",Georgia,serif;color:#3A1220;overflow-wrap:break-word}
+.egg-sign{position:relative;margin:14px 0 0;font:italic 500 1.15rem/1.3 "Cormorant Garamond",Georgia,serif;color:#7A5A2E}
+.egg-sign[hidden]{display:none}
+.egg-count{position:relative;margin:16px 0 0;font:500 .68rem/1.3 "Lora",Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#B8925A}
+.egg-close{position:relative;min-height:44px;margin-top:6px;padding:8px 18px;border:0;background:none;color:rgba(58,18,32,.6);font:italic 500 1.05rem/1 "Cormorant Garamond",Georgia,serif;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(184,146,90,.5);cursor:pointer;touch-action:manipulation}
+@media (prefers-reduced-motion:reduce){.egg-seal::after{animation:none}.egg-pop,.egg-card{transition:none}}
 /* ===== TEMPORARY WELCOME BACK THEME - REMOVE TOMORROW =====
    Everything here has the class .temp-welcome-theme. To switch it all off in one line: CONFIG.welcomeTheme.enabled = false */
 .temp-welcome-theme[hidden]{display:none!important}
@@ -1928,6 +1953,17 @@ body:has(#ow:not([hidden])) #cfHint,body:has(#lb:not([hidden])) #cfHint{display:
 </div>
 <div class="kh-fx" id="khFx" aria-hidden="true"></div>
 <p class="kh-toast" id="khToast" aria-live="polite" hidden></p>
+<!-- v26: the pop-over for the hidden love notes (CONFIG.hiddenNotes). Tap outside it, "Close" or Escape to close -->
+<div class="egg-pop" id="eggPop" hidden role="dialog" aria-modal="true" aria-labelledby="eggTitle">
+  <div class="egg-card">
+    <svg class="egg-orn" viewBox="0 0 96 16" aria-hidden="true"><path d="M4 8H36M60 8H92" stroke="#D4AF76" stroke-width="1" stroke-linecap="round"/><path d="M48 13C43.5 9.8 41 7.4 41 5.2 41 3.4 42.4 2 44.1 2c1.6 0 2.9.9 3.9 2.3C49 2.9 50.3 2 51.9 2 53.6 2 55 3.4 55 5.2c0 2.2-2.5 4.6-7 7.8Z" fill="#F4B6C2" stroke="#D4AF76" stroke-width=".9"/></svg>
+    <h3 class="egg-title" id="eggTitle"></h3>
+    <p class="egg-text" id="eggText"></p>
+    <p class="egg-sign" id="eggSign" hidden></p>
+    <p class="egg-count" id="eggCount"></p>
+    <button class="egg-close" id="eggClose" type="button">Close</button>
+  </div>
+</div>
 <!-- v22: the "Welcome back" pop-up right after the PIN (filled in from CONFIG.welcomeBack). Closing it sets display:none + pointer-events:none -->
 <div class="wb" id="np" hidden role="dialog" aria-modal="true" aria-labelledby="wbHead">
   <div class="wb-glow" aria-hidden="true"></div>
@@ -2313,6 +2349,25 @@ const CONFIG = {
     hugToasts: ["Adham felt that", "Sent straight to Adham", "Wrapped all around Adham"],
     subject: "[MARIAM SENT LOVE] {what}"
   },
+  // ---- v26: love notes hidden across the site. page = where its little gold seal sits ("home" = the very bottom of Home) ----
+  hiddenNotes: {
+    enabled: true,
+    notes: [
+      { id: "safePlace", page: "comfort", hint: "A little note hidden for you", title: "My Safe Place",
+        text: "In a world that never stops moving, you are the only place where my heart actually rests. Everything feels lighter the second I hear your voice or see your smile—because with you, I'm finally home." },
+      { id: "alwaysYou", page: "memories", hint: "Tap here for a secret note", title: "Why It's Always You",
+        text: "Loving you isn't just a feeling I have when things are easy—it's the easiest choice I make every single day. Out of everyone in this world, my heart only knows how to belong to you, and no matter where life takes us, my hand is staying right in yours." },
+      { id: "beginning", page: "us", hint: "Open me", title: "Just the Beginning",
+        text: "Everything we've been through only proved one thing to me: nothing can ever break what we have. We're not just back together—we're just getting started on the best years of our lives." },
+      { id: "forget", page: "notes", hint: "A little note hidden for you", title: "If You Ever Forget",
+        text: "If you ever have a hard day and forget how deeply you are loved, come back here and read this: you are the best thing that ever happened to me, my heart belongs only to you, and there isn't a single version of my future that doesn't have you right beside me." },
+      { id: "signature", page: "home", hint: "One last note, tucked in for you", title: "A Quiet Signature Note",
+        text: "In every lifetime, in every version of this world, I would still choose you. You are my home, my peace, and my favorite part of being alive.", sign: "— Always yours, Adham" }
+    ],
+    found: "Read it again",
+    count: "{n} of {total} hidden notes found",
+    all: "You found all {total} of my hidden notes"
+  },
   // TEMPORARY WELCOME BACK THEME - REMOVE TOMORROW (enabled: false switches the whole theme off)
   welcomeTheme: {
     enabled: true,
@@ -2454,7 +2509,7 @@ const CONFIG = {
     careTitle: "Your Virtual Care Package 🍫🫖",
     careHint: "Tap each one to open it.",
     care: [
-      { name: "Warm Heating Pad 🔥", message: "Wish I was right next to you to take all the pain away, keep warm my love." },
+      { name: "Warm Blanket & Forehead Kisses", message: "Wrapping you up in the softest, warmest blanket and covering your forehead in gentle kisses, holding you close until you feel better, my love." },
       { name: "Sweet Chocolate 🍫", message: "Say the word and your favorite chocolate is on its way to you." },
       { name: "Cozy Blanket 🧸", message: "Wrapping you in the biggest virtual hug until I can hold you for real." },
       { name: "Warm Tea & Rest 🫖", message: "Drink something warm and let yourself rest today, you deserve all the pampering." }
@@ -3441,7 +3496,7 @@ document.addEventListener("keydown", e => {
   if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
   const t = e.target;
   if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden || !$("#sky").hidden || !$("#np").hidden) return;
+  if (!lb.hidden || !$("#ow").hidden || !$("#el").hidden || !$("#u2m").hidden || !$("#an").hidden || !$("#lv").hidden || !$("#rq").hidden || !$("#pl").hidden || !$("#sky").hidden || !$("#np").hidden || !$("#eggPop").hidden) return;
   if (e.key === "ArrowRight"){ flowNext(); }
   else if (e.key === "ArrowLeft"){ flowPrev(); }
 });
@@ -3453,7 +3508,7 @@ document.addEventListener("keydown", e => {
     sw = null;
     if (e.touches.length !== 1) return;
     const t = e.target, c = e.touches[0];
-    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, #sky, #np, .rc-frame, .rc-vn, .cv-player, .dodge")) return;
+    if (t.closest && t.closest("canvas, input, textarea, #dock, #cc, #ow, #lb, #el, #u2m, #an, #lv, #rq, #pl, #sky, #np, #eggPop, .rc-frame, .rc-vn, .cv-player, .dodge")) return;
     if (c.clientX < 24 || c.clientX > window.innerWidth - 24) return;        // leave the browser's own edge swipe alone
     sw = { x: c.clientX, y: c.clientY, t: Date.now() };
   }, { passive: true });
@@ -5264,6 +5319,63 @@ function arOpen(){ const b = $("#arBody"); return !!b && !b.hidden; }
   const check = () => { if (!shown && unlocked && $("#np").hidden && !$("#home").hidden){ shown = true; bar.hidden = false; } };
   new MutationObserver(check).observe($("#np"), { attributes: true, attributeFilter: ["hidden"] });
   new MutationObserver(check).observe($("#home"), { attributes: true, attributeFilter: ["hidden"] });
+})();
+
+/* ============ v26: love notes hidden across the site (CONFIG.hiddenNotes). Each page gets a tiny gold seal; tapping it opens the note,
+   marks it as found (kept on her phone) and notes it in the activity report ============ */
+(function(){
+  const H = CONFIG.hiddenNotes, pop = $("#eggPop");
+  if (!H || !H.enabled) return;
+  const STORE = "mimi_notes_found", list = H.notes || [], total = list.length;
+  let found = [];
+  try { found = JSON.parse(localStorage.getItem(STORE) || "[]") || []; } catch (e){}
+  const seals = {};
+  const heart = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C6 16 3 12.9 3 9.4 3 6.9 5 5 7.4 5c1.8 0 3.4 1 4.6 2.5C13.2 6 14.8 5 16.6 5 19 5 21 6.9 21 9.4c0 3.5-3 6.6-9 11.1Z" fill="currentColor"/></svg>';
+  const label = n => found.includes(n.id) ? (H.found || "Read it again") : n.hint;
+  let openAt = 0, lastBtn = null;
+  function show(n, btn){
+    lastBtn = btn;
+    if (!found.includes(n.id)){
+      found.push(n.id);
+      try { localStorage.setItem(STORE, JSON.stringify(found)); } catch (e){}
+      btn.classList.add("found");
+      btn.querySelector(".egg-hint").textContent = label(n);
+      try { if (window.__trackEvent) window.__trackEvent("Found a hidden note: " + n.title + " (" + n.page + " page) - " + found.length + " of " + total); } catch (e){}
+    } else {
+      try { if (window.__trackEvent) window.__trackEvent("Read a hidden note again: " + n.title); } catch (e){}
+    }
+    $("#eggTitle").textContent = n.title;
+    $("#eggText").textContent = n.text;
+    const sg = $("#eggSign"); sg.textContent = n.sign || ""; sg.hidden = !n.sign;
+    $("#eggCount").textContent = (found.length >= total ? (H.all || "") : (H.count || "")).replace("{n}", found.length).replace("{total}", total);
+    pop.hidden = false;
+    void pop.offsetWidth;
+    pop.classList.add("on");
+    openAt = Date.now();
+    try { $("#eggClose").focus({ preventScroll: true }); } catch (e){}
+  }
+  function hide(){
+    if (pop.hidden) return;
+    pop.classList.remove("on");
+    setTimeout(() => { if (!pop.classList.contains("on")) pop.hidden = true; }, reduceMotion ? 0 : 360);
+    try { if (lastBtn) lastBtn.focus({ preventScroll: true }); } catch (e){}
+  }
+  pop.addEventListener("click", e => { if (e.target === pop && Date.now() - openAt > 250) hide(); });   // a tap anywhere outside the card
+  $("#eggClose").onclick = hide;
+  document.addEventListener("keydown", e => { if (e.key === "Escape") hide(); });
+  list.forEach(n => {
+    const pg = document.getElementById(n.page);
+    if (!pg) return;
+    const btn = mk("button", "egg" + (n.page === "home" ? " home" : "") + (found.includes(n.id) ? " found" : ""));
+    btn.type = "button";
+    btn.setAttribute("aria-label", "A hidden love note: " + n.title);
+    const seal = mk("span", "egg-seal"); seal.innerHTML = heart;
+    btn.append(seal, mk("span", "egg-hint", label(n)));
+    btn.onclick = () => show(n, btn);
+    if (n.page === "home") pg.append(btn);                          // the very bottom of Home
+    else pg.insertBefore(btn, pg.firstChild);                       // tucked into the top corner of the page
+    seals[n.id] = btn;
+  });
 })();
 
 /* ===== TEMPORARY WELCOME BACK THEME - REMOVE TOMORROW (this whole block; or set CONFIG.welcomeTheme.enabled = false) ===== */
